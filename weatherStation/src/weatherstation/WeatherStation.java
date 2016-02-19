@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package weatherstation;
 
 // import statements
@@ -19,22 +14,43 @@ public class WeatherStation extends JFrame {
     //default constructor
     public WeatherStation()
     {
+        //super class constructor for window title
         super( "WeatherStation" );
+        
+        //set and register up menu bar
+        JMenuBar menuBar = new JMenuBar();
+        setJMenuBar(menuBar);
+        
+        //FILE menu
+        JMenu file = new JMenu("File");
+        menuBar.add(file);
+        
+        //file|open
+        JMenuItem open = new JMenuItem("Open");
+        file.add(open);
+        
+        //file|quit
+        JMenuItem quit = new JMenuItem("Quit");
+        file.addSeparator();
+        file.add(quit);
+        
+        //set up content pane
         Container contents = getContentPane();
-        Container contents2 = getContentPane();
         contents.setLayout( new FlowLayout() );
         
-        contents.add( new JButton( "Button 1" ) );
-
+        //suggest window default size
+        setSize(400, 400);
         
-        setSize(300, 300);
+        //window manager sets components
+        //pack();
         
-        pack();
+        //display window
         setVisible(true);
         
+        
+        //default close operation
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
-    
     
     /**
      * @param args the command line arguments
