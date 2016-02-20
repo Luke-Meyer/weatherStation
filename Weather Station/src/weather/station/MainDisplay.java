@@ -1,4 +1,6 @@
 package weather.station;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -149,6 +151,11 @@ public class MainDisplay extends javax.swing.JFrame {
         jMenu1.add(jMenuItem2);
 
         jMenuItem6.setText("Specify directory...");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem6);
 
         jMenuItem1.setText("Quit");
@@ -219,7 +226,7 @@ public class MainDisplay extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        // TODO add your handling code here:
+        System.exit(0);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
@@ -233,6 +240,23 @@ public class MainDisplay extends javax.swing.JFrame {
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        //Schedule a job for the event dispatch thread:
+        //creating and showing this application's GUI.
+        
+        System.out.println("Specify directory was clicked");
+//        SwingUtilities.invokeLater( new Runnable()
+//        {
+//            DirectoryChooser dir = new DirectoryChooser();
+//            public void run()
+//            {
+//                //Turn off metal's use of bold fonts
+//                UIManager.put( "swing.boldMetal", Boolean.FALSE );
+//                dir.createAndShowGUI();
+//            }
+//        } );
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     /**
      * @param args the command line arguments

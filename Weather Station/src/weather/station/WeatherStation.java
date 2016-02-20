@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 package weather.station;
+import javax.swing.*;
+import javax.swing.SwingUtilities;
 
 /**
  *
