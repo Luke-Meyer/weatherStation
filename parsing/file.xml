@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<oz>
+	<actor>
+		<name>Dorothy</name>
+		<species>human</species>
+		<profession>assassin</profession>
+	</actor>
+	<actor>
+		<name>Scarecrow</name>
+		<species>vegetable</species>
+		<profession>agriculture</profession>
+	</actor>
+	<actor>
+		<name>Tin Woodsman</name>
+		<species>robot</species>
+		<profession>machinery</profession>
+	</actor>
+	<actor>
+		<name>Cowardly Lion</name>
+		<species>big cat</species>
+		<profession>carnivore</profession>
+	</actor>
+	<actor>
+		<name>Toto</name>
+		<species>dog</species>
+		<profession>musician</profession>
+	</actor>
+</oz>
