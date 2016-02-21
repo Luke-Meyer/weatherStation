@@ -279,17 +279,17 @@ public class MainDisplay extends javax.swing.JFrame {
         //Schedule a job for the event dispatch thread:
         //creating and showing this application's GUI.
         
-        System.out.println("Specify directory was clicked");
-//        SwingUtilities.invokeLater( new Runnable()
-//        {
-//            DirectoryChooser dir = new DirectoryChooser();
-//            public void run()
-//            {
-//                //Turn off metal's use of bold fonts
-//                UIManager.put( "swing.boldMetal", Boolean.FALSE );
-//                dir.createAndShowGUI();
-//            }
-//        } );
+        //System.out.println("Specify directory was clicked");
+        SwingUtilities.invokeLater( new Runnable()
+        {
+            DirectoryChooser dir = new DirectoryChooser();
+            public void run()
+            {
+                //Turn off metal's use of bold fonts
+                UIManager.put( "swing.boldMetal", Boolean.FALSE );
+                dir.createAndShowGUI();
+            }
+        } );
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     /**

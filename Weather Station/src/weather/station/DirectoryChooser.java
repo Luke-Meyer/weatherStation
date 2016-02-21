@@ -48,19 +48,14 @@ static private final String newline = "\n";
         //Create the open button.  We use the image from the JLF
         //Graphics Repository (but we extracted it from the jar).
         openButton = new JButton( "Choose a directory...",
-                                  createImageIcon( "images/Open16.gif" ) );
+                                  createImageIcon( "images/Open24.gif" ) );
         openButton.addActionListener( this );
 
-        //Create the save button.  We use the image from the JLF
-        //Graphics Repository (but we extracted it from the jar).
-        //saveButton = new JButton( "Save a File...",
-                                  //createImageIcon( "images/Save16.gif" ) );
-        //saveButton.addActionListener( this );
+        
 
         //For layout purposes, put the buttons in a separate panel
         JPanel buttonPanel = new JPanel(); //use FlowLayout
         buttonPanel.add( openButton );
-       // buttonPanel.add( saveButton );
 
         //Add the buttons and the log to this panel.
         add( buttonPanel, BorderLayout.PAGE_START );
@@ -89,21 +84,6 @@ static private final String newline = "\n";
 
             //Handle save button action.
         }
-//        else if ( e.getSource() == saveButton )
-//        {
-//            int returnVal = fc.showSaveDialog( DirectoryChooser.this );
-//            if ( returnVal == JFileChooser.APPROVE_OPTION )
-//            {
-//                File file = fc.getSelectedFile();
-//                //This is where a real application would save the file.
-//                log.append( "Saving: " + file.getName() + "." + newline );
-//            }
-//            else
-//            {
-//                log.append( "Save command cancelled by user." + newline );
-//            }
-//            log.setCaretPosition( log.getDocument().getLength() );
-//        }
     }
     
     /** Returns an ImageIcon, or null if the path was invalid. */
@@ -129,8 +109,10 @@ static private final String newline = "\n";
     public static void createAndShowGUI()
     {
         //Create and set up the window.
-        JFrame frame = new JFrame( "FileChooserDemo" );
-        frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
+        JFrame frame = new JFrame( "DirectoryChooser" );
+        
+        
+        frame.setDefaultCloseOperation( JFrame.DISPOSE_ON_CLOSE);
 
         //Add content to the window.
         frame.add( new DirectoryChooser() );
