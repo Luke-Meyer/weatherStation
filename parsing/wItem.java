@@ -2,6 +2,9 @@
 
 public class wItem {
     private String date;
+    private int year;
+    private int month;
+    private int day;
     private String time;
     private float temperature;
     private float humidity;
@@ -19,7 +22,23 @@ public class wItem {
     }
     public void setDate(String date) {
         this.date = date;
+        
+        String temp = date.trim();
+        String delims = "[/]";
+        String[] token = temp.split(delims);
+        this.year = Integer.valueOf(token[0]);
+        this.month = Integer.valueOf(token[1]);
+        this.day = Integer.valueOf(token[2]);
+    }    
+    public int getYear() {
+        return year;
     }
+    public int getMonth() {
+        return month;
+    }
+    public int getDay() {
+        return day;
+    }    
     public String getTime() {
         return time;
     }
@@ -89,7 +108,7 @@ public class wItem {
       
     @Override
     public String toString() {
-        return "wItem:: date="+this.date +" time=" + this.time + " temperature=" + this.temperature;
+        return "wItem:: date="+this.date; //+" time=" + this.time + " temperature=" + this.temperature;
     }
      
 }
