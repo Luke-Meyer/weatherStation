@@ -41,7 +41,7 @@ public class WeatherData
 		int excessMonths = 0;
 		//Dictionary dictOfYears = new Hashtable< Integer, Year >();
 		Hashtable<Integer, Year> dictOfYears = new Hashtable<Integer, Year>();
-		Month mun = new Month();  
+		Month mun = new Month();
 		Year year = new Year();
 		
 		
@@ -138,23 +138,14 @@ public class WeatherData
 								if( prevYear != currYear )
 								{									
 									year.setYear( prevYear );
-									
 									Year savedYear = new Year( year );
-									
 									dictOfYears.put( prevYear, savedYear );  
-									
 									prevYear = currYear;
 								}
-								
 								prevMonth = currMonth;
 							}					
-							
-							
-							
-							daySamples.clear();  // remove previous day's samples
-							
+							daySamples.clear();  // remove previous day's sample
 							daySamples.add( item );  // add first sample to new day
-							
 							prevDay = currDay;  // shift flags
 						
 							
@@ -163,14 +154,8 @@ public class WeatherData
 						{
 							daySamples.add( item ); // if we are still processing the same day, keep adding samples 
 						}
-						
-						
-						
-						
-                    }
-									
-					fileCount += 1;
-                    
+                    }			
+					fileCount += 1; 
                 }
                 // JDOMException indicates a well-formedness error
                 catch ( JDOMException e )
@@ -183,24 +168,7 @@ public class WeatherData
                     System.out.println( e );
                 }
             } 
-			
-			
-			
-			
-		
-			
-			
         }
-        // Get size and display.
-	    //int count = weatherData.size();
-	    //System.out.println("Count: " + count);
-
-	    // Loop through elements.
-	    /*for (int i = 0; i < weatherData.size(); i++) {
-	        int value = weatherData.get(i);
-	        System.out.println("Element: " + value);
-	    }*/
+        System.out.println(dictOfYears);
     }
-	
-	
 }
