@@ -24,14 +24,25 @@ import java.io.FileInputStream;
 import org.jdom2.input.SAXBuilder;
 import java.io.IOException;
 import java.util.*;
+import java.io.FilenameFilter;
 import org.apache.commons.io.FileUtils;
 
 public class WeatherData
 {
     public static void main( String[] args )
     {        
-        File folder = new File("./");
+        //File folder = new File("./");
+		File folder = new File( "..\\data\\" );
         File[] listOfFiles = folder.listFiles();
+		
+		File[] xmlFiles = folder.listFiles( new FilenameFilter(){
+			public boolean accept(  File folder, String name) {
+				return name.toLowerCase().endsWith(".xml");
+			}
+		});
+		
+		int totalDataFileCount = xmlFiles.length;
+		System.out.println( "Number of .xml files: " + totalDataFileCount );
 		
 		int fileCount = 0;
 		int currYear = -1;
@@ -39,7 +50,9 @@ public class WeatherData
 		int prevMonth = -1;
 		int currMonth = -1;
 		int excessMonths = 0;
+		
 		//Dictionary dictOfYears = new Hashtable< Integer, Year >();
+		
 		Hashtable<Integer, Year> dictOfYears = new Hashtable<Integer, Year>();
 		Month mun = new Month();
 		Year year = new Year();
@@ -62,14 +75,14 @@ public class WeatherData
                     
                 System.out.print(file + "\n");			
 				
-				
+				int currDay = -1;
+				int prevDay = -1;
                 
                 // read and parse XML document
                 SAXBuilder builder = new SAXBuilder();
                 try
                 {
-					int currDay = -1;
-					int prevDay = -1;
+					
                     Document doc = builder.build( file );	    // parse XML tags
                     Element root = doc.getRootElement();	    // get root of XML tree
                     List<Element> xmlContent = root.getChildren("weather");
@@ -93,6 +106,7 @@ public class WeatherData
                         item.setUvindex(Float.parseFloat(element.getChildText("uvindex")));
                         item.setRainfall(Float.parseFloat(element.getChildText("rainfall")));
 						
+						//System.out.print( item.toString() );
 						
 						currDay = item.getDay();
 						
@@ -115,6 +129,9 @@ public class WeatherData
 							prevYear = currYear;
 						}
 						
+						//System.out.println( "Previous day: " + prevDay );
+						//System.out.println( "Current day: " + currDay );
+						
 						if( prevDay != currDay )  // if we started processing samples from a different day
 						{
 							Day daa = new Day();
@@ -123,9 +140,10 @@ public class WeatherData
 							daa.setMonth( prevMonth );
 							daa.setYear( prevYear );
 							
+							//System.out.println("Days not equal!" );//daa.getSamples());
+							
 							mun.setDailySamples( prevDay, daa );  // set that day of samples in a month object
-							
-							
+													
 							
 							if( prevMonth != currMonth )  // check to see if the next day is in a new month
 							{														
@@ -154,8 +172,10 @@ public class WeatherData
 						{
 							daySamples.add( item ); // if we are still processing the same day, keep adding samples 
 						}
+						//fileCount += 1; 
+						//System.out.println( fileCount + " samples processed ");
                     }			
-					fileCount += 1; 
+					//fileCount += 1; 
                 }
                 // JDOMException indicates a well-formedness error
                 catch ( JDOMException e )

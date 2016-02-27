@@ -26,9 +26,13 @@ public class wItem {
         String temp = date.trim();
         String delims = "[/]";
         String[] token = temp.split(delims);
-        this.year = Integer.valueOf(token[0]);
-        this.month = Integer.valueOf(token[1]);
-        this.day = Integer.valueOf(token[2]);
+        //this.year = Integer.valueOf(token[0]);
+        //this.month = Integer.valueOf(token[1]);
+        //this.day = Integer.valueOf(token[2]);
+		
+		this.month = Integer.valueOf(token[0]);
+		this.day = Integer.valueOf(token[1]);
+		this.year = Integer.valueOf(token[2]);
     }    
     public int getYear() {
         return year;

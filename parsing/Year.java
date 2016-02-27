@@ -20,25 +20,6 @@ public class Year
 		
 		monthlySamples.putAll( tempYear.getAllMonthlySamples() );
 		
-		
-		/*
-		monthlySamples.Clear();
-		
-		foreach(object key in tempYear.Keys)
-        {
-            monthlySamples.Add(key, tempYear[key]);
-        }
-		*/
-		/*
-		Set<String> keys = monthlySamples.keySet();
-		
-		
-		for(String key: keys)
-		{
-			monthlySamples.Add( key, tempYear.get(key) );
-			
-        }\
-		*/
 	}
 	
 	
