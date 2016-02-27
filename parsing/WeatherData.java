@@ -33,15 +33,19 @@ public class WeatherData
     {        
         //File folder = new File("./");
 		File folder = new File( "..\\data\\" );
-        File[] listOfFiles = folder.listFiles();
+        //File[] listOfFiles = folder.listFiles();
 		
-		File[] xmlFiles = folder.listFiles( new FilenameFilter(){
+		File[] listOfFiles = folder.listFiles( new FilenameFilter(){  // only get .xml files included in list of files to be processed in the directory
 			public boolean accept(  File folder, String name) {
 				return name.toLowerCase().endsWith(".xml");
 			}
 		});
 		
-		int totalDataFileCount = xmlFiles.length;
+		int totalDataFileCount = listOfFiles.length;  // get the total number of data files
+		int completeYearsOfData = totalDataFileCount / 12;  // get the total number of complete years of data to be processed
+		int excessMonths = totalDataFileCount - ( 12 * completeYearsOfData ); // get the number of remaining month.xml data files to make up last incomplete year
+		
+		
 		System.out.println( "Number of .xml files: " + totalDataFileCount );
 		
 		int fileCount = 0;
@@ -49,7 +53,7 @@ public class WeatherData
 		int prevYear = -1;
 		int prevMonth = -1;
 		int currMonth = -1;
-		int excessMonths = 0;
+		
 		
 		//Dictionary dictOfYears = new Hashtable< Integer, Year >();
 		
@@ -152,6 +156,14 @@ public class WeatherData
 								
 								Month tempMonth = new Month( mun); // create a new month in memory
 								year.setMonthlySamples( prevMonth, mun );  // add month to year
+								
+								if( i == totalDataFileCount - 1 )  // if we are processing the last year, consisting of incomplete month data, include it 
+								{
+									year.setYear( prevYear );
+									Year savedYear = new Year( year );
+									dictOfYears.put( prevYear, savedYear );  
+									//prevYear = currYear;
+								}
 								
 								if( prevYear != currYear )
 								{									
