@@ -1,21 +1,21 @@
-
+import java.util.*;
 
 public class Month
 {
 	private int month;
 	private int year;
-	private Map<Integer, Day> dailySamples;
+	private Hashtable<Integer, Day> dailySamples;
 	
 	public Month()
 	{
-		dailySamples = new Hasttable<Integer, Day>();
+		dailySamples = new Hashtable<Integer, Day>();
 		month = -1;
 		year = -1;
 	}
 	
 	public Month( Month tempMonth )
 	{
-		dailySamples = new Hasttable<Integer, Day>();
+		dailySamples = new Hashtable<Integer, Day>();
 		
 		year = tempMonth.getYear();
 		month = tempMonth.getMonth();
@@ -69,7 +69,7 @@ public class Month
 		dailySamples.put( dayKey, dayOfSamples );
 	}
 	
-	public Hasttable<Integer, Day> getAllDaySamples()
+	public Hashtable<Integer, Day> getAllDaySamples()
 	{
 		return dailySamples;
 	}
@@ -78,8 +78,8 @@ public class Month
 		return dailySamples.get(dayKey);
 	}
 	
-	public List<Day> getWeekOfSamples( int weekKey )
+	/*(public ArrayList<Day> getWeekOfSamples( int weekKey )
 	{
 		
-	}
+	}*/
 }

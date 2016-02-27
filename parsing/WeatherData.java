@@ -17,7 +17,7 @@ JMW 160205
 
 http://www.journaldev.com/1206/jdom-parser-read-xml-file-to-object-in-java
 */
-//package weather.station;
+
 import org.jdom2.*;
 import java.io.File;
 import java.io.FileInputStream;
@@ -25,8 +25,6 @@ import org.jdom2.input.SAXBuilder;
 import java.io.IOException;
 import java.util.*;
 import org.apache.commons.io.FileUtils;
-
-//import weather.station.wItem; //not sure if needed
 
 public class WeatherData
 {
@@ -42,7 +40,7 @@ public class WeatherData
 		int currMonth = -1;
 		int excessMonths = 0;
 		//Dictionary dictOfYears = new Hashtable< Integer, Year >();
-		Map<Integer, Year> dictOfYears = new Hashtable< Integer, Year>();
+		Hashtable<Integer, Year> dictOfYears = new Hashtable<Integer, Year>();
 		Month mun = new Month();  
 		Year year = new Year();
 		
@@ -143,7 +141,7 @@ public class WeatherData
 									
 									Year savedYear = new Year( year );
 									
-									dictOfYears( prevYear, savedYear );  
+									dictOfYears.put( prevYear, savedYear );  
 									
 									prevYear = currYear;
 								}

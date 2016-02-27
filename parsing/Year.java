@@ -1,11 +1,10 @@
 
-
+import java.util.*;
 
 public class Year
 {
 	private int year;
-	
-	private Map<Integer, Month> monthlySamples;
+	private Hashtable<Integer, Month> monthlySamples;
 	
 	public Year()
 	{
