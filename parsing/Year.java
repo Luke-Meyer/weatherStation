@@ -9,13 +9,13 @@ public class Year
 	
 	public Year()
 	{
-		monthlySamples = new HashTable<Integer, Month > ();
+		monthlySamples = new Hashtable<Integer, Month > ();
 		year = -1;
 	}
 	
 	public Year( Month tempYear )
 	{
-		monthlySamples = new HashTable<Integer, Month>();
+		monthlySamples = new Hashtable<Integer, Month>();
 		
 		year = tempYear.getYear();
 		

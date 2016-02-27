@@ -8,14 +8,14 @@ public class Month
 	
 	public Month()
 	{
-		dailySamples = new HastTable<Integer, Day>();
+		dailySamples = new Hasttable<Integer, Day>();
 		month = -1;
 		year = -1;
 	}
 	
 	public Month( Month tempMonth )
 	{
-		dailySamples = new HastTable<Integer, Day>();
+		dailySamples = new Hasttable<Integer, Day>();
 		
 		year = tempMonth.getYear();
 		month = tempMonth.getMonth();
