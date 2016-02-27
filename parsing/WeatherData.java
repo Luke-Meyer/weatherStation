@@ -41,7 +41,7 @@ public class WeatherData
 		int prevMonth = -1;
 		int currMonth = -1;
 		int excessMonths = 0;
-		Dictionary dictOfYears = new HashTable< Integer, Year >();
+		Dictionary dictOfYears = new Hashtable< Integer, Year >();
 		Month mun = new Month();  
 		Year year = new Year();
 		
