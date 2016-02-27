@@ -41,7 +41,7 @@ public class ReadXML2
 		int prevMonth = -1;
 		int currMonth = -1;
 		int excessMonths = 0;
-		Dictionary dictOfYears = new HastTable< int, Year >();
+		Dictionary dictOfYears = new HashTable< int, Year >();
 		Month mun = new Month();  
 		Year year = new Year();
 		
