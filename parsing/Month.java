@@ -46,7 +46,7 @@ public class Month
 		year = tempYear;
 	}
 	
-	public void setDailySamples( Day dayOfSamples, int dayKey )
+	public void setDailySamples( int dayKey, Day dayOfSamples ) //Day dayOfSamples, int dayKey )
 	{
 		
 		dailySamples.put( dayKey, dayOfSamples );

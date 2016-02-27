@@ -15,7 +15,7 @@ public class Year
 	
 	public Year( Month tempYear )
 	{
-		monthlySamples = new HastTable<int, Month>();
+		monthlySamples = new HashTable<int, Month>();
 		
 		year = tempYear.getYear();
 		
@@ -36,7 +36,7 @@ public class Year
 		year = tempYear;
 	}
 	
-	public void setMonthlySamples( Month monthOfSamples, int monthKey )
+	public void setMonthlySamples( int monthKey, Mont monthOfSamples )//Month monthOfSamples, int monthKey )
 	{
 		
 		monthlySamples.put( monthKey, monthOfSamples );
