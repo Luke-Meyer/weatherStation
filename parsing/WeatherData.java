@@ -28,7 +28,7 @@ import org.apache.commons.io.FileUtils;
 
 //import weather.station.wItem; //not sure if needed
 
-public class ReadXML2
+public class WeatherData
 {
     public static void main( String[] args )
     {        
