@@ -13,18 +13,33 @@ public class Year
 		year = -1;
 	}
 	
-	public Year( Month tempYear )
+	public Year( Year tempYear )
 	{
 		monthlySamples = new Hashtable<Integer, Month>();
 		
 		year = tempYear.getYear();
 		
+		monthlySamples.putAll( tempYear.getAllMonthlySamples() );
+		
+		
+		/*
 		monthlySamples.Clear();
 		
 		foreach(object key in tempYear.Keys)
         {
             monthlySamples.Add(key, tempYear[key]);
         }
+		*/
+		/*
+		Set<String> keys = monthlySamples.keySet();
+		
+		
+		for(String key: keys)
+		{
+			monthlySamples.Add( key, tempYear.get(key) );
+			
+        }\
+		*/
 	}
 	
 	
@@ -44,7 +59,12 @@ public class Year
 		monthlySamples.put( monthKey, monthOfSamples );
 	}
 	
-	public Month getMonthlySamples( int monthKey )
+	public Hashtable<Integer, Month> getAllMonthlySamples()
+	{
+		return monthlySamples;
+	}
+	
+	public Month getMonthlySamplesByMonth( int monthKey )
 	{
 		return monthlySamples.get(monthKey);
 	}

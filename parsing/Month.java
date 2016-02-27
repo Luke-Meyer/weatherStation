@@ -20,10 +20,27 @@ public class Month
 		year = tempMonth.getYear();
 		month = tempMonth.getMonth();
 		
+		dailySamples.putAll( tempMonth.getAllDaySamples() );
+		
+		
+		/*
+		Set<String> keys = dailySamples.keySet();
+		
+		
+		for(String key: keys)
+		{
+			dailySamples.Add( key, tempMonth.get(key) );
+			
+        }
+		
+		/*
 		foreach(object key in tempMonth.Keys)
         {
             dailySamples.Add(key, tempMonth[key]);
         }
+		*/
+		*/
+
 	}
 	
 	public int getMonth()
@@ -52,7 +69,11 @@ public class Month
 		dailySamples.put( dayKey, dayOfSamples );
 	}
 	
-	public Day getMonthOfSamples( int dayKey)
+	public Hasttable<Integer, Day> getAllDaySamples()
+	{
+		return dailySamples;
+	}
+	public Day getDayofSamples( int dayKey)
 	{
 		return dailySamples.get(dayKey);
 	}
