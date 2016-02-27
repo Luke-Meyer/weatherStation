@@ -40,7 +40,7 @@ public class ReadXML2
 		int prevYear = -1;
 		int prevMonth = -1;
 		int currMonth = -1;
-		int excessMonths = 0
+		int excessMonths = 0;
 		Dictionary dictOfYears = new HastTable< int, Year >();
 		Month mun = new Month();  
 		Year year = new Year();
@@ -108,7 +108,7 @@ public class ReadXML2
 						
 						if( prevMonth == -1 )  
 						{
-							prevMonth = currMonth
+							prevMonth = currMonth;
 						}
 						
 						if( prevYear == -1 )
@@ -140,7 +140,7 @@ public class ReadXML2
 								{									
 									year.setYear( prevYear );
 									
-									Year savedYear( year );
+									Year savedYear = new Year( year );
 									
 									dictOfYears( prevYear, savedYear );  
 									
