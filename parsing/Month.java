@@ -2,20 +2,20 @@
 
 public class Month
 {
-	private month;
-	private year;
+	private int month;
+	private int year;
 	private Dictionary dailySamples;
 	
 	public Month()
 	{
-		dailySamples = new HastTable<int, Day>();
+		dailySamples = new HastTable<Integer, Day>();
 		month = -1;
 		year = -1;
 	}
 	
 	public Month( Month tempMonth )
 	{
-		dailySamples = new HastTable<int, Day>();
+		dailySamples = new HastTable<Integer, Day>();
 		
 		year = tempMonth.getYear();
 		month = tempMonth.getMonth();
@@ -52,7 +52,7 @@ public class Month
 		dailySamples.put( dayKey, dayOfSamples );
 	}
 	
-	public List<Day> getMonthOfSamples( int dayKey)
+	public Day getMonthOfSamples( int dayKey)
 	{
 		return dailySamples.get(dayKey);
 	}

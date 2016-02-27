@@ -51,7 +51,7 @@ public class Day
 		samples = new ArrayList( tempSamples );
 	}
 	
-	public List<wItem> getSamples()
+	public ArrayList<wItem> getSamples()
 	{
 		return samples;
 	}

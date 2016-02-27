@@ -3,21 +3,23 @@
 
 public class Year
 {
-	private year;
+	private int year;
 	
 	private Dictionary monthlySamples;
 	
 	public Year()
 	{
-		monthlySamples = new HashTable<int, Month > ();
+		monthlySamples = new HashTable<Integer, Month > ();
 		year = -1;
 	}
 	
 	public Year( Month tempYear )
 	{
-		monthlySamples = new HashTable<int, Month>();
+		monthlySamples = new HashTable<Integer, Month>();
 		
 		year = tempYear.getYear();
+		
+		monthlySamples.Clear();
 		
 		foreach(object key in tempYear.Keys)
         {
@@ -36,13 +38,13 @@ public class Year
 		year = tempYear;
 	}
 	
-	public void setMonthlySamples( int monthKey, Mont monthOfSamples )//Month monthOfSamples, int monthKey )
+	public void setMonthlySamples( int monthKey, Month monthOfSamples )//Month monthOfSamples, int monthKey )
 	{
 		
 		monthlySamples.put( monthKey, monthOfSamples );
 	}
 	
-	public ArrayList<Month> getMonthlySamples( int monthKey )
+	public Month getMonthlySamples( int monthKey )
 	{
 		return monthlySamples.get(monthKey);
 	}
