@@ -4,7 +4,7 @@ public class Month
 {
 	private int month;
 	private int year;
-	private Dictionary dailySamples;
+	private Map<Integer, Day> dailySamples;
 	
 	public Month()
 	{

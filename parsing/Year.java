@@ -5,7 +5,7 @@ public class Year
 {
 	private int year;
 	
-	private Dictionary monthlySamples;
+	private Map<Integer, Month> monthlySamples;
 	
 	public Year()
 	{
