@@ -27,6 +27,7 @@ public class MainDisplay extends javax.swing.JFrame {
     private String yLabel = "";
     private XYDataset dataSet = null;
     private int tabFlag = 1;
+    private int radioFlag = 0;
 
     /**
      * Creates new form MainDisplay
@@ -54,10 +55,6 @@ public class MainDisplay extends javax.swing.JFrame {
         windsRadioButton = new javax.swing.JRadioButton();
         barometricRadioButton = new javax.swing.JRadioButton();
         heatUVindex = new javax.swing.JRadioButton();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
         dataSelector = new javax.swing.JSlider();
         maindisplayMenuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
@@ -68,9 +65,9 @@ public class MainDisplay extends javax.swing.JFrame {
         averageTempItem = new javax.swing.JMenuItem();
         averageWindItem = new javax.swing.JMenuItem();
         averagePrecipItem = new javax.swing.JMenuItem();
-        averageHeatUVitem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setSize(new java.awt.Dimension(0, 0));
 
         dailyTab.addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentResized(java.awt.event.ComponentEvent evt) {
@@ -85,7 +82,7 @@ public class MainDisplay extends javax.swing.JFrame {
         dailyTab.setLayout(dailyTabLayout);
         dailyTabLayout.setHorizontalGroup(
             dailyTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 980, Short.MAX_VALUE)
+            .addGap(0, 1065, Short.MAX_VALUE)
         );
         dailyTabLayout.setVerticalGroup(
             dailyTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -107,7 +104,7 @@ public class MainDisplay extends javax.swing.JFrame {
         weeklyTab.setLayout(weeklyTabLayout);
         weeklyTabLayout.setHorizontalGroup(
             weeklyTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 980, Short.MAX_VALUE)
+            .addGap(0, 1065, Short.MAX_VALUE)
         );
         weeklyTabLayout.setVerticalGroup(
             weeklyTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -129,7 +126,7 @@ public class MainDisplay extends javax.swing.JFrame {
         monthlyTab.setLayout(monthlyTabLayout);
         monthlyTabLayout.setHorizontalGroup(
             monthlyTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 980, Short.MAX_VALUE)
+            .addGap(0, 1065, Short.MAX_VALUE)
         );
         monthlyTabLayout.setVerticalGroup(
             monthlyTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -151,7 +148,7 @@ public class MainDisplay extends javax.swing.JFrame {
         yearlyTab.setLayout(yearlyTabLayout);
         yearlyTabLayout.setHorizontalGroup(
             yearlyTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 980, Short.MAX_VALUE)
+            .addGap(0, 1065, Short.MAX_VALUE)
         );
         yearlyTabLayout.setVerticalGroup(
             yearlyTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -191,14 +188,6 @@ public class MainDisplay extends javax.swing.JFrame {
                 heatUVindexMouseClicked(evt);
             }
         });
-
-        jLabel3.setText("Dial/Gauge 1");
-
-        jLabel4.setText("Dial/Gauge 2");
-
-        jLabel5.setText("Dial/Gauge 3");
-
-        jLabel6.setText("Dial/Gauge 4");
 
         fileMenu.setText("File");
 
@@ -247,10 +236,12 @@ public class MainDisplay extends javax.swing.JFrame {
         statsMenu.add(averageWindItem);
 
         averagePrecipItem.setText("Precipitation");
+        averagePrecipItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                averagePrecipItemActionPerformed(evt);
+            }
+        });
         statsMenu.add(averagePrecipItem);
-
-        averageHeatUVitem.setText("Heat/UV index");
-        statsMenu.add(averageHeatUVitem);
 
         maindisplayMenuBar.add(statsMenu);
 
@@ -268,27 +259,15 @@ public class MainDisplay extends javax.swing.JFrame {
                     .addComponent(windsRadioButton)
                     .addComponent(temperatureRadioButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(dataSelector, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(188, 188, 188)
-                        .addComponent(jLabel4)
-                        .addGap(192, 192, 192)
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel6)
-                        .addGap(202, 202, 202))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jTabbedPane1)
-                        .addContainerGap())))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(dataSelector, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jTabbedPane1))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(77, 77, 77)
+                .addGap(37, 37, 37)
                 .addComponent(dataSelector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -301,13 +280,7 @@ public class MainDisplay extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(heatUVindex))
                     .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(42, 42, 42)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel6))
-                .addContainerGap(183, Short.MAX_VALUE))
+                .addContainerGap(72, Short.MAX_VALUE))
         );
 
         pack();
@@ -316,14 +289,6 @@ public class MainDisplay extends javax.swing.JFrame {
     private void quitItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitItemActionPerformed
         System.exit(0);
     }//GEN-LAST:event_quitItemActionPerformed
-
-    private void averageTempItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_averageTempItemActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_averageTempItemActionPerformed
-
-    private void averageWindItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_averageWindItemActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_averageWindItemActionPerformed
 
     private void chooseFilesItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseFilesItemActionPerformed
         // TODO add your handling code here:
@@ -348,6 +313,7 @@ public class MainDisplay extends javax.swing.JFrame {
     private void dailyTabComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_dailyTabComponentShown
         // TODO add your handling code here:
         tabFlag = 1;
+        setChartTitle(radioFlag);
         generateGraph(dailyTab);
     }//GEN-LAST:event_dailyTabComponentShown
 
@@ -359,6 +325,7 @@ public class MainDisplay extends javax.swing.JFrame {
     private void weeklyTabComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_weeklyTabComponentShown
         // TODO add your handling code here:
         tabFlag = 2;
+        setChartTitle(radioFlag);
         generateGraph(weeklyTab);
     }//GEN-LAST:event_weeklyTabComponentShown
 
@@ -370,6 +337,7 @@ public class MainDisplay extends javax.swing.JFrame {
     private void monthlyTabComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_monthlyTabComponentShown
         // TODO add your handling code here:
         tabFlag = 3;
+        setChartTitle(radioFlag);
         generateGraph(monthlyTab);
     }//GEN-LAST:event_monthlyTabComponentShown
 
@@ -381,6 +349,7 @@ public class MainDisplay extends javax.swing.JFrame {
     private void yearlyTabComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_yearlyTabComponentShown
         // TODO add your handling code here:
         tabFlag = 4;
+        setChartTitle(radioFlag);
         generateGraph(yearlyTab);
     }//GEN-LAST:event_yearlyTabComponentShown
 
@@ -391,27 +360,46 @@ public class MainDisplay extends javax.swing.JFrame {
 
     private void temperatureRadioButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_temperatureRadioButtonMouseClicked
         // TODO add your handling code here:
-        setChartTitle("Temperature");
+        radioFlag = 1;
+        setChartTitle(radioFlag);
         callTabs();
     }//GEN-LAST:event_temperatureRadioButtonMouseClicked
 
     private void windsRadioButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_windsRadioButtonMouseClicked
         // TODO add your handling code here:
-        setChartTitle("Wind Speeds");
+        radioFlag = 2;
+        setChartTitle(radioFlag);
         callTabs();
     }//GEN-LAST:event_windsRadioButtonMouseClicked
 
     private void barometricRadioButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_barometricRadioButtonMouseClicked
         // TODO add your handling code here:
-        setChartTitle("Barometric Pressure");
+        radioFlag = 3;
+        setChartTitle(radioFlag);
         callTabs();
     }//GEN-LAST:event_barometricRadioButtonMouseClicked
 
     private void heatUVindexMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_heatUVindexMouseClicked
         // TODO add your handling code here:
-        setChartTitle("Heat/UV Index");
+        radioFlag = 4;
+        setChartTitle(radioFlag);
         callTabs();
     }//GEN-LAST:event_heatUVindexMouseClicked
+
+    private void averageTempItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_averageTempItemActionPerformed
+        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(null,"Average: ##F\nHigh:       ##F  (#/##/## @#:##)\nLow:        ##F  (#/##/## @#:##)","Temperature Stats", JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_averageTempItemActionPerformed
+
+    private void averageWindItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_averageWindItemActionPerformed
+        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(null,"Average:   ## mph\nHigh:         ## mph  (#/##/## @#:##)\nDirection:  E","Wind Stats", JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_averageWindItemActionPerformed
+
+    private void averagePrecipItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_averagePrecipItemActionPerformed
+        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(null,"Rainfall: ## in","Rain Stats", JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_averagePrecipItemActionPerformed
 
     public JFreeChart makeChart() {
         JFreeChart chart = ChartFactory.createXYLineChart(
@@ -455,10 +443,28 @@ public class MainDisplay extends javax.swing.JFrame {
         }
         
     }
-    
-    public void setChartTitle(String title) {
+    public void setChartTitle(int radioFlag) {
         String name = jTabbedPane1.getTitleAt(tabFlag-1);
-        this.chartTitle = name + " " + title;
+        
+        switch(radioFlag)
+        {
+            case 1:
+                this.chartTitle = name + " Temperature";
+                break;
+            case 2:
+                this.chartTitle = name + " Wind Speed";
+                break;
+            case 3:
+                this.chartTitle = name + " Barometric Pressure";
+                break;
+            case 4:
+                this.chartTitle = name + " Heat/UV Index";
+                break;
+            default:
+                this.chartTitle = "Please Select Data Types on Left";
+                break;
+        }
+        
     }
     public String getChartTitle() {
         return chartTitle;
@@ -518,7 +524,6 @@ public class MainDisplay extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem averageHeatUVitem;
     private javax.swing.JMenuItem averagePrecipItem;
     private javax.swing.JMenuItem averageTempItem;
     private javax.swing.JMenuItem averageWindItem;
@@ -528,10 +533,6 @@ public class MainDisplay extends javax.swing.JFrame {
     private javax.swing.JSlider dataSelector;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JRadioButton heatUVindex;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JMenuBar maindisplayMenuBar;
     private javax.swing.JPanel monthlyTab;
