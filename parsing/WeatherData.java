@@ -27,6 +27,7 @@ import java.util.*;
 import java.io.FilenameFilter;
 import org.apache.commons.io.FileUtils;
 import org.jfree.data.xy.XYDataset;
+import org.jfree.data.xy.XYDataItem;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 //import javax.xml.parsers.DocumentBuilderFactory;
@@ -45,15 +46,194 @@ public class WeatherData
 		{
 			attr = "50.0";
 		}
+		
 		return attr;
 	}
 	
-	/*
-	public XYDataset getYearSetOfData( int yearIndex )
+	public static XYSeriesCollection getDaySetOfData( int yearIndex, int monthIndex, int dayIndex )
 	{
+		XYSeries tempz = new XYSeries("Temperature");
+		XYSeries windz = new XYSeries("Wind");
+		XYSeries baroz = new XYSeries("Barometer");
+		XYSeries heatindexz = new XYSeries("Heat Index" );
+		XYSeries uvindexz = new XYSeries("UV Index" );
+		
+		XYSeriesCollection dataset = new XYSeriesCollection();
+		
+		Year year = WeatherData.dictOfYears.get( yearIndex ); // grab the year of data in question
+		
+		Month mun = year.getMonthlySamplesByMonth( monthIndex );  // grab the month of data in question
+		
+		Day daa = mun.getDayofSamples( dayIndex );
+		
+		ArrayList<wItem> samples = daa.getSamples();
+				
+		int i = 0;
+		for (wItem item: samples) // for each sample in a day
+		{
+		    // convert data into xy coordinate sets for JFreeChart use
+            tempz.add( i, item.getTemperature() );
+			windz.add( i, item.getWindspeed() );
+			baroz.add( i, item.getBarometer() );
+			heatindexz.add( i, item.getHeatindex() );
+			uvindexz.add( i, item.getUvindex() );
+			
+			i += 1;
+					
+		} 
+
+        // construct the graph-able data set for the year
+		dataset.addSeries( tempz );
+		dataset.addSeries( windz );
+		dataset.addSeries( baroz );
+		dataset.addSeries( heatindexz );
+		dataset.addSeries( uvindexz );
+		
+		return dataset;				
+		
 		
 	}
-	*/
+	
+	public static XYSeriesCollection getMonthSetOfData( int yearIndex, int monthIndex )
+	{
+		XYSeries tempz = new XYSeries("Temperature");
+		XYSeries windz = new XYSeries("Wind");
+		XYSeries baroz = new XYSeries("Barometer");
+		XYSeries heatindexz = new XYSeries("Heat Index" );
+		XYSeries uvindexz = new XYSeries("UV Index" );
+		
+		XYSeriesCollection dataset = new XYSeriesCollection();
+		
+		Year year = WeatherData.dictOfYears.get( yearIndex ); // grab the year of data in question
+		
+		Month mun = year.getMonthlySamplesByMonth( monthIndex );  // grab the month of data in question
+		
+		Hashtable<Integer, Day> days = mun.getAllDaySamples();
+		
+		int i = 1;
+		
+		int j = 0;
+			
+		//for( int dkey : days.keySet() )  // for each day in the month
+		for( i = 1; i <= days.size(); i++ )
+		{
+			//int j = 0;
+			
+			if( j < 50 )
+			{
+				System.out.println( "Day key: " + i );
+			}
+			
+			Day daa = days.get( i );//dkey );
+				
+			ArrayList<wItem> samples = daa.getSamples();
+			
+			//Collections.reverse( samples );
+			
+            			
+				
+			for (wItem item: samples) // for each sample in a day
+			{
+				/*
+				if( i < 50 )
+				{
+				    System.out.println( item );
+				}
+				*/
+				// convert data into xy coordinate sets for JFreeChart use
+                tempz.add( j, item.getTemperature() );
+			    windz.add( j, item.getWindspeed() );
+				baroz.add( j, item.getBarometer() );
+				heatindexz.add( j, item.getHeatindex() );
+				uvindexz.add( j, item.getUvindex() );
+				
+				j += 1;
+					
+			}  
+			
+			//samples.clear();
+		}
+			
+		// construct the graph-able data set for the year
+		dataset.addSeries( tempz );
+		dataset.addSeries( windz );
+		dataset.addSeries( baroz );
+		dataset.addSeries( heatindexz );
+		dataset.addSeries( uvindexz );
+		
+		return dataset;	
+		
+	}
+	
+	
+	public static XYSeriesCollection getYearSetOfData( int yearIndex )
+	{
+		XYSeries tempz = new XYSeries("Temperature");
+		XYSeries windz = new XYSeries("Wind");
+		XYSeries baroz = new XYSeries("Barometer");
+		XYSeries heatindexz = new XYSeries("Heat Index" );
+		XYSeries uvindexz = new XYSeries("UV Index" );
+		
+		XYSeriesCollection dataset = new XYSeriesCollection();
+		
+		Year year = WeatherData.dictOfYears.get( yearIndex ); // grab the year of data in question
+		
+		Hashtable<Integer, Month> months = year.getAllMonthlySamples(); // grab the months in the current year
+				
+			
+		int i = 0;
+		for (int mkey : months.keySet()) // for each month in the year
+		{
+			//System.out.println("------------------------------------------------");
+            //System.out.println("Iterating or looping map using java5 foreach loop");
+            //System.out.println("key: " + key + " value: " + loans.get(key));
+			Month mun = months.get(mkey);  // grab a single month in the list of months
+			
+			Hashtable<Integer, Day> days = mun.getAllDaySamples();
+			
+			for( int dkey : days.keySet() )  // for each day in a month
+			{
+				Day daa = days.get( dkey );
+				
+				ArrayList<wItem> samples = daa.getSamples();
+				
+				Collections.reverse( samples );
+				
+				/*
+				for (Bullet bullet: gunList.get(2).getBullet()) 
+				{
+                    System.out.println(bullet);
+                }
+				*/
+				
+				for (wItem item: samples) // for each sample in a day
+				{
+					// convert data into xy coordinate sets for JFreeChart use
+                    tempz.add( i, item.getTemperature() );
+					windz.add( i, item.getWindspeed() );
+					baroz.add( i, item.getBarometer() );
+					heatindexz.add( i, item.getHeatindex() );
+					uvindexz.add( i, item.getUvindex() );
+					
+					i += 1;
+                }
+			}
+		}
+		
+		// construct the graph-able data set for the year
+		dataset.addSeries( tempz );
+		dataset.addSeries( windz );
+		dataset.addSeries( baroz );
+		dataset.addSeries( heatindexz );
+		dataset.addSeries( uvindexz );
+		
+		return dataset;
+    }
+
+
+
+	
+	
 	
     public static void getWeatherData( File dir )//String dirName )//main( String[] args )
     {        
@@ -77,7 +257,8 @@ public class WeatherData
 		
 
 		
-		File[] listOfFiles = folder.listFiles( new FilenameFilter(){  // only get .xml files included in list of files to be processed in the directory
+		File[] listOfFiles = folder.listFiles( new FilenameFilter()
+		{  // only get .xml files included in list of files to be processed in the directory
 			public boolean accept(  File folder, String name) {
 				return name.toLowerCase().endsWith(".xml");
 			}
@@ -142,7 +323,7 @@ public class WeatherData
                         item.setDate(element.getChildText("date"));
                         item.setTime(element.getChildText("time"));																
 						
-						// check for null data tags
+						// check for null tags; set default value if data is missing
 						String tag = element.getChildText("temperature");  						
 						String attr = WeatherData.checkNullTag( tag );
 						item.setTemperature(Float.parseFloat(attr));												
@@ -179,7 +360,7 @@ public class WeatherData
 						attr = WeatherData.checkNullTag( tag );						
                         item.setUvindex(Float.parseFloat(element.getChildText("uvindex")));
 						
-						attr = element.getChildText("rainfall");  
+						tag = element.getChildText("rainfall");  
 						attr = WeatherData.checkNullTag( tag );							
                         item.setRainfall(Float.parseFloat(element.getChildText("rainfall")));
 						
@@ -213,8 +394,7 @@ public class WeatherData
 							
 							WeatherData.dictOfYears.put( currYear, savedYear );
 						}
-				        
-						
+				        						
 						currDay = item.getDay();
 						
 						currMonth = item.getMonth();
@@ -236,8 +416,7 @@ public class WeatherData
 						{
 							prevYear = currYear;
 						}
-						
-						
+											
 						
 						if( prevDay != currDay )  // if we started processing samples from a different day
 						{
@@ -249,15 +428,12 @@ public class WeatherData
 							daa.setMonth( prevMonth );
 							daa.setYear( prevYear );
 							
-
 							
 							mun.setDailySamples( prevDay, daa );  // set that day of samples in a month object
-							
-													
+																				
 							
 							if( prevMonth != currMonth )  // check to see if the next day is in a new month
-							{
-							    							
+							{							    							
 							
 								mun.setMonth( prevMonth );
 								mun.setYear( prevYear );
@@ -269,18 +445,7 @@ public class WeatherData
 								year.setMonthlySamples( prevMonth, tempMonth );  // add month to year
 								
 								mun.reset();
-								
-								//}
-								
-								/*
-								if( i == totalDataFileCount - 1 )  // if we are processing the last year, consisting of incomplete month data, include it 
-								{
-									year.setYear( prevYear );
-									Year savedYear = new Year( year );
-									dictOfYears.put( prevYear, savedYear ); 									
-									
-								}
-								*/
+																
 								
 								if( prevYear != currYear )
 								{									
@@ -300,8 +465,7 @@ public class WeatherData
 							
 							daySamples.add( item );  // add first sample to new day
 							
-							prevDay = currDay;  // shift flags
-						
+							prevDay = currDay;  // shift flags						
 							
 						}
 						else
@@ -325,6 +489,7 @@ public class WeatherData
             } 
         }
 		
+		/*
         System.out.println(dictOfYears);
 		Year tempYear = dictOfYears.get(13);
 		System.out.println( tempYear.getYear() );
@@ -344,6 +509,8 @@ public class WeatherData
 		dictOfSamples.put( 1,  tempDay.getSamples() );
 		System.out.println( dictOfSamples );
 		
+		*/
+		
 		
 		
     }
@@ -356,6 +523,35 @@ public class WeatherData
 		
 		//System.out.println( "The name of the directory is : " + dir.getName() );
 		
-		WeatherData.getWeatherData( dir );
+		WeatherData.getWeatherData( dir );		
+		
+		System.out.println( "Got data from .xml" );
+		
+		//XYSeriesCollection dataSet = WeatherData.getYearSetOfData( 10 ); // grab year 2010 weather data
+		
+	    XYSeriesCollection dataSet = WeatherData.getMonthSetOfData( 10, 1 );
+		
+		//XYSeriesCollection dataSet = WeatherData.getDaySetOfData( 10, 1, 1 );  // grab jan. 1st 2010
+		
+		System.out.println( "Created XY coord sets for graphing" );		
+		
+		//  debug for getYearSetOfData
+		XYSeries series0 = dataSet.getSeries("Temperature");
+		
+		int count = 0;
+        for (Object i : series0.getItems()) 
+		{
+            XYDataItem item = (XYDataItem) i;
+            double x = item.getXValue();
+            double y = item.getYValue();
+			
+			if( count < 50 )
+			{
+			    System.out.println(" Sample#: " + x + " Temp: " + y );
+			}
+			
+			count += 1;
+        }
+		
 	}
 }
