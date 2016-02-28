@@ -1,18 +1,31 @@
 package weather.station;
+
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+import javax.swing.*;
+import java.awt.*;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.xy.XYDataset;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author 1640636
  */
-public class MainDisplay extends javax.swing.JFrame {
+public class MainDisplay extends javax.swing.JFrame {    
+    private String chartTitle = "";
+    private String xLabel = "";
+    private String yLabel = "";
+    private XYDataset dataSet = null;
 
     /**
      * Creates new form MainDisplay
@@ -39,7 +52,7 @@ public class MainDisplay extends javax.swing.JFrame {
         temperatureRadioButton = new javax.swing.JRadioButton();
         windsRadioButton = new javax.swing.JRadioButton();
         barometricRadioButton = new javax.swing.JRadioButton();
-        jRadioButton4 = new javax.swing.JRadioButton();
+        heatUVindex = new javax.swing.JRadioButton();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -58,11 +71,20 @@ public class MainDisplay extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        dailyTab.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentResized(java.awt.event.ComponentEvent evt) {
+                dailyTabComponentResized(evt);
+            }
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                dailyTabComponentShown(evt);
+            }
+        });
+
         javax.swing.GroupLayout dailyTabLayout = new javax.swing.GroupLayout(dailyTab);
         dailyTab.setLayout(dailyTabLayout);
         dailyTabLayout.setHorizontalGroup(
             dailyTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 978, Short.MAX_VALUE)
+            .addGap(0, 980, Short.MAX_VALUE)
         );
         dailyTabLayout.setVerticalGroup(
             dailyTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -71,11 +93,20 @@ public class MainDisplay extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Daily", dailyTab);
 
+        weeklyTab.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentResized(java.awt.event.ComponentEvent evt) {
+                weeklyTabComponentResized(evt);
+            }
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                weeklyTabComponentShown(evt);
+            }
+        });
+
         javax.swing.GroupLayout weeklyTabLayout = new javax.swing.GroupLayout(weeklyTab);
         weeklyTab.setLayout(weeklyTabLayout);
         weeklyTabLayout.setHorizontalGroup(
             weeklyTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 978, Short.MAX_VALUE)
+            .addGap(0, 980, Short.MAX_VALUE)
         );
         weeklyTabLayout.setVerticalGroup(
             weeklyTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -84,11 +115,20 @@ public class MainDisplay extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Weekly", weeklyTab);
 
+        monthlyTab.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentResized(java.awt.event.ComponentEvent evt) {
+                monthlyTabComponentResized(evt);
+            }
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                monthlyTabComponentShown(evt);
+            }
+        });
+
         javax.swing.GroupLayout monthlyTabLayout = new javax.swing.GroupLayout(monthlyTab);
         monthlyTab.setLayout(monthlyTabLayout);
         monthlyTabLayout.setHorizontalGroup(
             monthlyTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 978, Short.MAX_VALUE)
+            .addGap(0, 980, Short.MAX_VALUE)
         );
         monthlyTabLayout.setVerticalGroup(
             monthlyTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -97,11 +137,20 @@ public class MainDisplay extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Monthly", monthlyTab);
 
+        yearlyTab.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentResized(java.awt.event.ComponentEvent evt) {
+                yearlyTabComponentResized(evt);
+            }
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                yearlyTabComponentShown(evt);
+            }
+        });
+
         javax.swing.GroupLayout yearlyTabLayout = new javax.swing.GroupLayout(yearlyTab);
         yearlyTab.setLayout(yearlyTabLayout);
         yearlyTabLayout.setHorizontalGroup(
             yearlyTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 978, Short.MAX_VALUE)
+            .addGap(0, 980, Short.MAX_VALUE)
         );
         yearlyTabLayout.setVerticalGroup(
             yearlyTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -112,15 +161,35 @@ public class MainDisplay extends javax.swing.JFrame {
 
         radioButtonGroup.add(temperatureRadioButton);
         temperatureRadioButton.setText("Temperature");
+        temperatureRadioButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                temperatureRadioButtonMouseClicked(evt);
+            }
+        });
 
         radioButtonGroup.add(windsRadioButton);
         windsRadioButton.setText("Winds");
+        windsRadioButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                windsRadioButtonMouseClicked(evt);
+            }
+        });
 
         radioButtonGroup.add(barometricRadioButton);
         barometricRadioButton.setText("Barometrics");
+        barometricRadioButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                barometricRadioButtonMouseClicked(evt);
+            }
+        });
 
-        radioButtonGroup.add(jRadioButton4);
-        jRadioButton4.setText("Head/UV index");
+        radioButtonGroup.add(heatUVindex);
+        heatUVindex.setText("Heat/UV index");
+        heatUVindex.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                heatUVindexMouseClicked(evt);
+            }
+        });
 
         jLabel3.setText("Dial/Gauge 1");
 
@@ -193,7 +262,7 @@ public class MainDisplay extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jRadioButton4)
+                    .addComponent(heatUVindex)
                     .addComponent(barometricRadioButton)
                     .addComponent(windsRadioButton)
                     .addComponent(temperatureRadioButton))
@@ -229,7 +298,7 @@ public class MainDisplay extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(barometricRadioButton)
                         .addGap(18, 18, 18)
-                        .addComponent(jRadioButton4))
+                        .addComponent(heatUVindex))
                     .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(42, 42, 42)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -262,20 +331,232 @@ public class MainDisplay extends javax.swing.JFrame {
     private void specifyDirectoryItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_specifyDirectoryItemActionPerformed
         //Schedule a job for the event dispatch thread:
         //creating and showing this application's GUI.
-        
+
         //System.out.println("Specify directory was clicked");
-        SwingUtilities.invokeLater( new Runnable()
-        {
+        SwingUtilities.invokeLater(new Runnable() {
             DirectoryChooser dir = new DirectoryChooser();
-            public void run()
-            {
+
+            public void run() {
                 //Turn off metal's use of bold fonts
-                UIManager.put( "swing.boldMetal", Boolean.FALSE );
+                UIManager.put("swing.boldMetal", Boolean.FALSE);
                 dir.createAndShowGUI();
             }
-        } );
+        });
     }//GEN-LAST:event_specifyDirectoryItemActionPerformed
 
+    private void dailyTabComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_dailyTabComponentShown
+        // TODO add your handling code here:
+        JFreeChart chart = ChartFactory.createXYLineChart(
+            chartTitle,      // chart title
+            xLabel,                      // x axis label
+            yLabel,                      // y axis label
+            dataSet,                  // data
+            PlotOrientation.VERTICAL,
+            true,                     // include legend
+            true,                     // tooltips
+            false                     // urls
+        );
+        
+        ChartPanel graph = new ChartPanel(chart);
+
+        graph.setSize(dailyTab.getWidth(), dailyTab.getHeight());
+        graph.setVisible(true);
+        dailyTab.add(graph);
+    }//GEN-LAST:event_dailyTabComponentShown
+
+    private void dailyTabComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_dailyTabComponentResized
+        // TODO add your handling code here:
+        dailyTab.removeAll();
+        
+        JFreeChart chart = ChartFactory.createXYLineChart(
+            chartTitle,      // chart title
+            xLabel,                      // x axis label
+            yLabel,                      // y axis label
+            dataSet,                  // data
+            PlotOrientation.VERTICAL,
+            true,                     // include legend
+            true,                     // tooltips
+            false                     // urls
+        );
+        
+        ChartPanel graph = new ChartPanel(chart);
+
+        graph.setSize(dailyTab.getWidth(), dailyTab.getHeight());
+        graph.setVisible(true);
+        dailyTab.add(graph);
+    }//GEN-LAST:event_dailyTabComponentResized
+
+    private void weeklyTabComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_weeklyTabComponentShown
+        // TODO add your handling code here:
+        JFreeChart chart = ChartFactory.createXYLineChart(
+            chartTitle,      // chart title
+            xLabel,                      // x axis label
+            yLabel,                      // y axis label
+            dataSet,                  // data
+            PlotOrientation.VERTICAL,
+            true,                     // include legend
+            true,                     // tooltips
+            false                     // urls
+        );
+        
+        ChartPanel graph = new ChartPanel(chart);
+
+        graph.setSize(weeklyTab.getWidth(), weeklyTab.getHeight());
+        graph.setVisible(true);
+        weeklyTab.add(graph);
+    }//GEN-LAST:event_weeklyTabComponentShown
+
+    private void weeklyTabComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_weeklyTabComponentResized
+        // TODO add your handling code here:
+        weeklyTab.removeAll();
+        
+        JFreeChart chart = ChartFactory.createXYLineChart(
+            chartTitle,      // chart title
+            xLabel,                      // x axis label
+            yLabel,                      // y axis label
+            dataSet,                  // data
+            PlotOrientation.VERTICAL,
+            true,                     // include legend
+            true,                     // tooltips
+            false                     // urls
+        );
+        
+        ChartPanel graph = new ChartPanel(chart);
+
+        graph.setSize(weeklyTab.getWidth(), weeklyTab.getHeight());
+        graph.setVisible(true);
+        weeklyTab.add(graph);
+    }//GEN-LAST:event_weeklyTabComponentResized
+
+    private void monthlyTabComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_monthlyTabComponentShown
+        // TODO add your handling code here:
+        JFreeChart chart = ChartFactory.createXYLineChart(
+            chartTitle,      // chart title
+            xLabel,                      // x axis label
+            yLabel,                      // y axis label
+            dataSet,                  // data
+            PlotOrientation.VERTICAL,
+            true,                     // include legend
+            true,                     // tooltips
+            false                     // urls
+        );
+        
+        ChartPanel graph = new ChartPanel(chart);
+
+        graph.setSize(monthlyTab.getWidth(), monthlyTab.getHeight());
+        graph.setVisible(true);
+        monthlyTab.add(graph);
+    }//GEN-LAST:event_monthlyTabComponentShown
+
+    private void monthlyTabComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_monthlyTabComponentResized
+        // TODO add your handling code here:
+        monthlyTab.removeAll();
+        
+        JFreeChart chart = ChartFactory.createXYLineChart(
+            chartTitle,      // chart title
+            xLabel,                      // x axis label
+            yLabel,                      // y axis label
+            dataSet,                  // data
+            PlotOrientation.VERTICAL,
+            true,                     // include legend
+            true,                     // tooltips
+            false                     // urls
+        );
+        
+        ChartPanel graph = new ChartPanel(chart);
+
+        graph.setSize(monthlyTab.getWidth(), monthlyTab.getHeight());
+        graph.setVisible(true);
+        monthlyTab.add(graph);
+    }//GEN-LAST:event_monthlyTabComponentResized
+
+    private void yearlyTabComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_yearlyTabComponentShown
+        // TODO add your handling code here:
+        JFreeChart chart = ChartFactory.createXYLineChart(
+            chartTitle,      // chart title
+            xLabel,                      // x axis label
+            yLabel,                      // y axis label
+            dataSet,                  // data
+            PlotOrientation.VERTICAL,
+            true,                     // include legend
+            true,                     // tooltips
+            false                     // urls
+        );
+        
+        ChartPanel graph = new ChartPanel(chart);
+
+        graph.setSize(yearlyTab.getWidth(), yearlyTab.getHeight());
+        graph.setVisible(true);
+        yearlyTab.add(graph);
+    }//GEN-LAST:event_yearlyTabComponentShown
+
+    private void yearlyTabComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_yearlyTabComponentResized
+        // TODO add your handling code here:
+        yearlyTab.removeAll();
+        
+        JFreeChart chart = ChartFactory.createXYLineChart(
+            chartTitle,      // chart title
+            xLabel,                      // x axis label
+            yLabel,                      // y axis label
+            dataSet,                  // data
+            PlotOrientation.VERTICAL,
+            true,                     // include legend
+            true,                     // tooltips
+            false                     // urls
+        );
+        
+        ChartPanel graph = new ChartPanel(chart);
+
+        graph.setSize(yearlyTab.getWidth(), yearlyTab.getHeight());
+        graph.setVisible(true);
+        yearlyTab.add(graph);
+    }//GEN-LAST:event_yearlyTabComponentResized
+
+    private void temperatureRadioButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_temperatureRadioButtonMouseClicked
+        // TODO add your handling code here:
+        System.out.println("Temp");
+    }//GEN-LAST:event_temperatureRadioButtonMouseClicked
+
+    private void windsRadioButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_windsRadioButtonMouseClicked
+        // TODO add your handling code here:
+        System.out.println("Wind");
+    }//GEN-LAST:event_windsRadioButtonMouseClicked
+
+    private void barometricRadioButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_barometricRadioButtonMouseClicked
+        // TODO add your handling code here:
+        System.out.println("Baro");
+    }//GEN-LAST:event_barometricRadioButtonMouseClicked
+
+    private void heatUVindexMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_heatUVindexMouseClicked
+        // TODO add your handling code here:
+        System.out.println("heat/uv");
+    }//GEN-LAST:event_heatUVindexMouseClicked
+
+    public void setChartTitle(String title) {
+        this.chartTitle = title;
+    }
+    public String getChartTitle() {
+        return chartTitle;
+    }
+    public void setXlabel(String xLabel) {
+        this.xLabel = xLabel;
+    }
+    public String getXlabel() {
+        return xLabel;
+    }
+    public void setYlabel(String yLabel) {
+        this.yLabel = yLabel;
+    }
+    public String getYlabel() {
+        return yLabel;
+    }
+    public void setDataSet(XYDataset dataSet) {
+        this.dataSet = dataSet;
+    }
+    public XYDataset getDataSet() {
+        return dataSet;
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -321,11 +602,11 @@ public class MainDisplay extends javax.swing.JFrame {
     private javax.swing.JPanel dailyTab;
     private javax.swing.JSlider dataSelector;
     private javax.swing.JMenu fileMenu;
+    private javax.swing.JRadioButton heatUVindex;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JRadioButton jRadioButton4;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JMenuBar maindisplayMenuBar;
     private javax.swing.JPanel monthlyTab;

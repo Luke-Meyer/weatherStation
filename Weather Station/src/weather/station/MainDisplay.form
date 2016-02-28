@@ -99,7 +99,7 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jRadioButton4" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="heatUVindex" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="barometricRadioButton" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="windsRadioButton" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="temperatureRadioButton" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -142,7 +142,7 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="barometricRadioButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="jRadioButton4" min="-2" max="-2" attributes="0"/>
+                      <Component id="heatUVindex" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Component id="jTabbedPane1" min="-2" pref="357" max="-2" attributes="0"/>
               </Group>
@@ -164,6 +164,10 @@
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
       <SubComponents>
         <Container class="javax.swing.JPanel" name="dailyTab">
+          <Events>
+            <EventHandler event="componentResized" listener="java.awt.event.ComponentListener" parameters="java.awt.event.ComponentEvent" handler="dailyTabComponentResized"/>
+            <EventHandler event="componentShown" listener="java.awt.event.ComponentListener" parameters="java.awt.event.ComponentEvent" handler="dailyTabComponentShown"/>
+          </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
               <JTabbedPaneConstraints tabName="Daily">
@@ -175,7 +179,7 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="978" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="980" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
@@ -186,6 +190,10 @@
           </Layout>
         </Container>
         <Container class="javax.swing.JPanel" name="weeklyTab">
+          <Events>
+            <EventHandler event="componentResized" listener="java.awt.event.ComponentListener" parameters="java.awt.event.ComponentEvent" handler="weeklyTabComponentResized"/>
+            <EventHandler event="componentShown" listener="java.awt.event.ComponentListener" parameters="java.awt.event.ComponentEvent" handler="weeklyTabComponentShown"/>
+          </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
               <JTabbedPaneConstraints tabName="Weekly">
@@ -197,7 +205,7 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="978" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="980" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
@@ -208,6 +216,10 @@
           </Layout>
         </Container>
         <Container class="javax.swing.JPanel" name="monthlyTab">
+          <Events>
+            <EventHandler event="componentResized" listener="java.awt.event.ComponentListener" parameters="java.awt.event.ComponentEvent" handler="monthlyTabComponentResized"/>
+            <EventHandler event="componentShown" listener="java.awt.event.ComponentListener" parameters="java.awt.event.ComponentEvent" handler="monthlyTabComponentShown"/>
+          </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
               <JTabbedPaneConstraints tabName="Monthly">
@@ -219,7 +231,7 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="978" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="980" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
@@ -230,6 +242,10 @@
           </Layout>
         </Container>
         <Container class="javax.swing.JPanel" name="yearlyTab">
+          <Events>
+            <EventHandler event="componentResized" listener="java.awt.event.ComponentListener" parameters="java.awt.event.ComponentEvent" handler="yearlyTabComponentResized"/>
+            <EventHandler event="componentShown" listener="java.awt.event.ComponentListener" parameters="java.awt.event.ComponentEvent" handler="yearlyTabComponentShown"/>
+          </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
               <JTabbedPaneConstraints tabName="Yearly">
@@ -241,7 +257,7 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="978" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="980" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
@@ -260,6 +276,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Temperature"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="temperatureRadioButtonMouseClicked"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JRadioButton" name="windsRadioButton">
       <Properties>
@@ -268,6 +287,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Winds"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="windsRadioButtonMouseClicked"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JRadioButton" name="barometricRadioButton">
       <Properties>
@@ -276,14 +298,20 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Barometrics"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="barometricRadioButtonMouseClicked"/>
+      </Events>
     </Component>
-    <Component class="javax.swing.JRadioButton" name="jRadioButton4">
+    <Component class="javax.swing.JRadioButton" name="heatUVindex">
       <Properties>
         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
           <ComponentRef name="radioButtonGroup"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Head/UV index"/>
+        <Property name="text" type="java.lang.String" value="Heat/UV index"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="heatUVindexMouseClicked"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel3">
       <Properties>
