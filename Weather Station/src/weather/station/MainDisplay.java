@@ -33,6 +33,7 @@ public class MainDisplay extends javax.swing.JFrame {
      * Creates new form MainDisplay
      */
     public MainDisplay() {
+        super("Weather Station");
         initComponents();
     }
 
@@ -84,7 +85,7 @@ public class MainDisplay extends javax.swing.JFrame {
         dailyTab.setLayout(dailyTabLayout);
         dailyTabLayout.setHorizontalGroup(
             dailyTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1065, Short.MAX_VALUE)
+            .addGap(0, 1040, Short.MAX_VALUE)
         );
         dailyTabLayout.setVerticalGroup(
             dailyTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -106,7 +107,7 @@ public class MainDisplay extends javax.swing.JFrame {
         weeklyTab.setLayout(weeklyTabLayout);
         weeklyTabLayout.setHorizontalGroup(
             weeklyTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1065, Short.MAX_VALUE)
+            .addGap(0, 1040, Short.MAX_VALUE)
         );
         weeklyTabLayout.setVerticalGroup(
             weeklyTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -128,7 +129,7 @@ public class MainDisplay extends javax.swing.JFrame {
         monthlyTab.setLayout(monthlyTabLayout);
         monthlyTabLayout.setHorizontalGroup(
             monthlyTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1065, Short.MAX_VALUE)
+            .addGap(0, 1040, Short.MAX_VALUE)
         );
         monthlyTabLayout.setVerticalGroup(
             monthlyTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -150,7 +151,7 @@ public class MainDisplay extends javax.swing.JFrame {
         yearlyTab.setLayout(yearlyTabLayout);
         yearlyTabLayout.setHorizontalGroup(
             yearlyTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1065, Short.MAX_VALUE)
+            .addGap(0, 1040, Short.MAX_VALUE)
         );
         yearlyTabLayout.setVerticalGroup(
             yearlyTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -288,10 +289,10 @@ public class MainDisplay extends javax.swing.JFrame {
                     .addComponent(humidityRadioButton)
                     .addComponent(rainfallRadioButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(dataSelector, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTabbedPane1))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dataSelector, javax.swing.GroupLayout.PREFERRED_SIZE, 940, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -314,7 +315,7 @@ public class MainDisplay extends javax.swing.JFrame {
                         .addComponent(humidityRadioButton)
                         .addGap(18, 18, 18)
                         .addComponent(rainfallRadioButton)))
-                .addContainerGap(72, Short.MAX_VALUE))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         pack();

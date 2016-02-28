@@ -5,9 +5,6 @@
  */
 package weather.station;
 
-import javax.swing.*;
-import javax.swing.SwingUtilities;
-import org.apache.commons.io.FileUtils;
 
 /**
  *
@@ -43,12 +40,10 @@ public class WeatherStation {
 //        //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                //ReadXML2 read = new ReadXML2();
-                //read.readFiles();
-                new MainDisplay().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            //WeatherData data = new WeatherData();
+            //data.readData();
+            new MainDisplay().setVisible(true);
         });
     }
 }
