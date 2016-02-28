@@ -46,7 +46,7 @@ public class WeatherData
 		int excessMonths = totalDataFileCount - ( 12 * completeYearsOfData ); // get the number of remaining month.xml data files to make up last incomplete year
 		
 		
-		System.out.println( "Number of .xml files: " + totalDataFileCount );
+		//System.out.println( "Number of .xml files: " + totalDataFileCount );
 		
 		int fileCount = 0;
 		int currYear = -1;
@@ -57,6 +57,7 @@ public class WeatherData
 	
 		
 		Hashtable<Integer, Year> dictOfYears = new Hashtable<Integer, Year>();
+		ArrayList<wItem> daySamples = new ArrayList<wItem>();  // will contain all samples for one day
 		Month mun = new Month();
 		Year year = new Year();
 				
@@ -90,7 +91,11 @@ public class WeatherData
                     List<Element> xmlContent = root.getChildren("weather");
 								
 					
-					ArrayList<wItem> daySamples = new ArrayList<wItem>();  // will contain all samples for one day
+					
+					
+					int numOSamples = xmlContent.size();  // store number of samples in .xml file; for flagging the last file processed
+					
+					int j = 0;  // loop flag for the last file processed
 					
                     for (Element element : xmlContent) 
 					{
@@ -108,11 +113,37 @@ public class WeatherData
                         item.setUvindex(Float.parseFloat(element.getChildText("uvindex")));
                         item.setRainfall(Float.parseFloat(element.getChildText("rainfall")));
 						
-						if(element.Last)
+						
+						j += 1;
+						
+						if( j == numOSamples && i == totalDataFileCount - 1)  // if we are on the last sample of the last file
 						{
-							System.out.println( "SDFSDFSDFSDFSDFSDFSDFSDFFFFFFSDFSDFSDFSDFSDFSDF" );
+							daySamples.add( item );
+							
+					        Day daa = new Day();
+							daa.setSamples( daySamples );  // set the samples for the previous day
+							daa.setDay( currDay );  // set the day field
+							
+							daa.setMonth( currMonth );
+							
+							daa.setYear( currYear );
+							
+							
+							mun.setDailySamples( currDay, daa ); 
+							
+							mun.setMonth( currMonth );
+							mun.setYear( currYear );
+								
+							Month tempMonth = new Month( mun ); // create a new month in memory
+										
+							year.setMonthlySamples( currMonth, tempMonth );  // add month to year
+							
+							year.setYear( currYear );
+							Year savedYear = new Year( year );
+							
+							dictOfYears.put( currYear, savedYear );
 						}
-				
+				        
 						
 						currDay = item.getDay();
 						
@@ -120,13 +151,6 @@ public class WeatherData
 						
 						currYear = item.getYear();
 						
-						/*if( i == totalDataFileCount - 1 )
-						{
-									//mun.setMonth( currMonth );
-									//mun.setYear( currYear );
-									//System.out.println(file );//+ "\n");
-									System.out.println( "Last Month: " + currMonth );
-						} */
 						
 						if( prevDay == -1 )  // if there hasn't been a previous day yet
 						{
@@ -143,11 +167,13 @@ public class WeatherData
 							prevYear = currYear;
 						}
 						
-						//System.out.println( "Previous day: " + prevDay );
-						//System.out.println( "Current day: " + currDay );
+						
 						
 						if( prevDay != currDay )  // if we started processing samples from a different day
 						{
+							System.out.println( "Previous day: " + prevDay );
+						    System.out.println( "Current day: " + currDay );
+						
 							Day daa = new Day();
 							daa.setSamples( daySamples );  // set the samples for the previous day
 							daa.setDay( prevDay );  // set the day field
@@ -158,64 +184,43 @@ public class WeatherData
 							//System.out.println("Days not equal!" );//daa.getSamples());
 							
 							mun.setDailySamples( prevDay, daa );  // set that day of samples in a month object
-							//daa.reset();
 							
-							//mun.setMonth( prevMonth );
-							//mun.setYear( prevYear );
-							
-							if( i == totalDataFileCount - 1 )
-								{
-									//mun.setMonth( currMonth );
-									//mun.setYear( currYear );
-									System.out.println(file );//+ "\n");
-								}
+							//daa.reset();  // is this needed?????
 													
 							
 							if( prevMonth != currMonth )  // check to see if the next day is in a new month
 							{
+								/*
 								if( i == totalDataFileCount - 1 )
 								{
 								System.out.println( "Previous: " + prevMonth);
 								System.out.println( "Current: " + currMonth);
 								}
-							    
-								
-								
-								
-								if( i == totalDataFileCount - 1 )
-								{
-									//mun.setMonth( currMonth );
-									//mun.setYear( currYear );
-									System.out.println(file );//+ "\n");
-								}
-								//else
-								//{
+								*/
+							    							
+							
 								mun.setMonth( prevMonth );
 								mun.setYear( prevYear );
-								//}
+								
 								
 								Month tempMonth = new Month( mun ); // create a new month in memory
 								
-								//if( i == totalDataFileCount - 1 )
-								//{
-									//year.setMonthlySamples( currMonth, tempMonth );
-									//System.out.println( "number of files processed - 1: " + i );
-								//}
-								//else
-								//{
 									
 								year.setMonthlySamples( prevMonth, tempMonth );  // add month to year
+								
 								mun.reset();
 								
 								//}
 								
+								/*
 								if( i == totalDataFileCount - 1 )  // if we are processing the last year, consisting of incomplete month data, include it 
 								{
 									year.setYear( prevYear );
 									Year savedYear = new Year( year );
 									dictOfYears.put( prevYear, savedYear ); 									
-									//prevYear = currYear;
+									
 								}
+								*/
 								
 								if( prevYear != currYear )
 								{									
@@ -229,8 +234,10 @@ public class WeatherData
 							
 								prevMonth = currMonth;
 								
-							}					
+							}	
+							
 							daySamples.clear();  // remove previous day's sample
+							
 							daySamples.add( item );  // add first sample to new day
 							
 							prevDay = currDay;  // shift flags
@@ -241,10 +248,9 @@ public class WeatherData
 						{
 							daySamples.add( item ); // if we are still processing the same day, keep adding samples 
 						}
-						//fileCount += 1; 
-						//System.out.println( fileCount + " samples processed ");
+						
                     }			
-					//fileCount += 1; 
+					
                 }
                 // JDOMException indicates a well-formedness error
                 catch ( JDOMException e )
@@ -266,16 +272,16 @@ public class WeatherData
 		System.out.println(dictofMonths);
 		
 		Hashtable<Integer, Day> dictOfDays = new Hashtable<Integer, Day>();
-		Month tempMonth = dictofMonths.get(7);
+		Month tempMonth = dictofMonths.get(12);
 		System.out.println( tempMonth.getMonth() );
 		dictOfDays.putAll( tempMonth.getAllDaySamples() );
 		System.out.println(dictOfDays);
 		
 		Hashtable<Integer, ArrayList<wItem> > dictOfSamples = new Hashtable<Integer, ArrayList<wItem>>();
-		Day tempDay = dictOfDays.get(30);
+		Day tempDay = dictOfDays.get(31);
 		System.out.println( tempDay.getDay() );
 		dictOfSamples.put( 1,  tempDay.getSamples() );
-		//System.out.println( dictOfSamples );
+		System.out.println( dictOfSamples );
 		
 		
 		
