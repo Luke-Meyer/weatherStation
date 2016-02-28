@@ -54,16 +54,15 @@ public class WeatherData
 		int prevMonth = -1;
 		int currMonth = -1;
 		
-		
-		//Dictionary dictOfYears = new Hashtable< Integer, Year >();
+	
 		
 		Hashtable<Integer, Year> dictOfYears = new Hashtable<Integer, Year>();
 		Month mun = new Month();
 		Year year = new Year();
-		
-		
-		//Map<int, Map> yearData = new HashMap< int, Map>();
-		//Dictionary yearData = new HashTable();
+				
+
+		int currDay = -1;
+		int prevDay = -1;
 		
 		int i = 0;
 
@@ -79,8 +78,7 @@ public class WeatherData
                     
                 System.out.print(file + "\n");			
 				
-				int currDay = -1;
-				int prevDay = -1;
+				
                 
                 // read and parse XML document
                 SAXBuilder builder = new SAXBuilder();
@@ -110,13 +108,25 @@ public class WeatherData
                         item.setUvindex(Float.parseFloat(element.getChildText("uvindex")));
                         item.setRainfall(Float.parseFloat(element.getChildText("rainfall")));
 						
-						//System.out.print( item.toString() );
+						if(element.Last)
+						{
+							System.out.println( "SDFSDFSDFSDFSDFSDFSDFSDFFFFFFSDFSDFSDFSDFSDFSDF" );
+						}
+				
 						
 						currDay = item.getDay();
 						
 						currMonth = item.getMonth();
 						
 						currYear = item.getYear();
+						
+						/*if( i == totalDataFileCount - 1 )
+						{
+									//mun.setMonth( currMonth );
+									//mun.setYear( currYear );
+									//System.out.println(file );//+ "\n");
+									System.out.println( "Last Month: " + currMonth );
+						} */
 						
 						if( prevDay == -1 )  // if there hasn't been a previous day yet
 						{
@@ -141,27 +151,69 @@ public class WeatherData
 							Day daa = new Day();
 							daa.setSamples( daySamples );  // set the samples for the previous day
 							daa.setDay( prevDay );  // set the day field
+							
 							daa.setMonth( prevMonth );
 							daa.setYear( prevYear );
 							
 							//System.out.println("Days not equal!" );//daa.getSamples());
 							
 							mun.setDailySamples( prevDay, daa );  // set that day of samples in a month object
+							//daa.reset();
+							
+							//mun.setMonth( prevMonth );
+							//mun.setYear( prevYear );
+							
+							if( i == totalDataFileCount - 1 )
+								{
+									//mun.setMonth( currMonth );
+									//mun.setYear( currYear );
+									System.out.println(file );//+ "\n");
+								}
 													
 							
 							if( prevMonth != currMonth )  // check to see if the next day is in a new month
-							{														
+							{
+								if( i == totalDataFileCount - 1 )
+								{
+								System.out.println( "Previous: " + prevMonth);
+								System.out.println( "Current: " + currMonth);
+								}
+							    
+								
+								
+								
+								if( i == totalDataFileCount - 1 )
+								{
+									//mun.setMonth( currMonth );
+									//mun.setYear( currYear );
+									System.out.println(file );//+ "\n");
+								}
+								//else
+								//{
 								mun.setMonth( prevMonth );
 								mun.setYear( prevYear );
+								//}
 								
-								Month tempMonth = new Month( mun); // create a new month in memory
-								year.setMonthlySamples( prevMonth, mun );  // add month to year
+								Month tempMonth = new Month( mun ); // create a new month in memory
+								
+								//if( i == totalDataFileCount - 1 )
+								//{
+									//year.setMonthlySamples( currMonth, tempMonth );
+									//System.out.println( "number of files processed - 1: " + i );
+								//}
+								//else
+								//{
+									
+								year.setMonthlySamples( prevMonth, tempMonth );  // add month to year
+								mun.reset();
+								
+								//}
 								
 								if( i == totalDataFileCount - 1 )  // if we are processing the last year, consisting of incomplete month data, include it 
 								{
 									year.setYear( prevYear );
 									Year savedYear = new Year( year );
-									dictOfYears.put( prevYear, savedYear );  
+									dictOfYears.put( prevYear, savedYear ); 									
 									//prevYear = currYear;
 								}
 								
@@ -169,13 +221,18 @@ public class WeatherData
 								{									
 									year.setYear( prevYear );
 									Year savedYear = new Year( year );
-									dictOfYears.put( prevYear, savedYear );  
+									dictOfYears.put( prevYear, savedYear ); 
+									
+								    year.reset();
 									prevYear = currYear;
 								}
+							
 								prevMonth = currMonth;
+								
 							}					
 							daySamples.clear();  // remove previous day's sample
 							daySamples.add( item );  // add first sample to new day
+							
 							prevDay = currDay;  // shift flags
 						
 							
@@ -202,5 +259,25 @@ public class WeatherData
             } 
         }
         System.out.println(dictOfYears);
+		Year tempYear = dictOfYears.get(13);
+		System.out.println( tempYear.getYear() );
+		Hashtable<Integer, Month> dictofMonths = new Hashtable<Integer, Month>();
+		dictofMonths.putAll(tempYear.getAllMonthlySamples() );
+		System.out.println(dictofMonths);
+		
+		Hashtable<Integer, Day> dictOfDays = new Hashtable<Integer, Day>();
+		Month tempMonth = dictofMonths.get(7);
+		System.out.println( tempMonth.getMonth() );
+		dictOfDays.putAll( tempMonth.getAllDaySamples() );
+		System.out.println(dictOfDays);
+		
+		Hashtable<Integer, ArrayList<wItem> > dictOfSamples = new Hashtable<Integer, ArrayList<wItem>>();
+		Day tempDay = dictOfDays.get(30);
+		System.out.println( tempDay.getDay() );
+		dictOfSamples.put( 1,  tempDay.getSamples() );
+		//System.out.println( dictOfSamples );
+		
+		
+		
     }
 }

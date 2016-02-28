@@ -9,50 +9,58 @@ public class Day
 	
 	public Day()
 	{
-		day = -1;
-		month = -1;
-		year = -1;
-		samples = new ArrayList<wItem>();
+		this.day = -1;
+		this.month = -1;
+		this.year = -1;
+		this.samples = new ArrayList<wItem>();
 	}
 	
 	
 	public int getDay()
 	{
-		return day;
+		return this.day;
 	}
 	
 	public void setDay( int tempDay )
 	{
-		day = tempDay;
+		this.day = tempDay;
 	}
 	
 	public int getMonth()
 	{
-		return month;
+		return this.month;
 	}
 	
 	public void setMonth( int tempMonth)
 	{
-		month = tempMonth;
+		this.month = tempMonth;
 	}
 	
 	public int getYear()
 	{	
-		return year;
+		return this.year;
 	}
 	
 	public void setYear( int tempYear )
 	{
-		year = tempYear;
+		this.year = tempYear;
 	}
 	
 	public void setSamples( List<wItem> tempSamples )
 	{
-		samples = new ArrayList( tempSamples );
+		this.samples = new ArrayList( tempSamples );
 	}
 	
 	public ArrayList<wItem> getSamples()
 	{
-		return samples;
+		return this.samples;
+	}
+	
+	public void reset()
+	{
+		this.day = -1;
+		this.month = -1;
+		this.year = -1;
+		this.samples = new ArrayList<wItem>();
 	}
 }

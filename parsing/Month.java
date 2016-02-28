@@ -8,74 +8,63 @@ public class Month
 	
 	public Month()
 	{
-		dailySamples = new Hashtable<Integer, Day>();
-		month = -1;
-		year = -1;
+		this.dailySamples = new Hashtable<Integer, Day>();
+		this.month = -1;
+		this.year = -1;
 	}
 	
 	public Month( Month tempMonth )
 	{
-		dailySamples = new Hashtable<Integer, Day>();
+		this.dailySamples = new Hashtable<Integer, Day>();
 		
-		year = tempMonth.getYear();
-		month = tempMonth.getMonth();
+		this.year = tempMonth.getYear();
+		this.month = tempMonth.getMonth();
 		
-		dailySamples.putAll( tempMonth.getAllDaySamples() );
-		
-		
-		/*
-		Set<String> keys = dailySamples.keySet();
-		
-		
-		for(String key: keys)
-		{
-			dailySamples.Add( key, tempMonth.get(key) );
-			
-        }
-		
-		/*
-		foreach(object key in tempMonth.Keys)
-        {
-            dailySamples.Add(key, tempMonth[key]);
-        }
-		*/
+		this.dailySamples.putAll( tempMonth.getAllDaySamples() );
 		
 
 	}
 	
 	public int getMonth()
 	{
-		return month;
+		return this.month;
 	}
 	
 	public void setMonth( int tempMonth)
 	{
-		month = tempMonth;
+		this.month = tempMonth;
 	}
 	
 	public int getYear()
 	{
-		return year;
+		return this.year;
 	}
 	
 	public void setYear( int tempYear )
 	{
-		year = tempYear;
+		this.year = tempYear;
 	}
 	
 	public void setDailySamples( int dayKey, Day dayOfSamples ) //Day dayOfSamples, int dayKey )
 	{
 		
-		dailySamples.put( dayKey, dayOfSamples );
+		this.dailySamples.put( dayKey, dayOfSamples );
 	}
 	
 	public Hashtable<Integer, Day> getAllDaySamples()
 	{
-		return dailySamples;
+		return this.dailySamples;
 	}
 	public Day getDayofSamples( int dayKey)
 	{
-		return dailySamples.get(dayKey);
+		return this.dailySamples.get(dayKey);
+	}
+	
+	public void reset()
+	{
+		this.dailySamples = new Hashtable<Integer, Day>();
+		this.month = -1;
+		this.year = -1;
 	}
 	
 	/*(public ArrayList<Day> getWeekOfSamples( int weekKey )

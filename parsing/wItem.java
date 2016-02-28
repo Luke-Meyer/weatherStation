@@ -26,9 +26,7 @@ public class wItem {
         String temp = date.trim();
         String delims = "[/]";
         String[] token = temp.split(delims);
-        //this.year = Integer.valueOf(token[0]);
-        //this.month = Integer.valueOf(token[1]);
-        //this.day = Integer.valueOf(token[2]);
+        
 		
 		this.month = Integer.valueOf(token[0]);
 		this.day = Integer.valueOf(token[1]);
@@ -112,7 +110,7 @@ public class wItem {
       
     @Override
     public String toString() {
-        return "wItem:: date="+this.date; //+" time=" + this.time + " temperature=" + this.temperature;
+        return "wItem:: date="+this.date + " Time: " +this.time; //+" time=" + this.time + " temperature=" + this.temperature;
     }
      
 }
