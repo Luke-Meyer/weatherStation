@@ -29,11 +29,33 @@ import org.apache.commons.io.FileUtils;
 
 public class WeatherData
 {
-    public static void main( String[] args )
+	private static Hashtable<Integer, Year> dictOfYears;  // data structure to hold the weather data
+	
+	public 
+	
+    public static void getWeatherData( File dir )//String dirName )//main( String[] args )
     {        
-        //File folder = new File("./");
-		File folder = new File( "..\\data\\" );
+		
+		String dirName = dir.getName();
+		
+		File folder;
+		
+		System.out.println( "HEREERERERERERER" );
+		
+		if( dirName.isEmpty() )  // default behaviour if a null/empty string is supplied
+		{
+			 folder = new File( "..\\data\\" );
+		}
+		else // if there is a non-empty name, assumption is that there is also a valid absolute path
+		{
+			System.out.println("The name of the directory is: " + dirName );
+			dirName = dir.getAbsolutePath();
+			folder = new File( dirName );
+		}
+		//File folder = new File( "..\\data\\" );
         //File[] listOfFiles = folder.listFiles();
+		
+		System.out.println( "made it past dirName check" );
 		
 		File[] listOfFiles = folder.listFiles( new FilenameFilter(){  // only get .xml files included in list of files to be processed in the directory
 			public boolean accept(  File folder, String name) {
@@ -56,7 +78,9 @@ public class WeatherData
 		
 	
 		
-		Hashtable<Integer, Year> dictOfYears = new Hashtable<Integer, Year>();
+		//Hashtable<Integer, Year> dictOfYears = new Hashtable<Integer, Year>();		
+		WeatherData.dictOfYears = new Hashtable<Integer, Year>();
+		
 		ArrayList<wItem> daySamples = new ArrayList<wItem>();  // will contain all samples for one day
 		Month mun = new Month();
 		Year year = new Year();
@@ -75,10 +99,7 @@ public class WeatherData
                     String content = FileUtils.readFileToString(file);
                 } catch ( IOException e ) {
                     System.out.println( e );
-                }   
-                    
-                System.out.print(file + "\n");			
-				
+                }                      					
 				
                 
                 // read and parse XML document
@@ -141,7 +162,7 @@ public class WeatherData
 							year.setYear( currYear );
 							Year savedYear = new Year( year );
 							
-							dictOfYears.put( currYear, savedYear );
+							WeatherData.dictOfYears.put( currYear, savedYear );
 						}
 				        
 						
@@ -171,8 +192,6 @@ public class WeatherData
 						
 						if( prevDay != currDay )  // if we started processing samples from a different day
 						{
-							System.out.println( "Previous day: " + prevDay );
-						    System.out.println( "Current day: " + currDay );
 						
 							Day daa = new Day();
 							daa.setSamples( daySamples );  // set the samples for the previous day
@@ -181,22 +200,14 @@ public class WeatherData
 							daa.setMonth( prevMonth );
 							daa.setYear( prevYear );
 							
-							//System.out.println("Days not equal!" );//daa.getSamples());
+
 							
 							mun.setDailySamples( prevDay, daa );  // set that day of samples in a month object
 							
-							//daa.reset();  // is this needed?????
 													
 							
 							if( prevMonth != currMonth )  // check to see if the next day is in a new month
 							{
-								/*
-								if( i == totalDataFileCount - 1 )
-								{
-								System.out.println( "Previous: " + prevMonth);
-								System.out.println( "Current: " + currMonth);
-								}
-								*/
 							    							
 							
 								mun.setMonth( prevMonth );
@@ -226,7 +237,7 @@ public class WeatherData
 								{									
 									year.setYear( prevYear );
 									Year savedYear = new Year( year );
-									dictOfYears.put( prevYear, savedYear ); 
+									WeatherData.dictOfYears.put( prevYear, savedYear ); 
 									
 								    year.reset();
 									prevYear = currYear;
@@ -286,4 +297,14 @@ public class WeatherData
 		
 		
     }
+	
+	public static void main( String[] args )
+	{
+		File dir = new File("");
+		//File dir = new File("..\\data\\sub\\");
+		
+		System.out.println( "The name of the directory is : " + dir.getName() );
+		
+		WeatherData.getWeatherData( dir );
+	}
 }
