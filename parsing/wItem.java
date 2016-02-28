@@ -7,6 +7,7 @@ public class wItem {
     private int day;
     private String time;
     private float temperature;
+	//private int temperature;
     private float humidity;
     private float barometer;
     private float windspeed;
@@ -110,7 +111,7 @@ public class wItem {
       
     @Override
     public String toString() {
-        return "wItem:: date="+this.date + " Time: " +this.time; //+" time=" + this.time + " temperature=" + this.temperature;
+        return "wItem:: date="+this.date + " Time: " +this.time + "Temperature: " + this.temperature; //+" time=" + this.time + " temperature=" + this.temperature;
     }
      
 }
