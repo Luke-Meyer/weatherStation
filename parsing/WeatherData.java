@@ -66,6 +66,27 @@ public class WeatherData
 		
 		Day daa = mun.getDayofSamples( dayIndex );
 		
+		if( daa == null )  // if the day doesn't exist, populate some uninteresting data for JFreeChart
+		{
+			//System.out.println( "Day key: " + j );			
+			//continue;
+			//daa = mun.getDayofSamples( dayIndex - 1 ); // if the day doesn't exist, just duplicate the previous day
+			
+			tempz.add( 1, 0.0 );
+			windz.add( 1, 0.0 );
+			baroz.add( 1, 0.0 );
+			heatindexz.add( 1, 0.0 );
+			uvindexz.add( 1, 0.0 ) ;	
+            dataset.addSeries( tempz );
+		    dataset.addSeries( windz );
+		    dataset.addSeries( baroz );
+		    dataset.addSeries( heatindexz );
+		    dataset.addSeries( uvindexz );
+		
+		    return dataset;					
+			
+		}
+		
 		ArrayList<wItem> samples = daa.getSamples();
 				
 		int i = 0;
@@ -108,6 +129,23 @@ public class WeatherData
 		
 		Month mun = year.getMonthlySamplesByMonth( monthIndex );  // grab the month of data in question
 		
+		if( mun == null ) // if month doesn't exist, create uninteresting data for JFreeChart and return
+		{
+			tempz.add( 1, 0.0 );
+			windz.add( 1, 0.0 );
+			baroz.add( 1, 0.0 );
+			heatindexz.add( 1, 0.0 );
+			uvindexz.add( 1, 0.0 ) ;	
+			
+			dataset.addSeries( tempz );
+		    dataset.addSeries( windz );
+		    dataset.addSeries( baroz );
+		    dataset.addSeries( heatindexz );
+		    dataset.addSeries( uvindexz );
+		
+		    return dataset;
+		}
+		
 		Hashtable<Integer, Day> days = mun.getAllDaySamples();
 		
 		int i = 1;
@@ -117,29 +155,21 @@ public class WeatherData
 		//for( int dkey : days.keySet() )  // for each day in the month
 		for( i = 1; i <= days.size(); i++ )
 		{
-			//int j = 0;
-			
-			if( j < 50 )
-			{
-				System.out.println( "Day key: " + i );
-			}
 			
 			Day daa = days.get( i );//dkey );
+			
+			if( daa == null )  // if day doesn't exist, skip to next day lookup
+				{
+				    //System.out.println( "Day key: " + j );
+					continue;
+				}
 				
 			ArrayList<wItem> samples = daa.getSamples();
-			
-			//Collections.reverse( samples );
-			
-            			
+					
 				
 			for (wItem item: samples) // for each sample in a day
 			{
-				/*
-				if( i < 50 )
-				{
-				    System.out.println( item );
-				}
-				*/
+				
 				// convert data into xy coordinate sets for JFreeChart use
                 tempz.add( j, item.getTemperature() );
 			    windz.add( j, item.getWindspeed() );
@@ -149,9 +179,7 @@ public class WeatherData
 				
 				j += 1;
 					
-			}  
-			
-			//samples.clear();
+			}  			
 		}
 			
 		// construct the graph-able data set for the year
@@ -178,33 +206,59 @@ public class WeatherData
 		
 		Year year = WeatherData.dictOfYears.get( yearIndex ); // grab the year of data in question
 		
+		if( year == null )  // if year doesn't exist, create uniteresting data to graph and return;
+		{
+			tempz.add( 1, 0.0 );
+			windz.add( 1, 0.0 );
+			baroz.add( 1, 0.0 );
+			heatindexz.add( 1, 0.0 );
+			uvindexz.add( 1, 0.0 ) ;	
+			
+			dataset.addSeries( tempz );
+		    dataset.addSeries( windz );
+		    dataset.addSeries( baroz );
+		    dataset.addSeries( heatindexz );
+		    dataset.addSeries( uvindexz );
+		
+		    return dataset;
+		}
+		
 		Hashtable<Integer, Month> months = year.getAllMonthlySamples(); // grab the months in the current year
 				
 			
 		int i = 0;
-		for (int mkey : months.keySet()) // for each month in the year
+		int z = 1;
+		
+		for( z = 1; z <= months.size(); z++ )  // for each month in the year
 		{
 			//System.out.println("------------------------------------------------");
             //System.out.println("Iterating or looping map using java5 foreach loop");
             //System.out.println("key: " + key + " value: " + loans.get(key));
-			Month mun = months.get(mkey);  // grab a single month in the list of months
+			Month mun = months.get(z);//mkey);  // grab a single month in the list of months
+			
+			if( mun == null )  // if the month doesn't exist, skip it
+			{
+				continue;
+			}
+			
 			
 			Hashtable<Integer, Day> days = mun.getAllDaySamples();
 			
-			for( int dkey : days.keySet() )  // for each day in a month
+			int j = 1;
+			
+			for( j = 1; j <= days.size(); j++ )  // for each day in a month
 			{
-				Day daa = days.get( dkey );
+				Day daa = days.get( j );
+				
+				if( daa == null ) // if day doesn't exist, skip to next day lookup
+				{
+				    //System.out.println( "Day key: " + j );
+					continue;
+				}
+				
 				
 				ArrayList<wItem> samples = daa.getSamples();
 				
-				Collections.reverse( samples );
-				
-				/*
-				for (Bullet bullet: gunList.get(2).getBullet()) 
-				{
-                    System.out.println(bullet);
-                }
-				*/
 				
 				for (wItem item: samples) // for each sample in a day
 				{
@@ -236,13 +290,10 @@ public class WeatherData
 	
 	
     public static void getWeatherData( File dir )//String dirName )//main( String[] args )
-    {        
-		
+    {        	
 		String dirName = dir.getName();
 		
 		File folder;
-		
-
 		
 		if( dirName.isEmpty() )  // default behaviour if a null/empty string is supplied
 		{
@@ -250,7 +301,6 @@ public class WeatherData
 		}
 		else // if there is a non-empty name, assumption is that there is also a valid absolute path
 		{
-			System.out.println("The name of the directory is: " + dirName );
 			dirName = dir.getAbsolutePath();
 			folder = new File( dirName );
 		}	
@@ -525,15 +575,15 @@ public class WeatherData
 		
 		WeatherData.getWeatherData( dir );		
 		
-		System.out.println( "Got data from .xml" );
+		//System.out.println( "Got data from .xml" );
 		
-		//XYSeriesCollection dataSet = WeatherData.getYearSetOfData( 10 ); // grab year 2010 weather data
+		XYSeriesCollection dataSet = WeatherData.getYearSetOfData( 15 ); // grab year 2010 weather data
 		
-	    XYSeriesCollection dataSet = WeatherData.getMonthSetOfData( 10, 1 );
+	    //XYSeriesCollection dataSet = WeatherData.getMonthSetOfData( 10, 1 );
 		
 		//XYSeriesCollection dataSet = WeatherData.getDaySetOfData( 10, 1, 1 );  // grab jan. 1st 2010
 		
-		System.out.println( "Created XY coord sets for graphing" );		
+		//System.out.println( "Created XY coord sets for graphing" );		
 		
 		//  debug for getYearSetOfData
 		XYSeries series0 = dataSet.getSeries("Temperature");
