@@ -3,7 +3,6 @@ package weather.station;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.*;
-import java.awt.*;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
@@ -21,7 +20,8 @@ import org.jfree.data.xy.XYSeriesCollection;
  *
  * @author 1640636
  */
-public class MainDisplay extends javax.swing.JFrame {    
+public class MainDisplay extends javax.swing.JFrame {
+
     private String chartTitle = "";
     private String xLabel = "";
     private String yLabel = "";
@@ -289,9 +289,9 @@ public class MainDisplay extends javax.swing.JFrame {
                     .addComponent(humidityRadioButton)
                     .addComponent(rainfallRadioButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(dataSelector, javax.swing.GroupLayout.PREFERRED_SIZE, 940, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(dataSelector, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jTabbedPane1))
                 .addContainerGap(37, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -395,17 +395,17 @@ public class MainDisplay extends javax.swing.JFrame {
 
     private void averageTempItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_averageTempItemActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(null,"Average: ##F\nHigh:       ##F  (#/##/## @#:##)\nLow:        ##F  (#/##/## @#:##)","Temperature Stats", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Average: ##F\nHigh:       ##F  (#/##/## @#:##)\nLow:        ##F  (#/##/## @#:##)", "Temperature Stats", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_averageTempItemActionPerformed
 
     private void averageWindItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_averageWindItemActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(null,"Average:   ## mph\nHigh:         ## mph  (#/##/## @#:##)\nDirection:  E","Wind Stats", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Average:   ## mph\nHigh:         ## mph  (#/##/## @#:##)\nDirection:  E", "Wind Stats", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_averageWindItemActionPerformed
 
     private void averagePrecipItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_averagePrecipItemActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(null,"Rainfall: ## in","Rain Stats", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Rainfall: ## in", "Rain Stats", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_averagePrecipItemActionPerformed
 
     private void temperatureRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_temperatureRadioButtonActionPerformed
@@ -452,21 +452,22 @@ public class MainDisplay extends javax.swing.JFrame {
 
     public JFreeChart makeChart() {
         JFreeChart chart = ChartFactory.createXYLineChart(
-            chartTitle,      // chart title
-            xLabel,                      // x axis label
-            yLabel,                      // y axis label
-            dataSet,                  // data
-            PlotOrientation.VERTICAL,
-            true,                     // include legend
-            true,                     // tooltips
-            false                     // urls
+                chartTitle, // chart title
+                xLabel, // x axis label
+                yLabel, // y axis label
+                dataSet, // data
+                PlotOrientation.VERTICAL,
+                true, // include legend
+                true, // tooltips
+                false // urls
         );
-        
+
         return chart;
     }
+
     public void generateGraph(JPanel tab) {
         tab.removeAll();
-        
+
         ChartPanel graph = new ChartPanel(makeChart());
 
         graph.setSize(tab.getWidth(), tab.getHeight());
@@ -474,9 +475,9 @@ public class MainDisplay extends javax.swing.JFrame {
         tab.add(graph);
         tab.repaint();
     }
+
     public void callTabs() {
-        switch(tabFlag)
-        {
+        switch (tabFlag) {
             case 1:
                 generateGraph(dailyTab);
                 break;
@@ -490,13 +491,13 @@ public class MainDisplay extends javax.swing.JFrame {
                 generateGraph(yearlyTab);
                 break;
         }
-        
+
     }
+
     public void setChartTitle(int radioFlag) {
-        String name = jTabbedPane1.getTitleAt(tabFlag-1);
-        
-        switch(radioFlag)
-        {
+        String name = jTabbedPane1.getTitleAt(tabFlag - 1);
+
+        switch (radioFlag) {
             case 1:
                 this.chartTitle = name + " Temperature";
                 setYlabel("Degrees Farenheit (F)");
@@ -525,30 +526,37 @@ public class MainDisplay extends javax.swing.JFrame {
                 this.chartTitle = "Please Select Data Types on Left";
                 break;
         }
-        
+
     }
+
     public String getChartTitle() {
         return chartTitle;
     }
+
     public void setXlabel(String xLabel) {
         this.xLabel = xLabel;
     }
+
     public String getXlabel() {
         return xLabel;
     }
+
     public void setYlabel(String yLabel) {
         this.yLabel = yLabel;
     }
+
     public String getYlabel() {
         return yLabel;
     }
+
     public void setDataSet(XYDataset dataSet) {
         this.dataSet = dataSet;
     }
+
     public XYDataset getDataSet() {
         return dataSet;
     }
-    
+
     /**
      * @param args the command line arguments
      */

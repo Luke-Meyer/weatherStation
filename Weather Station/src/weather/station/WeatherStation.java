@@ -5,6 +5,8 @@
  */
 package weather.station;
 
+import java.io.File;
+
 
 /**
  *
@@ -41,8 +43,9 @@ public class WeatherStation {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            //WeatherData data = new WeatherData();
-            //data.readData();
+            File dir = new File("/home/turkk/Documents/gui/weatherStation/Weather Station/src/weather/station/");
+            WeatherData data = new WeatherData();
+            data.getWeatherData(dir);
             new MainDisplay().setVisible(true);
         });
     }
