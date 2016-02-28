@@ -1,4 +1,4 @@
-package weather.station;
+//package weather.station;
 
 public class wItem {
     private String date;
@@ -7,6 +7,7 @@ public class wItem {
     private int day;
     private String time;
     private float temperature;
+	//private int temperature;
     private float humidity;
     private float barometer;
     private float windspeed;
@@ -26,9 +27,11 @@ public class wItem {
         String temp = date.trim();
         String delims = "[/]";
         String[] token = temp.split(delims);
-        this.year = Integer.valueOf(token[0]);
-        this.month = Integer.valueOf(token[1]);
-        this.day = Integer.valueOf(token[2]);
+        
+		
+		this.month = Integer.valueOf(token[0]);
+		this.day = Integer.valueOf(token[1]);
+		this.year = Integer.valueOf(token[2]);
     }    
     public int getYear() {
         return year;
@@ -108,7 +111,7 @@ public class wItem {
       
     @Override
     public String toString() {
-        return "wItem:: date="+this.date; //+" time=" + this.time + " temperature=" + this.temperature;
+        return "wItem:: date="+this.date + " Time: " +this.time + "Temperature: " + this.temperature; //+" time=" + this.time + " temperature=" + this.temperature;
     }
      
 }

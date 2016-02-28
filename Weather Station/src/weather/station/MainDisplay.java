@@ -56,6 +56,8 @@ public class MainDisplay extends javax.swing.JFrame {
         barometricRadioButton = new javax.swing.JRadioButton();
         heatUVindex = new javax.swing.JRadioButton();
         dataSelector = new javax.swing.JSlider();
+        humidityRadioButton = new javax.swing.JRadioButton();
+        rainfallRadioButton = new javax.swing.JRadioButton();
         maindisplayMenuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         chooseFilesItem = new javax.swing.JMenuItem();
@@ -159,33 +161,55 @@ public class MainDisplay extends javax.swing.JFrame {
 
         radioButtonGroup.add(temperatureRadioButton);
         temperatureRadioButton.setText("Temperature");
-        temperatureRadioButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                temperatureRadioButtonMouseClicked(evt);
+        temperatureRadioButton.setToolTipText("Plot Temperature Data");
+        temperatureRadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                temperatureRadioButtonActionPerformed(evt);
             }
         });
 
         radioButtonGroup.add(windsRadioButton);
-        windsRadioButton.setText("Winds");
-        windsRadioButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                windsRadioButtonMouseClicked(evt);
+        windsRadioButton.setText("Wind Speed");
+        windsRadioButton.setToolTipText("Plot Wind Speed Data");
+        windsRadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                windsRadioButtonActionPerformed(evt);
             }
         });
 
         radioButtonGroup.add(barometricRadioButton);
-        barometricRadioButton.setText("Barometrics");
-        barometricRadioButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                barometricRadioButtonMouseClicked(evt);
+        barometricRadioButton.setText("Barometric Pressure");
+        barometricRadioButton.setToolTipText("Plot Barometric Pressure Data");
+        barometricRadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                barometricRadioButtonActionPerformed(evt);
             }
         });
 
         radioButtonGroup.add(heatUVindex);
-        heatUVindex.setText("Heat/UV index");
-        heatUVindex.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                heatUVindexMouseClicked(evt);
+        heatUVindex.setText("UV Index");
+        heatUVindex.setToolTipText("Plot Heat/UV Index Data");
+        heatUVindex.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                heatUVindexActionPerformed(evt);
+            }
+        });
+
+        radioButtonGroup.add(humidityRadioButton);
+        humidityRadioButton.setText("Humidity");
+        humidityRadioButton.setToolTipText("Plot Humidity Data");
+        humidityRadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                humidityRadioButtonActionPerformed(evt);
+            }
+        });
+
+        radioButtonGroup.add(rainfallRadioButton);
+        rainfallRadioButton.setText("Rainfall");
+        rainfallRadioButton.setToolTipText("Plot Rainfall Data");
+        rainfallRadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rainfallRadioButtonActionPerformed(evt);
             }
         });
 
@@ -220,6 +244,7 @@ public class MainDisplay extends javax.swing.JFrame {
         statsMenu.setText("Statistics");
 
         averageTempItem.setText("Temperature");
+        averageTempItem.setToolTipText("Compute mean/min/max values for temperature.");
         averageTempItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 averageTempItemActionPerformed(evt);
@@ -228,6 +253,7 @@ public class MainDisplay extends javax.swing.JFrame {
         statsMenu.add(averageTempItem);
 
         averageWindItem.setText("Wind");
+        averageWindItem.setToolTipText("Compute mean/max/direction values for wind speeds.");
         averageWindItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 averageWindItemActionPerformed(evt);
@@ -236,6 +262,7 @@ public class MainDisplay extends javax.swing.JFrame {
         statsMenu.add(averageWindItem);
 
         averagePrecipItem.setText("Precipitation");
+        averagePrecipItem.setToolTipText("Compute total rainfall.");
         averagePrecipItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 averagePrecipItemActionPerformed(evt);
@@ -252,17 +279,19 @@ public class MainDisplay extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(18, 18, 18)
+                .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(heatUVindex)
                     .addComponent(barometricRadioButton)
                     .addComponent(windsRadioButton)
-                    .addComponent(temperatureRadioButton))
+                    .addComponent(temperatureRadioButton)
+                    .addComponent(humidityRadioButton)
+                    .addComponent(rainfallRadioButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(dataSelector, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jTabbedPane1))
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -271,15 +300,20 @@ public class MainDisplay extends javax.swing.JFrame {
                 .addComponent(dataSelector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(35, 35, 35)
                         .addComponent(temperatureRadioButton)
                         .addGap(18, 18, 18)
                         .addComponent(windsRadioButton)
                         .addGap(18, 18, 18)
                         .addComponent(barometricRadioButton)
                         .addGap(18, 18, 18)
-                        .addComponent(heatUVindex))
-                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(heatUVindex)
+                        .addGap(18, 18, 18)
+                        .addComponent(humidityRadioButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(rainfallRadioButton)))
                 .addContainerGap(72, Short.MAX_VALUE))
         );
 
@@ -358,34 +392,6 @@ public class MainDisplay extends javax.swing.JFrame {
         generateGraph(yearlyTab);
     }//GEN-LAST:event_yearlyTabComponentResized
 
-    private void temperatureRadioButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_temperatureRadioButtonMouseClicked
-        // TODO add your handling code here:
-        radioFlag = 1;
-        setChartTitle(radioFlag);
-        callTabs();
-    }//GEN-LAST:event_temperatureRadioButtonMouseClicked
-
-    private void windsRadioButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_windsRadioButtonMouseClicked
-        // TODO add your handling code here:
-        radioFlag = 2;
-        setChartTitle(radioFlag);
-        callTabs();
-    }//GEN-LAST:event_windsRadioButtonMouseClicked
-
-    private void barometricRadioButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_barometricRadioButtonMouseClicked
-        // TODO add your handling code here:
-        radioFlag = 3;
-        setChartTitle(radioFlag);
-        callTabs();
-    }//GEN-LAST:event_barometricRadioButtonMouseClicked
-
-    private void heatUVindexMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_heatUVindexMouseClicked
-        // TODO add your handling code here:
-        radioFlag = 4;
-        setChartTitle(radioFlag);
-        callTabs();
-    }//GEN-LAST:event_heatUVindexMouseClicked
-
     private void averageTempItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_averageTempItemActionPerformed
         // TODO add your handling code here:
         JOptionPane.showMessageDialog(null,"Average: ##F\nHigh:       ##F  (#/##/## @#:##)\nLow:        ##F  (#/##/## @#:##)","Temperature Stats", JOptionPane.INFORMATION_MESSAGE);
@@ -400,6 +406,48 @@ public class MainDisplay extends javax.swing.JFrame {
         // TODO add your handling code here:
         JOptionPane.showMessageDialog(null,"Rainfall: ## in","Rain Stats", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_averagePrecipItemActionPerformed
+
+    private void temperatureRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_temperatureRadioButtonActionPerformed
+        // TODO add your handling code here:
+        radioFlag = 1;
+        setChartTitle(radioFlag);
+        callTabs();
+    }//GEN-LAST:event_temperatureRadioButtonActionPerformed
+
+    private void windsRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_windsRadioButtonActionPerformed
+        // TODO add your handling code here:
+        radioFlag = 2;
+        setChartTitle(radioFlag);
+        callTabs();
+    }//GEN-LAST:event_windsRadioButtonActionPerformed
+
+    private void barometricRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_barometricRadioButtonActionPerformed
+        // TODO add your handling code here:
+        radioFlag = 3;
+        setChartTitle(radioFlag);
+        callTabs();
+    }//GEN-LAST:event_barometricRadioButtonActionPerformed
+
+    private void heatUVindexActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_heatUVindexActionPerformed
+        // TODO add your handling code here:
+        radioFlag = 4;
+        setChartTitle(radioFlag);
+        callTabs();
+    }//GEN-LAST:event_heatUVindexActionPerformed
+
+    private void humidityRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_humidityRadioButtonActionPerformed
+        // TODO add your handling code here:
+        radioFlag = 5;
+        setChartTitle(radioFlag);
+        callTabs();
+    }//GEN-LAST:event_humidityRadioButtonActionPerformed
+
+    private void rainfallRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rainfallRadioButtonActionPerformed
+        // TODO add your handling code here:
+        radioFlag = 6;
+        setChartTitle(radioFlag);
+        callTabs();
+    }//GEN-LAST:event_rainfallRadioButtonActionPerformed
 
     public JFreeChart makeChart() {
         JFreeChart chart = ChartFactory.createXYLineChart(
@@ -450,15 +498,27 @@ public class MainDisplay extends javax.swing.JFrame {
         {
             case 1:
                 this.chartTitle = name + " Temperature";
+                setYlabel("Degrees Farenheit (F)");
                 break;
             case 2:
                 this.chartTitle = name + " Wind Speed";
+                setYlabel("Miles per Hour (MPH)");
                 break;
             case 3:
                 this.chartTitle = name + " Barometric Pressure";
+                setYlabel("Inches of Mercury (inHg)");
                 break;
             case 4:
-                this.chartTitle = name + " Heat/UV Index";
+                this.chartTitle = name + " UV Index";
+                setYlabel("Index");
+                break;
+            case 5:
+                this.chartTitle = name + " Humidity";
+                setYlabel("Percent (%)");
+                break;
+            case 6:
+                this.chartTitle = name + " Rainfall";
+                setYlabel("Inches (in)");
                 break;
             default:
                 this.chartTitle = "Please Select Data Types on Left";
@@ -533,11 +593,13 @@ public class MainDisplay extends javax.swing.JFrame {
     private javax.swing.JSlider dataSelector;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JRadioButton heatUVindex;
+    private javax.swing.JRadioButton humidityRadioButton;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JMenuBar maindisplayMenuBar;
     private javax.swing.JPanel monthlyTab;
     private javax.swing.JMenuItem quitItem;
     private javax.swing.ButtonGroup radioButtonGroup;
+    private javax.swing.JRadioButton rainfallRadioButton;
     private javax.swing.JMenuItem specifyDirectoryItem;
     private javax.swing.JMenu statsMenu;
     private javax.swing.JRadioButton temperatureRadioButton;
