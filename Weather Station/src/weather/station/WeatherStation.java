@@ -55,7 +55,7 @@ public class WeatherStation {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            File dir = new File("/home/turkk/Documents/gui/weatherStation/Weather Station/src/weather/station/");
+            File dir = new File("/home/turkk/Documents/gui/weatherStation/Weather Station/src/weather/station");
             WeatherData data = new WeatherData();
             data.getWeatherData(dir);
             new MainDisplay().setVisible(true);

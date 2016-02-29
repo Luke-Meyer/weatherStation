@@ -36,7 +36,7 @@ public class MainDisplay extends javax.swing.JFrame {
     public MainDisplay() {
         super("Weather Station");
         initComponents();
-        File dir = new File("/home/turkk/Documents/gui/weatherStation/Weather Station/src/weather/station/");
+        File dir = new File("/home/turkk/Documents/gui/weatherStation/Weather Station/src/weather/station");
         WeatherData data = new WeatherData();
         data.getWeatherData(dir);
     }
