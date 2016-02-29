@@ -6,8 +6,8 @@ import java.awt.event.*;
 import java.io.File;
 
 /************************************************************************
-   Class:
-   Author:
+   Class:   DirectoryChooser()
+   Author:  All
    Description:
    Parameters:
  ************************************************************************/
@@ -19,9 +19,13 @@ public class DirectoryChooser extends JPanel implements ActionListener {
     JFileChooser fc;
     
     /************************************************************************
-       Class:
-       Author:
-       Description:
+       Class: public DirectoryChooser()
+       Author: All
+       Description: This is the constructor for the DirectoryChooser() class.
+       * It creates a new JFileChooser.  This file chooser is where the user can
+       * select a directory filled with XML data to be read into the application.
+       * The constructor takes care of any necessary modifications to the 
+       * window such as borders, scroll bar layout, etc.
        Parameters:
      ************************************************************************/  
     public DirectoryChooser() {
@@ -62,9 +66,12 @@ public class DirectoryChooser extends JPanel implements ActionListener {
     }
     
     /************************************************************************
-       Class:
-       Author:
-       Description:
+       Function: actionPerformed()
+       Author: All
+       Description: This method of DirectoryChooser() handles the button press
+       * for the open button. When the open button is selected from the
+       * FileChooser, this directory is then opened and a message is displayed
+       * in the original window.
        Parameters:
      ************************************************************************/
     public void actionPerformed(ActionEvent e) {
@@ -90,10 +97,11 @@ public class DirectoryChooser extends JPanel implements ActionListener {
      * Returns an ImageIcon, or null if the path was invalid.
      */
     /************************************************************************
-       Class:
-       Author:
-       Description:
-       Parameters:
+       Function: createImageIcon()
+       Author: all
+       Description: This method creates the icon to be displayed next to the
+       * file name in the file chooser.
+       Parameters: String path - string holding path name
      ************************************************************************/
     protected static ImageIcon createImageIcon(String path) {
         java.net.URL imgURL = DirectoryChooser.class.getResource(path);
@@ -110,10 +118,12 @@ public class DirectoryChooser extends JPanel implements ActionListener {
      * invoked from the event dispatch thread.
      */
     /************************************************************************
-       Class:
-       Author:
-       Description:
-       Parameters:
+       Class: createAndShowGUI()
+       Author: All
+       Description: This function adds a window with a button "DirectoryChooser".
+       * This window will display all messages dealing with the file chooser.
+       * When this button is clicked, the file chooser will open.
+       Parameters: None
      ************************************************************************/
     public static void createAndShowGUI() {
         //Create and set up the window.

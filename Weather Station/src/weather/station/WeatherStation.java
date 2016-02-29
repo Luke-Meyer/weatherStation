@@ -1,33 +1,34 @@
 /************************************************************************
-   Program: 
-   Author: 
-   Class:
-   Instructor:
-   Date:
+   Program: Programming Assignment #1 - Weather Station Display
+   Author:  Luke Meyer, Kayhan Karatekeli, and Jayson Kjenstad
+   Class:   CSC 468/568 - GUI Programming
+   Instructor:  Dr. Weiss
+   Date:    3/1/2016
    Description:    (program requirements)
-   Input:
+   Input:   
    Output:
    Compilation instructions:
    Usage:
    Known bugs/missing features:
-   Modifications:
-   Date                Comment            
-   ----    ------------------------------------------------
  ************************************************************************/
 package weather.station;
 
 import java.io.File;
 
 /************************************************************************
-    Function:
-    Author:
-    Description:
-    Parameters:
+    Class:  WeatherStation()
+    Author: All
+    Description: This class is the starting point for the program. First the
+    * wanted directory is specified.  This directory is where all the XML data
+    * files containing the weather information is held.  The main section of
+    * this class calls the WeatherData() class.  That class takes care of all
+    * data parsing and sorting.  This class then creates a GUI by making a new
+    * instance of the MainDisplay() class.  The GUI is then set to be visible
+    * and interact with the user
+    Parameters: None
  ************************************************************************/
 public class WeatherStation {
-    /**
-     * @param args the command line arguments
-     */
+ 
     public static void main(String[] args) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -54,7 +55,7 @@ public class WeatherStation {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            File dir = new File("/home/turkk/Documents/gui/weatherStation/Weather Station/src/weather/station/");
+            File dir = new File("C:\\Users\\7142885\\Documents\\NetBeansProjects\\weatherStation\\Weather Station\\src\\weather\\station");
             WeatherData data = new WeatherData();
             data.getWeatherData(dir);
             new MainDisplay().setVisible(true);

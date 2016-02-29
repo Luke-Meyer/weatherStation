@@ -262,7 +262,7 @@ public class WeatherData {
 
         if (dirName.isEmpty()) // default behaviour if a null/empty string is supplied
         {
-            folder = new File("/home/turkk/Documents/gui/weatherStation/Weather Station/src/weather/station/");
+            folder = new File("C:\\Users\\7142885\\Documents\\NetBeansProjects\\weatherStation\\Weather Station\\src\\weather\\station");
         } else // if there is a non-empty name, assumption is that there is also a valid absolute path
         {
             dirName = dir.getAbsolutePath();
