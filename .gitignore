@@ -2,13 +2,27 @@
 	Weather Station/build/classes/.netbeans_update_resources
 	Weather Station/build/classes/WeatherData$1.class
 	Weather Station/build/classes/weather/station/Day.class
-	Weather Station/build/classes/weather/station/MainDisplay$16.class
-	Weather Station/build/classes/weather/station/MainDisplay$17.class
-	Weather Station/build/classes/weather/station/MainDisplay.form
 	Weather Station/build/classes/weather/station/Month.class
-	Weather Station/build/classes/weather/station/WeatherData$1.class
-	Weather Station/build/classes/weather/station/WeatherData.class
 	Weather Station/build/classes/weather/station/Year.class
 	Weather Station/build/classes/weather/station/jars/
 	Weather Station/build/classes/weather/station/wItem.class
+    Weather Station/build/classes/weather/station/MainDisplay$1.class
+    Weather Station/build/classes/weather/station/MainDisplay$10.class
+    Weather Station/build/classes/weather/station/MainDisplay$11.class
+    Weather Station/build/classes/weather/station/MainDisplay$12.class
+    Weather Station/build/classes/weather/station/MainDisplay$13.class
+    Weather Station/build/classes/weather/station/MainDisplay$14.class
+    Weather Station/build/classes/weather/station/MainDisplay$15.class
+    Weather Station/build/classes/weather/station/MainDisplay$16.class
+    Weather Station/build/classes/weather/station/MainDisplay$17.class
+    Weather Station/build/classes/weather/station/MainDisplay$2.class
+    Weather Station/build/classes/weather/station/MainDisplay$3.class
+    Weather Station/build/classes/weather/station/MainDisplay$4.class
+    Weather Station/build/classes/weather/station/MainDisplay$5.class
+    Weather Station/build/classes/weather/station/MainDisplay$6.class
+    Weather Station/build/classes/weather/station/MainDisplay$7.class
+    Weather Station/build/classes/weather/station/MainDisplay$8.class
+    Weather Station/build/classes/weather/station/MainDisplay$9.class
+    Weather Station/build/classes/weather/station/MainDisplay.class
+    Weather Station/build/classes/weather/station/WeatherStation.class
 /Weather Station/dist/
