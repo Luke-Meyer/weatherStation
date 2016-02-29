@@ -57,6 +57,8 @@ public class WeatherData
 		XYSeries baroz = new XYSeries("Barometer");
 		XYSeries heatindexz = new XYSeries("Heat Index" );
 		XYSeries uvindexz = new XYSeries("UV Index" );
+		XYSeries humidity = new XYSeries("Humidity" );
+		XYSeries precipitation = new XYSeries("Precipitation");
 		
 		XYSeriesCollection dataset = new XYSeriesCollection();
 		
@@ -76,12 +78,17 @@ public class WeatherData
 			windz.add( 1, 0.0 );
 			baroz.add( 1, 0.0 );
 			heatindexz.add( 1, 0.0 );
-			uvindexz.add( 1, 0.0 ) ;	
+			uvindexz.add( 1, 0.0 ) ;
+            humidity.add( 1, 0.0);
+            precipitation.add( 1, 0.0 );			
             dataset.addSeries( tempz );
 		    dataset.addSeries( windz );
 		    dataset.addSeries( baroz );
 		    dataset.addSeries( heatindexz );
 		    dataset.addSeries( uvindexz );
+			dataset.addSeries( humidity );
+			dataset.addSeries( precipitation );
+			
 		
 		    return dataset;					
 			
@@ -98,6 +105,8 @@ public class WeatherData
 			baroz.add( i, item.getBarometer() );
 			heatindexz.add( i, item.getHeatindex() );
 			uvindexz.add( i, item.getUvindex() );
+			humidity.add( i, item.getHumidity() );
+			precipitation.add( i, item.getRainfall() );
 			
 			i += 1;
 					
@@ -109,6 +118,8 @@ public class WeatherData
 		dataset.addSeries( baroz );
 		dataset.addSeries( heatindexz );
 		dataset.addSeries( uvindexz );
+		dataset.addSeries( humidity );
+		dataset.addSeries( precipitation);
 		
 		return dataset;				
 				
@@ -121,6 +132,8 @@ public class WeatherData
 		XYSeries baroz = new XYSeries("Barometer");
 		XYSeries heatindexz = new XYSeries("Heat Index" );
 		XYSeries uvindexz = new XYSeries("UV Index" );
+		XYSeries humidity = new XYSeries("Humidity" );
+		XYSeries precipitation = new XYSeries("Precipitation");
 		
 		XYSeriesCollection dataset = new XYSeriesCollection();
 		
@@ -134,15 +147,19 @@ public class WeatherData
 			windz.add( 1, 0.0 );
 			baroz.add( 1, 0.0 );
 			heatindexz.add( 1, 0.0 );
-			uvindexz.add( 1, 0.0 ) ;	
-			
-			dataset.addSeries( tempz );
+			uvindexz.add( 1, 0.0 ) ;
+            humidity.add( 1, 0.0);
+            precipitation.add( 1, 0.0 );			
+            dataset.addSeries( tempz );
 		    dataset.addSeries( windz );
 		    dataset.addSeries( baroz );
 		    dataset.addSeries( heatindexz );
 		    dataset.addSeries( uvindexz );
+			dataset.addSeries( humidity );
+			dataset.addSeries( precipitation );
+			
 		
-		    return dataset;
+		    return dataset;					
 		}
 		
 		ArrayList<Day> week = mun.getWeekOfSamples( weekIndex );//mun.getAllWeekSamples();  // get all samples in weekly chunks
@@ -165,10 +182,12 @@ public class WeatherData
 			    {			
 				    // convert data into xy coordinate sets for JFreeChart use
                     tempz.add( j, item.getTemperature() );
-			        windz.add( j, item.getWindspeed() );
-				    baroz.add( j, item.getBarometer() );
-				    heatindexz.add( j, item.getHeatindex() );
-				    uvindexz.add( j, item.getUvindex() );
+					windz.add( j, item.getWindspeed() );
+					baroz.add( j, item.getBarometer() );
+					heatindexz.add( j, item.getHeatindex() );
+					uvindexz.add( j, item.getUvindex() );
+					humidity.add( j, item.getHumidity() );
+					precipitation.add( j, item.getRainfall() );
 				
 				    j += 1;				
 			    }  			
@@ -181,6 +200,8 @@ public class WeatherData
 		dataset.addSeries( baroz );
 		dataset.addSeries( heatindexz );
 		dataset.addSeries( uvindexz );
+		dataset.addSeries( humidity );
+		dataset.addSeries( precipitation);
 		
 		return dataset;	
 		
@@ -196,6 +217,8 @@ public class WeatherData
 		XYSeries baroz = new XYSeries("Barometer");
 		XYSeries heatindexz = new XYSeries("Heat Index" );
 		XYSeries uvindexz = new XYSeries("UV Index" );
+		XYSeries humidity = new XYSeries("Humidity" );
+		XYSeries precipitation = new XYSeries("Precipitation");
 		
 		XYSeriesCollection dataset = new XYSeriesCollection();
 		
@@ -209,13 +232,16 @@ public class WeatherData
 			windz.add( 1, 0.0 );
 			baroz.add( 1, 0.0 );
 			heatindexz.add( 1, 0.0 );
-			uvindexz.add( 1, 0.0 ) ;	
-			
-			dataset.addSeries( tempz );
+			uvindexz.add( 1, 0.0 ) ;
+            humidity.add( 1, 0.0);
+            precipitation.add( 1, 0.0 );			
+            dataset.addSeries( tempz );
 		    dataset.addSeries( windz );
 		    dataset.addSeries( baroz );
 		    dataset.addSeries( heatindexz );
 		    dataset.addSeries( uvindexz );
+			dataset.addSeries( humidity );
+			dataset.addSeries( precipitation );
 		
 		    return dataset;
 		}
@@ -246,10 +272,12 @@ public class WeatherData
 				
 				// convert data into xy coordinate sets for JFreeChart use
                 tempz.add( j, item.getTemperature() );
-			    windz.add( j, item.getWindspeed() );
+				windz.add( j, item.getWindspeed() );
 				baroz.add( j, item.getBarometer() );
 				heatindexz.add( j, item.getHeatindex() );
 				uvindexz.add( j, item.getUvindex() );
+				humidity.add( j, item.getHumidity() );					
+				precipitation.add( j, item.getRainfall() );
 				
 				j += 1;
 					
@@ -262,6 +290,8 @@ public class WeatherData
 		dataset.addSeries( baroz );
 		dataset.addSeries( heatindexz );
 		dataset.addSeries( uvindexz );
+		dataset.addSeries( humidity );
+		dataset.addSeries( precipitation);
 		
 		return dataset;	
 		
@@ -275,6 +305,8 @@ public class WeatherData
 		XYSeries baroz = new XYSeries("Barometer");
 		XYSeries heatindexz = new XYSeries("Heat Index" );
 		XYSeries uvindexz = new XYSeries("UV Index" );
+		XYSeries humidity = new XYSeries("Humidity" );
+		XYSeries precipitation = new XYSeries("Precipitation");
 		
 		XYSeriesCollection dataset = new XYSeriesCollection();
 		
@@ -286,13 +318,16 @@ public class WeatherData
 			windz.add( 1, 0.0 );
 			baroz.add( 1, 0.0 );
 			heatindexz.add( 1, 0.0 );
-			uvindexz.add( 1, 0.0 ) ;	
-			
-			dataset.addSeries( tempz );
+			uvindexz.add( 1, 0.0 ) ;
+            humidity.add( 1, 0.0);
+            precipitation.add( 1, 0.0 );			
+            dataset.addSeries( tempz );
 		    dataset.addSeries( windz );
 		    dataset.addSeries( baroz );
 		    dataset.addSeries( heatindexz );
 		    dataset.addSeries( uvindexz );
+			dataset.addSeries( humidity );
+			dataset.addSeries( precipitation );
 		
 		    return dataset;
 		}
@@ -342,6 +377,8 @@ public class WeatherData
 					baroz.add( i, item.getBarometer() );
 					heatindexz.add( i, item.getHeatindex() );
 					uvindexz.add( i, item.getUvindex() );
+					humidity.add( i, item.getHumidity() );					
+					precipitation.add( i, item.getRainfall() );
 					
 					i += 1;
                 }
@@ -354,6 +391,8 @@ public class WeatherData
 		dataset.addSeries( baroz );
 		dataset.addSeries( heatindexz );
 		dataset.addSeries( uvindexz );
+		dataset.addSeries( humidity );
+		dataset.addSeries( precipitation);
 		
 		return dataset;
     }
@@ -662,7 +701,7 @@ public class WeatherData
 		
 	    //XYSeriesCollection dataSet = WeatherData.getMonthSetOfData( 10, 1 );
 		
-		XYSeriesCollection dataSet = WeatherData.getWeekSetOfData( 15, 2, 6 ); // grab data from the first week in Feb. 2010
+		XYSeriesCollection dataSet = WeatherData.getWeekSetOfData( 14, 12, 5 ); // grab data from the first week in Feb. 2010
 		
 		//XYSeriesCollection dataSet = WeatherData.getDaySetOfData( 15, 2, 29 );  // grab jan. 1st 2010
 		
