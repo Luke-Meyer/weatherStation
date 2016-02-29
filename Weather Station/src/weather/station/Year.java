@@ -1,9 +1,10 @@
-package weather.station;
+
 import java.util.*;
 
 public class Year
 {
 	private int year;
+	
 	private Hashtable<Integer, Month> monthlySamples;
 	
 	public Year()
@@ -18,11 +19,9 @@ public class Year
 		
 		this.year = tempYear.getYear();
 		
-		this.monthlySamples.putAll( tempYear.getAllMonthlySamples() );
-		
+		this.monthlySamples.putAll( tempYear.getAllMonthlySamples() );		
 	}
-	
-	
+		
 	public int getYear()
 	{
 		return this.year;
