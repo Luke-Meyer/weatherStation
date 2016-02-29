@@ -92,7 +92,7 @@ public class MainDisplay extends javax.swing.JFrame {
                 break;
                 
             case 6: //rainfall
-                setTheData("Precipation");
+                setTheData("Precipitation");
                 break;
         }
     }
@@ -550,7 +550,8 @@ public class MainDisplay extends javax.swing.JFrame {
         // TODO add your handling code here:
         radioFlag = 1;
         setChartTitle(radioFlag);
-        this.callTabs();
+        callTabs();
+        
     }//GEN-LAST:event_temperatureRadioButtonActionPerformed
 
     /************************************************************************
@@ -665,16 +666,28 @@ public class MainDisplay extends javax.swing.JFrame {
     public void callTabs() {
         switch (tabFlag) {
             case 1:
+                dailyTab.removeAll();
+                setDataset();
                 generateGraph(dailyTab);
+                dailyTab.repaint();
                 break;
             case 2:
+                weeklyTab.removeAll();
+                setDataset();
                 generateGraph(weeklyTab);
+                weeklyTab.repaint();
                 break;
             case 3:
+                monthlyTab.removeAll();
+                setDataset();
                 generateGraph(monthlyTab);
+                monthlyTab.repaint();
                 break;
             case 4:
+                yearlyTab.removeAll();
+                setDataset();
                 generateGraph(yearlyTab);
+                yearlyTab.repaint();
                 break;
         }
     }
