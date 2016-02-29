@@ -12,12 +12,12 @@ import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
-/************************************************************************
-    Class: MainDisplay
-    Author: All
-    Description: Creates a main display with form
-    Parameters: n/a
- ************************************************************************/
+/**
+ * **********************************************************************
+ * Class: MainDisplay Author: All Description: Creates a main display with form
+ * Parameters: n/a
+ ***********************************************************************
+ */
 public class MainDisplay extends javax.swing.JFrame {
 
     private String chartTitle = "";
@@ -27,13 +27,13 @@ public class MainDisplay extends javax.swing.JFrame {
     private int tabFlag = 1;
     private int radioFlag = 0;
     private WeatherData data;
-    
-    /************************************************************************
-       Function: MainDisplay Constructor
-       Author: All
-       Description: Constructor for main class
-       Parameters: n/a
-     ************************************************************************/
+
+    /**
+     * **********************************************************************
+     * Function: MainDisplay Constructor Author: All Description: Constructor
+     * for main class Parameters: n/a
+     ***********************************************************************
+     */
     public MainDisplay() {
         super("Weather Station");
         initComponents();
@@ -43,37 +43,30 @@ public class MainDisplay extends javax.swing.JFrame {
         this.data = new WeatherData();
         data.getWeatherData(dir);
     }
-    
-    public void setTheData( String dataSpec ) {
-        if( tabFlag == 1 )  //if we want to look at the temp of one day
+
+    public void setTheData(String dataSpec) {
+        if (tabFlag == 1) //if we want to look at the temp of one day
         {
-            XYSeriesCollection dataCollection = this.data.getDaySetOfData( 10, 1, 1); //Jan. 1, 2010
-            XYSeries temp = dataCollection.getSeries( dataSpec ); 
-            this.dataSet = new XYSeriesCollection( temp );
-        }
-        else if ( tabFlag == 2 )
-        {
-            XYSeriesCollection dataCollection = this.data.getWeekSetOfData( 10, 1, 1); //Jan. 1, 2010
-            XYSeries temp = dataCollection.getSeries( dataSpec ); 
-            this.dataSet = new XYSeriesCollection( temp );
-        }
-        else if ( tabFlag == 3 )
-        {
-            XYSeriesCollection dataCollection = this.data.getMonthSetOfData( 10, 1 ); //Jan. 1, 2010
-            XYSeries temp = dataCollection.getSeries( dataSpec ); 
-            this.dataSet = new XYSeriesCollection( temp );
-        }
-        else if ( tabFlag == 4 )
-        {
-            XYSeriesCollection dataCollection = this.data.getYearSetOfData( 10 ); //Jan. 1, 2010
-            XYSeries temp = dataCollection.getSeries( dataSpec ); 
-            this.dataSet = new XYSeriesCollection( temp );
+            XYSeriesCollection dataCollection = this.data.getDaySetOfData(10, 1, 1); //Jan. 1, 2010
+            XYSeries temp = dataCollection.getSeries(dataSpec);
+            this.dataSet = new XYSeriesCollection(temp);
+        } else if (tabFlag == 2) {
+            XYSeriesCollection dataCollection = this.data.getWeekSetOfData(10, 1, 1); //Jan. 1, 2010
+            XYSeries temp = dataCollection.getSeries(dataSpec);
+            this.dataSet = new XYSeriesCollection(temp);
+        } else if (tabFlag == 3) {
+            XYSeriesCollection dataCollection = this.data.getMonthSetOfData(10, 1); //Jan. 1, 2010
+            XYSeries temp = dataCollection.getSeries(dataSpec);
+            this.dataSet = new XYSeriesCollection(temp);
+        } else if (tabFlag == 4) {
+            XYSeriesCollection dataCollection = this.data.getYearSetOfData(10); //Jan. 1, 2010
+            XYSeries temp = dataCollection.getSeries(dataSpec);
+            this.dataSet = new XYSeriesCollection(temp);
         }
     }
-    public void setDataset()
-    {
-        switch (radioFlag) 
-        {
+
+    public void setDataset() {
+        switch (radioFlag) {
             case 1:  // Temp
                 setTheData("Temperature");
                 break;
@@ -86,23 +79,23 @@ public class MainDisplay extends javax.swing.JFrame {
             case 4: // UV inde
                 setTheData("UV Index");
                 break;
-            
+
             case 5: //humid
                 setTheData("Humidity");
                 break;
-                
+
             case 6: //rainfall
                 setTheData("Precipitation");
                 break;
         }
     }
 
-    /************************************************************************
-       Function: initComponents
-       Author: All
-       Description: method called from constructor to init form
-       Parameters: n/a
-     ************************************************************************/
+    /**
+     * **********************************************************************
+     * Function: initComponents Author: All Description: method called from
+     * constructor to init form Parameters: n/a
+     ***********************************************************************
+     */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -375,22 +368,22 @@ public class MainDisplay extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /************************************************************************
-       Function: quitItemActionPerformed
-       Author: All
-       Description: Denotes action when exiting program
-       Parameters: Action Event
-     ************************************************************************/
+    /**
+     * **********************************************************************
+     * Function: quitItemActionPerformed Author: All Description: Denotes action
+     * when exiting program Parameters: Action Event
+     ***********************************************************************
+     */
     private void quitItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitItemActionPerformed
         System.exit(0);
     }//GEN-LAST:event_quitItemActionPerformed
-    
-    /************************************************************************
-       Function: specifyDirectoryItemActionPerformed
-       Author: All
-       Description: Specifies a directory to choose xml files
-       Parameters: Action Event
-     ************************************************************************/
+
+    /**
+     * **********************************************************************
+     * Function: specifyDirectoryItemActionPerformed Author: All Description:
+     * Specifies a directory to choose xml files Parameters: Action Event
+     ***********************************************************************
+     */
     private void specifyDirectoryItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_specifyDirectoryItemActionPerformed
         //Schedule a job for the event dispatch thread:
         //creating and showing this application's GUI.
@@ -406,13 +399,13 @@ public class MainDisplay extends javax.swing.JFrame {
             }
         });
     }//GEN-LAST:event_specifyDirectoryItemActionPerformed
-    
-    /************************************************************************
-       Function: dailyTabComponentShown
-       Author: All
-       Description: Displays the daily tab
-       Parameters: Component Event
-     ************************************************************************/
+
+    /**
+     * **********************************************************************
+     * Function: dailyTabComponentShown Author: All Description: Displays the
+     * daily tab Parameters: Component Event
+     ***********************************************************************
+     */
     private void dailyTabComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_dailyTabComponentShown
         // TODO add your handling code here:
         tabFlag = 1;
@@ -421,23 +414,23 @@ public class MainDisplay extends javax.swing.JFrame {
         generateGraph(dailyTab);
     }//GEN-LAST:event_dailyTabComponentShown
 
-    /************************************************************************
-       Function: dailyTabComponentResized
-       Author: All
-       Description: Renders the graph when window is resized
-       Parameters: Component Event
-     ************************************************************************/
+    /**
+     * **********************************************************************
+     * Function: dailyTabComponentResized Author: All Description: Renders the
+     * graph when window is resized Parameters: Component Event
+     ***********************************************************************
+     */
     private void dailyTabComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_dailyTabComponentResized
         // TODO add your handling code here:
         generateGraph(dailyTab);
     }//GEN-LAST:event_dailyTabComponentResized
 
-    /************************************************************************
-       Function: weeklyTabComponentShown
-       Author: All
-       Description: Displays the weekly tab
-       Parameters: Component Event
-     ************************************************************************/
+    /**
+     * **********************************************************************
+     * Function: weeklyTabComponentShown Author: All Description: Displays the
+     * weekly tab Parameters: Component Event
+     ***********************************************************************
+     */
     private void weeklyTabComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_weeklyTabComponentShown
         // TODO add your handling code here:
         tabFlag = 2;
@@ -446,23 +439,23 @@ public class MainDisplay extends javax.swing.JFrame {
         generateGraph(weeklyTab);
     }//GEN-LAST:event_weeklyTabComponentShown
 
-    /************************************************************************
-       Function: weeklyTabComponentResized
-       Author: All
-       Description: Renders the graph when window is resized
-       Parameters: Component Event
-     ************************************************************************/
+    /**
+     * **********************************************************************
+     * Function: weeklyTabComponentResized Author: All Description: Renders the
+     * graph when window is resized Parameters: Component Event
+     ***********************************************************************
+     */
     private void weeklyTabComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_weeklyTabComponentResized
         // TODO add your handling code here:
         generateGraph(weeklyTab);
     }//GEN-LAST:event_weeklyTabComponentResized
 
-    /************************************************************************
-       Function: monthlyTabComponentShown
-       Author: All
-       Description: Displays the monthly tab
-       Parameters: Component Event
-     ************************************************************************/
+    /**
+     * **********************************************************************
+     * Function: monthlyTabComponentShown Author: All Description: Displays the
+     * monthly tab Parameters: Component Event
+     ***********************************************************************
+     */
     private void monthlyTabComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_monthlyTabComponentShown
         // TODO add your handling code here:
         tabFlag = 3;
@@ -471,23 +464,23 @@ public class MainDisplay extends javax.swing.JFrame {
         generateGraph(monthlyTab);
     }//GEN-LAST:event_monthlyTabComponentShown
 
-    /************************************************************************
-       Function: monthlyTabComponentResized
-       Author: All
-       Description: Renders the graph when window is resized
-       Parameters: Component Event
-     ************************************************************************/
+    /**
+     * **********************************************************************
+     * Function: monthlyTabComponentResized Author: All Description: Renders the
+     * graph when window is resized Parameters: Component Event
+     ***********************************************************************
+     */
     private void monthlyTabComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_monthlyTabComponentResized
         // TODO add your handling code here:
         generateGraph(monthlyTab);
     }//GEN-LAST:event_monthlyTabComponentResized
 
-    /************************************************************************
-       Function: yearlyTabComponentShown
-       Author: All
-       Description: Displays the yearly tab
-       Parameters: Component Event
-     ************************************************************************/
+    /**
+     * **********************************************************************
+     * Function: yearlyTabComponentShown Author: All Description: Displays the
+     * yearly tab Parameters: Component Event
+     ***********************************************************************
+     */
     private void yearlyTabComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_yearlyTabComponentShown
         // TODO add your handling code here:
         tabFlag = 4;
@@ -496,70 +489,70 @@ public class MainDisplay extends javax.swing.JFrame {
         generateGraph(yearlyTab);
     }//GEN-LAST:event_yearlyTabComponentShown
 
-    /************************************************************************
-       Function: yearlyTabComponentResized
-       Author: All
-       Description: Renders the graph when window is resized
-       Parameters: Component Event
-     ************************************************************************/
+    /**
+     * **********************************************************************
+     * Function: yearlyTabComponentResized Author: All Description: Renders the
+     * graph when window is resized Parameters: Component Event
+     ***********************************************************************
+     */
     private void yearlyTabComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_yearlyTabComponentResized
         // TODO add your handling code here:
         generateGraph(yearlyTab);
     }//GEN-LAST:event_yearlyTabComponentResized
 
-    /************************************************************************
-       Function: averageTempItemActionPerformed
-       Author: All
-       Description: Displays information regarding temperature
-       Parameters: Action Event
-     ************************************************************************/
+    /**
+     * **********************************************************************
+     * Function: averageTempItemActionPerformed Author: All Description:
+     * Displays information regarding temperature Parameters: Action Event
+     ***********************************************************************
+     */
     private void averageTempItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_averageTempItemActionPerformed
         // TODO add your handling code here:
         JOptionPane.showMessageDialog(null, "Average: ##F\nHigh:       ##F  (#/##/## @#:##)\nLow:        ##F  (#/##/## @#:##)", "Temperature Stats", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_averageTempItemActionPerformed
 
-    /************************************************************************
-       Function: averageWindItemActionPerformed
-       Author: All
-       Description: Displays information regarding wind data
-       Parameters: Action Event
-     ************************************************************************/
+    /**
+     * **********************************************************************
+     * Function: averageWindItemActionPerformed Author: All Description:
+     * Displays information regarding wind data Parameters: Action Event
+     ***********************************************************************
+     */
     private void averageWindItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_averageWindItemActionPerformed
         // TODO add your handling code here:
         JOptionPane.showMessageDialog(null, "Average:   ## mph\nHigh:         ## mph  (#/##/## @#:##)\nDirection:  E", "Wind Stats", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_averageWindItemActionPerformed
 
-    /************************************************************************
-       Function: averagePrecipItemActionPerformed
-       Author: All
-       Description: Returns rainfall data
-       Parameters: Action Event
-     ************************************************************************/
+    /**
+     * **********************************************************************
+     * Function: averagePrecipItemActionPerformed Author: All Description:
+     * Returns rainfall data Parameters: Action Event
+     ***********************************************************************
+     */
     private void averagePrecipItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_averagePrecipItemActionPerformed
         // TODO add your handling code here:
         JOptionPane.showMessageDialog(null, "Rainfall: ## in", "Rain Stats", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_averagePrecipItemActionPerformed
 
-    /************************************************************************
-       Function: temperatureRadioButtonActionPerformed
-       Author: All
-       Description: Radio button for temperature
-       Parameters: Action Event
-     ************************************************************************/
+    /**
+     * **********************************************************************
+     * Function: temperatureRadioButtonActionPerformed Author: All Description:
+     * Radio button for temperature Parameters: Action Event
+     ***********************************************************************
+     */
     private void temperatureRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_temperatureRadioButtonActionPerformed
         // TODO add your handling code here:
         radioFlag = 1;
         setChartTitle(radioFlag);
         callTabs();
-        
+
     }//GEN-LAST:event_temperatureRadioButtonActionPerformed
 
-    /************************************************************************
-       Function: windsRadioButtonActionPerformed
-       Author: All
-       Description: Selects wind data for display
-       Parameters: Action Event
-     ************************************************************************/
+    /**
+     * **********************************************************************
+     * Function: windsRadioButtonActionPerformed Author: All Description:
+     * Selects wind data for display Parameters: Action Event
+     ***********************************************************************
+     */
     private void windsRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_windsRadioButtonActionPerformed
         // TODO add your handling code here:
         radioFlag = 2;
@@ -567,12 +560,12 @@ public class MainDisplay extends javax.swing.JFrame {
         callTabs();
     }//GEN-LAST:event_windsRadioButtonActionPerformed
 
-    /************************************************************************
-       Function: barometricRadioButtonActionPerformed
-       Author: All
-       Description: Selects pressure data for display
-       Parameters: Action Event
-     ************************************************************************/
+    /**
+     * **********************************************************************
+     * Function: barometricRadioButtonActionPerformed Author: All Description:
+     * Selects pressure data for display Parameters: Action Event
+     ***********************************************************************
+     */
     private void barometricRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_barometricRadioButtonActionPerformed
         // TODO add your handling code here:
         radioFlag = 3;
@@ -580,12 +573,12 @@ public class MainDisplay extends javax.swing.JFrame {
         callTabs();
     }//GEN-LAST:event_barometricRadioButtonActionPerformed
 
-    /************************************************************************
-       Function: heatUVindexActionPerformed
-       Author: All
-       Description: displays uv data on graph
-       Parameters: Action Event
-     ************************************************************************/
+    /**
+     * **********************************************************************
+     * Function: heatUVindexActionPerformed Author: All Description: displays uv
+     * data on graph Parameters: Action Event
+     ***********************************************************************
+     */
     private void heatUVindexActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_heatUVindexActionPerformed
         // TODO add your handling code here:
         radioFlag = 4;
@@ -593,12 +586,12 @@ public class MainDisplay extends javax.swing.JFrame {
         callTabs();
     }//GEN-LAST:event_heatUVindexActionPerformed
 
-    /************************************************************************
-       Function: humidityRadioButtonActionPerformed
-       Author: All
-       Description: selects humidity data to display
-       Parameters: Action Event
-     ************************************************************************/
+    /**
+     * **********************************************************************
+     * Function: humidityRadioButtonActionPerformed Author: All Description:
+     * selects humidity data to display Parameters: Action Event
+     ***********************************************************************
+     */
     private void humidityRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_humidityRadioButtonActionPerformed
         // TODO add your handling code here:
         radioFlag = 5;
@@ -606,12 +599,12 @@ public class MainDisplay extends javax.swing.JFrame {
         callTabs();
     }//GEN-LAST:event_humidityRadioButtonActionPerformed
 
-    /************************************************************************
-       Function: rainfallRadioButtonActionPerformed
-       Author: All
-       Description: selects rainfall data for display
-       Parameters: Action Event
-     ************************************************************************/
+    /**
+     * **********************************************************************
+     * Function: rainfallRadioButtonActionPerformed Author: All Description:
+     * selects rainfall data for display Parameters: Action Event
+     ***********************************************************************
+     */
     private void rainfallRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rainfallRadioButtonActionPerformed
         // TODO add your handling code here:
         radioFlag = 6;
@@ -619,12 +612,12 @@ public class MainDisplay extends javax.swing.JFrame {
         callTabs();
     }//GEN-LAST:event_rainfallRadioButtonActionPerformed
 
-    /************************************************************************
-       Function: makeChart
-       Author: All
-       Description: creates a chart using JFreeChart
-       Parameters: n/a
-     ************************************************************************/
+    /**
+     * **********************************************************************
+     * Function: makeChart Author: All Description: creates a chart using
+     * JFreeChart Parameters: n/a
+     ***********************************************************************
+     */
     public JFreeChart makeChart() {
         JFreeChart chart = ChartFactory.createXYLineChart(
                 chartTitle, // chart title
@@ -640,12 +633,13 @@ public class MainDisplay extends javax.swing.JFrame {
         return chart;
     }
 
-    /************************************************************************
-       Function: generateGraph
-       Author: All
-       Description: generates a graph utilizing makeChart
-       Parameters: tab - a JPanel type to set the appropriate graphs
-     ************************************************************************/
+    /**
+     * **********************************************************************
+     * Function: generateGraph Author: All Description: generates a graph
+     * utilizing makeChart Parameters: tab - a JPanel type to set the
+     * appropriate graphs
+     ***********************************************************************
+     */
     public void generateGraph(JPanel tab) {
         tab.removeAll();
 
@@ -657,12 +651,12 @@ public class MainDisplay extends javax.swing.JFrame {
         tab.repaint();
     }
 
-    /************************************************************************
-       Function: callTabs
-       Author: All
-       Description: generates a graph for the appropriate tab
-       Parameters: n/a
-     ************************************************************************/
+    /**
+     * **********************************************************************
+     * Function: callTabs Author: All Description: generates a graph for the
+     * appropriate tab Parameters: n/a
+     ***********************************************************************
+     */
     public void callTabs() {
         switch (tabFlag) {
             case 1:
@@ -692,12 +686,12 @@ public class MainDisplay extends javax.swing.JFrame {
         }
     }
 
-    /************************************************************************
-       Function: setChartTitle
-       Author: All
-       Description: sets the labels on the chart
-       Parameters: radioFlag - denotes which radio button is selected
-     ************************************************************************/
+    /**
+     * **********************************************************************
+     * Function: setChartTitle Author: All Description: sets the labels on the
+     * chart Parameters: radioFlag - denotes which radio button is selected
+     ***********************************************************************
+     */
     public void setChartTitle(int radioFlag) {
         String name = jTabbedPane1.getTitleAt(tabFlag - 1);
 
@@ -733,42 +727,43 @@ public class MainDisplay extends javax.swing.JFrame {
 
     }
 
-    /************************************************************************
-       Function: setXlabel
-       Author: All
-       Description: sets the label on the x axis
-       Parameters: xlabel
-     ************************************************************************/
+    /**
+     * **********************************************************************
+     * Function: setXlabel Author: All Description: sets the label on the x axis
+     * Parameters: xlabel
+     ***********************************************************************
+     */
     public void setXlabel(String xLabel) {
         this.xLabel = xLabel;
     }
 
-    /************************************************************************
-       Function: setYlabel
-       Author: All
-       Description: sets the label on the Y axis
-       Parameters: yLabel
-     ************************************************************************/
+    /**
+     * **********************************************************************
+     * Function: setYlabel Author: All Description: sets the label on the Y axis
+     * Parameters: yLabel
+     ***********************************************************************
+     */
     public void setYlabel(String yLabel) {
         this.yLabel = yLabel;
     }
 
-    /************************************************************************
-       Function: setDataSet
-       Author: All
-       Description: creates a data set to render the data on the graph
-       Parameters: dataSet - data created/used for the JFreeChart
-     ************************************************************************/
+    /**
+     * **********************************************************************
+     * Function: setDataSet Author: All Description: creates a data set to
+     * render the data on the graph Parameters: dataSet - data created/used for
+     * the JFreeChart
+     ***********************************************************************
+     */
     public void setDataSet(XYDataset dataSet) {
         this.dataSet = dataSet;
     }
 
-    /************************************************************************
-       Function: getDataSet
-       Author: All
-       Description: returns the data set created for the graph
-       Parameters: n/a
-     ************************************************************************/
+    /**
+     * **********************************************************************
+     * Function: getDataSet Author: All Description: returns the data set
+     * created for the graph Parameters: n/a
+     ***********************************************************************
+     */
     public XYDataset getDataSet() {
         return dataSet;
     }
@@ -776,12 +771,12 @@ public class MainDisplay extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    /************************************************************************
-       Function: main
-       Author: All
-       Description: runs the main thread for MainDisplay (and associated form)
-       Parameters: args[] - command line args
-     ************************************************************************/
+    /**
+     * **********************************************************************
+     * Function: main Author: All Description: runs the main thread for
+     * MainDisplay (and associated form) Parameters: args[] - command line args
+     ***********************************************************************
+     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

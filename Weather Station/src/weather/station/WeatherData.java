@@ -409,6 +409,7 @@ public class WeatherData {
         if (dirName.isEmpty()) // default behaviour if a null/empty string is supplied
         {
             //folder = new File("..\\data\\");
+            //folder = new File("/home/turkk/Documents/gui/weatherStation/Weather Station/src/weather/station");
             folder = new File("/home/turkk/Documents/gui/weatherStation/Weather Station/src/weather/station");
             //folder = new File("C:\\Users\\7142885\\Documents\\NetBeansProjects\\weatherStation\\Weather Station\\src\\weather\\station\\");
             //folder = new File("C:\\Users\\1640636\\Documents\\school\\Spring 2106\\GUI\\prog1\\Weather Station\\src\\weather\\station\\");
@@ -452,7 +453,9 @@ public class WeatherData {
                 } catch (IOException e) {
                     System.out.println(e);
                 }
-
+                
+                System.out.println(file);
+                
                 // read and parse XML document
                 SAXBuilder builder = new SAXBuilder();
                 try {

@@ -103,7 +103,7 @@ public class wItem {
         this.uvindex = uvindex;
     }
     public float getRainfall() {
-        return uvindex;
+        return rainfall;
     }
     public void setRainfall(float rainfall) {
         this.rainfall = rainfall;
