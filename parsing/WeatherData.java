@@ -145,17 +145,17 @@ public class WeatherData
 		    return dataset;
 		}
 		
-		Hashtable<Integer, ArrayList<Day>> weeks = mun.getAllWeekSamples();  // get all samples in weekly chunks
+		ArrayList<Day> week = mun.getWeekOfSamples( weekIndex );//mun.getAllWeekSamples();  // get all samples in weekly chunks
 		
-		System.out.println( "There are " + weeks.size() + " in the month of " + mun.getMonth() );
+		//System.out.println( "There are " + weeks.size() + " in the month of " + mun.getMonth() );
 		
-		int i = 1;
+		//int i = 1;
 		
 		int j = 0;
 		
-		for( i = 1; i <= weeks.size(); i++ )  // for each of the weeks in this month
-		{
-			ArrayList<Day> week = weeks.get(i);
+		//for( i = 1; i <= weeks.size(); i++ )  // for each of the weeks in this month
+		//{
+			//ArrayList<Day> week = weeks.get(i);
 			
 			for( Day daa : week )
 			{
@@ -173,7 +173,7 @@ public class WeatherData
 				    j += 1;				
 			    }  			
 			}
-		}
+		//}
 		
 		// construct the graph-able data set for the year
 		dataset.addSeries( tempz );
@@ -650,7 +650,7 @@ public class WeatherData
 	{
 		//File dir = new File("");
 		//WeatherData data = new WeatherData();
-		File dir = new File("..\\data\\sub\\");
+		File dir = new File("..\\data\\");
 		
 		//System.out.println( "The name of the directory is : " + dir.getName() );
 		
@@ -662,9 +662,9 @@ public class WeatherData
 		
 	    //XYSeriesCollection dataSet = WeatherData.getMonthSetOfData( 10, 1 );
 		
-		XYSeriesCollection dataSet = WeatherData.getWeekSetOfData( 10, 2, 1 ); // grab data from the first week in Feb. 2010
+		XYSeriesCollection dataSet = WeatherData.getWeekSetOfData( 15, 2, 6 ); // grab data from the first week in Feb. 2010
 		
-		//XYSeriesCollection dataSet = WeatherData.getDaySetOfData( 10, 1, 1 );  // grab jan. 1st 2010
+		//XYSeriesCollection dataSet = WeatherData.getDaySetOfData( 15, 2, 29 );  // grab jan. 1st 2010
 		
 		//System.out.println( "Created XY coord sets for graphing" );		
 		
