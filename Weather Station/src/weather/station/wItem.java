@@ -1,4 +1,4 @@
-//package weather.station;
+package weather.station;
 
 public class wItem {
     private String date;
