@@ -59,6 +59,10 @@ public class WeatherData
 		XYSeries uvindexz = new XYSeries("UV Index" );
 		XYSeries humidity = new XYSeries("Humidity" );
 		XYSeries precipitation = new XYSeries("Precipitation");
+		XYSeries windspeed = new XYSeries("Windspeed" );
+		//XYSeries winddirection = new XYSeries("Winddirection" );
+		//XYSeries windgust = new XYSeries("Windgust");
+		//XYSeries windchill = new XYSeries("Windchill");
 		
 		XYSeriesCollection dataset = new XYSeriesCollection();
 		
@@ -80,7 +84,8 @@ public class WeatherData
 			heatindexz.add( 1, 0.0 );
 			uvindexz.add( 1, 0.0 ) ;
             humidity.add( 1, 0.0);
-            precipitation.add( 1, 0.0 );			
+            precipitation.add( 1, 0.0 );	
+            windspeed.add( 1, 0.0 );			
             dataset.addSeries( tempz );
 		    dataset.addSeries( windz );
 		    dataset.addSeries( baroz );
@@ -88,6 +93,7 @@ public class WeatherData
 		    dataset.addSeries( uvindexz );
 			dataset.addSeries( humidity );
 			dataset.addSeries( precipitation );
+			dataset.addSeries( windspeed );
 			
 		
 		    return dataset;					
@@ -107,6 +113,7 @@ public class WeatherData
 			uvindexz.add( i, item.getUvindex() );
 			humidity.add( i, item.getHumidity() );
 			precipitation.add( i, item.getRainfall() );
+			windspeed.add( i, item.getWindspeed() );
 			
 			i += 1;
 					
@@ -120,6 +127,7 @@ public class WeatherData
 		dataset.addSeries( uvindexz );
 		dataset.addSeries( humidity );
 		dataset.addSeries( precipitation);
+		dataset.addSeries( windspeed );
 		
 		return dataset;				
 				
@@ -134,6 +142,7 @@ public class WeatherData
 		XYSeries uvindexz = new XYSeries("UV Index" );
 		XYSeries humidity = new XYSeries("Humidity" );
 		XYSeries precipitation = new XYSeries("Precipitation");
+		XYSeries windspeed = new XYSeries("Windspeed" );
 		
 		XYSeriesCollection dataset = new XYSeriesCollection();
 		
@@ -149,7 +158,8 @@ public class WeatherData
 			heatindexz.add( 1, 0.0 );
 			uvindexz.add( 1, 0.0 ) ;
             humidity.add( 1, 0.0);
-            precipitation.add( 1, 0.0 );			
+            precipitation.add( 1, 0.0 );	
+            windspeed.add( 1, 0.0 );			
             dataset.addSeries( tempz );
 		    dataset.addSeries( windz );
 		    dataset.addSeries( baroz );
@@ -157,6 +167,7 @@ public class WeatherData
 		    dataset.addSeries( uvindexz );
 			dataset.addSeries( humidity );
 			dataset.addSeries( precipitation );
+			dataset.addSeries( windspeed );
 			
 		
 		    return dataset;					
@@ -188,6 +199,7 @@ public class WeatherData
 					uvindexz.add( j, item.getUvindex() );
 					humidity.add( j, item.getHumidity() );
 					precipitation.add( j, item.getRainfall() );
+					windspeed.add( j, item.getWindspeed() );
 				
 				    j += 1;				
 			    }  			
@@ -202,6 +214,7 @@ public class WeatherData
 		dataset.addSeries( uvindexz );
 		dataset.addSeries( humidity );
 		dataset.addSeries( precipitation);
+		dataset.addSeries( windspeed );
 		
 		return dataset;	
 		
@@ -219,6 +232,7 @@ public class WeatherData
 		XYSeries uvindexz = new XYSeries("UV Index" );
 		XYSeries humidity = new XYSeries("Humidity" );
 		XYSeries precipitation = new XYSeries("Precipitation");
+		XYSeries windspeed = new XYSeries("Windspeed" );
 		
 		XYSeriesCollection dataset = new XYSeriesCollection();
 		
@@ -234,7 +248,8 @@ public class WeatherData
 			heatindexz.add( 1, 0.0 );
 			uvindexz.add( 1, 0.0 ) ;
             humidity.add( 1, 0.0);
-            precipitation.add( 1, 0.0 );			
+            precipitation.add( 1, 0.0 );	
+            windspeed.add( 1, 0.0 );			
             dataset.addSeries( tempz );
 		    dataset.addSeries( windz );
 		    dataset.addSeries( baroz );
@@ -242,6 +257,7 @@ public class WeatherData
 		    dataset.addSeries( uvindexz );
 			dataset.addSeries( humidity );
 			dataset.addSeries( precipitation );
+			dataset.addSeries( windspeed );
 		
 		    return dataset;
 		}
@@ -278,6 +294,7 @@ public class WeatherData
 				uvindexz.add( j, item.getUvindex() );
 				humidity.add( j, item.getHumidity() );					
 				precipitation.add( j, item.getRainfall() );
+				windspeed.add( j, item.getWindspeed() );
 				
 				j += 1;
 					
@@ -292,6 +309,7 @@ public class WeatherData
 		dataset.addSeries( uvindexz );
 		dataset.addSeries( humidity );
 		dataset.addSeries( precipitation);
+		dataset.addSeries( windspeed );
 		
 		return dataset;	
 		
@@ -307,6 +325,7 @@ public class WeatherData
 		XYSeries uvindexz = new XYSeries("UV Index" );
 		XYSeries humidity = new XYSeries("Humidity" );
 		XYSeries precipitation = new XYSeries("Precipitation");
+		XYSeries windspeed = new XYSeries( "Windspeed");
 		
 		XYSeriesCollection dataset = new XYSeriesCollection();
 		
@@ -320,7 +339,8 @@ public class WeatherData
 			heatindexz.add( 1, 0.0 );
 			uvindexz.add( 1, 0.0 ) ;
             humidity.add( 1, 0.0);
-            precipitation.add( 1, 0.0 );			
+            precipitation.add( 1, 0.0 );
+            windspeed.add( 1, 0.0 );			
             dataset.addSeries( tempz );
 		    dataset.addSeries( windz );
 		    dataset.addSeries( baroz );
@@ -328,6 +348,7 @@ public class WeatherData
 		    dataset.addSeries( uvindexz );
 			dataset.addSeries( humidity );
 			dataset.addSeries( precipitation );
+			dataset.addSeries( windspeed );
 		
 		    return dataset;
 		}
@@ -379,6 +400,7 @@ public class WeatherData
 					uvindexz.add( i, item.getUvindex() );
 					humidity.add( i, item.getHumidity() );					
 					precipitation.add( i, item.getRainfall() );
+					windspeed.add( i, item.getWindspeed() );
 					
 					i += 1;
                 }
@@ -393,6 +415,7 @@ public class WeatherData
 		dataset.addSeries( uvindexz );
 		dataset.addSeries( humidity );
 		dataset.addSeries( precipitation);
+		dataset.addSeries( windspeed );
 		
 		return dataset;
     }
@@ -424,8 +447,6 @@ public class WeatherData
 		});
 		
 		int totalDataFileCount = listOfFiles.length;  // get the total number of data files
-		int completeYearsOfData = totalDataFileCount / 12;  // get the total number of complete years of data to be processed
-		int excessMonths = totalDataFileCount - ( 12 * completeYearsOfData ); // get the number of remaining month.xml data files to make up last incomplete year
 		
 		
 		//System.out.println( "Number of .xml files: " + totalDataFileCount );
@@ -541,10 +562,15 @@ public class WeatherData
 							
 							mun.setDailySamples( currDay, daa ); 
 							
+							mun.setMonth( currMonth );
+							
+							mun.setYear( currYear );
+							
 							mun.setWeeklySamples();
 							
-							mun.setMonth( currMonth );
-							mun.setYear( currYear );
+							//System.out.println( "The last month is " + currMonth );
+							
+							
 								
 							Month tempMonth = new Month( mun ); // create a new month in memory
 							

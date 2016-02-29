@@ -44,7 +44,7 @@ public class Month
 		
 		int weekIndex = 1;
 		
-		System.out.println( "THere are : " + numOdays + "number of days in the month");
+		//System.out.println( "THere are : " + numOdays + "number of days in the month");
 
 		
 		for( int i = 1; i <= numOdays; i++ )  // for each day in the month
@@ -53,11 +53,11 @@ public class Month
 			
 			daze.add( daa );  // add the day to our week 
 			
-			boolean flag = false;
+			boolean flag = false;  // flag tells us if there is a fifth week in the month
 			
 			if( i % 7 == 0 ) // if we have processed seven days, consider this a week
 			{
-				System.out.println( "THere are : " + daze.size() + "number of days in week" + weekIndex );
+				//System.out.println( "THere are : " + daze.size() + "number of days in week" + weekIndex );
 
 				ArrayList<Day> temp = new ArrayList<Day>(daze);
 				this.weeklySamples.put( weekIndex, temp );
@@ -73,12 +73,12 @@ public class Month
 			{
 				// add the last incomplete week to the week list
 				this.weeklySamples.put( weekIndex, daze );
-				System.out.println( "THere are : " + daze.size() + "number of days in week" + weekIndex + "LAST WEEK IN MONTH!");
+				//System.out.println( "THere are : " + daze.size() + "number of days in week" + weekIndex + "LAST WEEK IN MONTH!");
 				
 			}												
 		}	
 
-         System.out.println( "THere are " + this.weeklySamples.size() + " weeks of samples in " + this.getMonth() );		
+         //System.out.println( "THere are " + this.weeklySamples.size() + " weeks of samples in " + this.getMonth() );		
 	}
 	
 	
