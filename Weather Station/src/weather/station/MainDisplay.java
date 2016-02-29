@@ -26,7 +26,8 @@ public class MainDisplay extends javax.swing.JFrame {
     private XYDataset dataSet = null;
     private int tabFlag = 1;
     private int radioFlag = 0;
-
+    private WeatherData data;
+    
     /************************************************************************
        Function: MainDisplay Constructor
        Author: All
@@ -39,8 +40,61 @@ public class MainDisplay extends javax.swing.JFrame {
         File dir = new File("/home/turkk/Documents/gui/weatherStation/Weather Station/src/weather/station");
         //File dir = new File("C:\\Users\\7142885\\Documents\\NetBeansProjects\\weatherStation\\Weather Station\\src\\weather\\station\\");
         //File dir = new File("C:\\Users\\1640636\\Documents\\school\\Spring 2106\\GUI\\prog1\\Weather Station\\src\\weather\\station\\");
-        WeatherData data = new WeatherData();
+        this.data = new WeatherData();
         data.getWeatherData(dir);
+    }
+    
+    public void setTheData( String dataSpec ) {
+        if( tabFlag == 1 )  //if we want to look at the temp of one day
+        {
+            XYSeriesCollection dataCollection = this.data.getDaySetOfData( 10, 1, 1); //Jan. 1, 2010
+            XYSeries temp = dataCollection.getSeries( dataSpec ); 
+            this.dataSet = new XYSeriesCollection( temp );
+        }
+        else if ( tabFlag == 2 )
+        {
+            XYSeriesCollection dataCollection = this.data.getWeekSetOfData( 10, 1, 1); //Jan. 1, 2010
+            XYSeries temp = dataCollection.getSeries( dataSpec ); 
+            this.dataSet = new XYSeriesCollection( temp );
+        }
+        else if ( tabFlag == 3 )
+        {
+            XYSeriesCollection dataCollection = this.data.getMonthSetOfData( 10, 1 ); //Jan. 1, 2010
+            XYSeries temp = dataCollection.getSeries( dataSpec ); 
+            this.dataSet = new XYSeriesCollection( temp );
+        }
+        else if ( tabFlag == 4 )
+        {
+            XYSeriesCollection dataCollection = this.data.getYearSetOfData( 10 ); //Jan. 1, 2010
+            XYSeries temp = dataCollection.getSeries( dataSpec ); 
+            this.dataSet = new XYSeriesCollection( temp );
+        }
+    }
+    public void setDataset()
+    {
+        switch (radioFlag) 
+        {
+            case 1:  // Temp
+                setTheData("Temperature");
+                break;
+            case 2: // Wind
+                setTheData("Wind");
+                break;
+            case 3:  // Baro
+                setTheData("Barometer");
+                break;
+            case 4: // UV inde
+                setTheData("UV Index");
+                break;
+            
+            case 5: //humid
+                setTheData("Humidity");
+                break;
+                
+            case 6: //rainfall
+                setTheData("Precipation");
+                break;
+        }
     }
 
     /************************************************************************
@@ -363,6 +417,7 @@ public class MainDisplay extends javax.swing.JFrame {
         // TODO add your handling code here:
         tabFlag = 1;
         setChartTitle(radioFlag);
+        setDataset();
         generateGraph(dailyTab);
     }//GEN-LAST:event_dailyTabComponentShown
 
@@ -387,6 +442,7 @@ public class MainDisplay extends javax.swing.JFrame {
         // TODO add your handling code here:
         tabFlag = 2;
         setChartTitle(radioFlag);
+        setDataset();
         generateGraph(weeklyTab);
     }//GEN-LAST:event_weeklyTabComponentShown
 
@@ -411,6 +467,7 @@ public class MainDisplay extends javax.swing.JFrame {
         // TODO add your handling code here:
         tabFlag = 3;
         setChartTitle(radioFlag);
+        setDataset();
         generateGraph(monthlyTab);
     }//GEN-LAST:event_monthlyTabComponentShown
 
@@ -435,6 +492,7 @@ public class MainDisplay extends javax.swing.JFrame {
         // TODO add your handling code here:
         tabFlag = 4;
         setChartTitle(radioFlag);
+        setDataset();
         generateGraph(yearlyTab);
     }//GEN-LAST:event_yearlyTabComponentShown
 
@@ -492,7 +550,7 @@ public class MainDisplay extends javax.swing.JFrame {
         // TODO add your handling code here:
         radioFlag = 1;
         setChartTitle(radioFlag);
-        callTabs();
+        this.callTabs();
     }//GEN-LAST:event_temperatureRadioButtonActionPerformed
 
     /************************************************************************
@@ -619,7 +677,6 @@ public class MainDisplay extends javax.swing.JFrame {
                 generateGraph(yearlyTab);
                 break;
         }
-
     }
 
     /************************************************************************
