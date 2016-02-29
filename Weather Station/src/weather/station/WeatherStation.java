@@ -1,19 +1,30 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/************************************************************************
+   Program: 
+   Author: 
+   Class:
+   Instructor:
+   Date:
+   Description:    (program requirements)
+   Input:
+   Output:
+   Compilation instructions:
+   Usage:
+   Known bugs/missing features:
+   Modifications:
+   Date                Comment            
+   ----    ------------------------------------------------
+ ************************************************************************/
 package weather.station;
 
 import java.io.File;
 
-
-/**
- *
- * @author 1640636
- */
+/************************************************************************
+    Function:
+    Author:
+    Description:
+    Parameters:
+ ************************************************************************/
 public class WeatherStation {
-
     /**
      * @param args the command line arguments
      */

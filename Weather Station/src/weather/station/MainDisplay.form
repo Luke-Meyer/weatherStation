@@ -11,21 +11,15 @@
             <Property name="text" type="java.lang.String" value="File"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="chooseFilesItem">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Choose .xml file(s)"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chooseFilesItemActionPerformed"/>
-              </Events>
-            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="specifyDirectoryItem">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Specify directory..."/>
+                <Property name="text" type="java.lang.String" value="Open Directory..."/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="specifyDirectoryItemActionPerformed"/>
               </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator1">
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="quitItem">
               <Properties>

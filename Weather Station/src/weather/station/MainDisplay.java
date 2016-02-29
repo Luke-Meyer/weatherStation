@@ -11,15 +11,12 @@ import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-/**
- *
- * @author 1640636
- */
+/************************************************************************
+    Class:
+    Author:
+    Description:
+    Parameters:
+ ************************************************************************/
 public class MainDisplay extends javax.swing.JFrame {
 
     private String chartTitle = "";
@@ -32,6 +29,12 @@ public class MainDisplay extends javax.swing.JFrame {
     /**
      * Creates new form MainDisplay
      */
+    /************************************************************************
+       Class:
+       Author:
+       Description:
+       Parameters:
+     ************************************************************************/
     public MainDisplay() {
         super("Weather Station");
         initComponents();
@@ -61,8 +64,8 @@ public class MainDisplay extends javax.swing.JFrame {
         rainfallRadioButton = new javax.swing.JRadioButton();
         maindisplayMenuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
-        chooseFilesItem = new javax.swing.JMenuItem();
         specifyDirectoryItem = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JPopupMenu.Separator();
         quitItem = new javax.swing.JMenuItem();
         statsMenu = new javax.swing.JMenu();
         averageTempItem = new javax.swing.JMenuItem();
@@ -216,21 +219,14 @@ public class MainDisplay extends javax.swing.JFrame {
 
         fileMenu.setText("File");
 
-        chooseFilesItem.setText("Choose .xml file(s)");
-        chooseFilesItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chooseFilesItemActionPerformed(evt);
-            }
-        });
-        fileMenu.add(chooseFilesItem);
-
-        specifyDirectoryItem.setText("Specify directory...");
+        specifyDirectoryItem.setText("Open Directory...");
         specifyDirectoryItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 specifyDirectoryItemActionPerformed(evt);
             }
         });
         fileMenu.add(specifyDirectoryItem);
+        fileMenu.add(jSeparator1);
 
         quitItem.setText("Quit");
         quitItem.addActionListener(new java.awt.event.ActionListener() {
@@ -321,14 +317,22 @@ public class MainDisplay extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /************************************************************************
+       Class:
+       Author:
+       Description:
+       Parameters:
+     ************************************************************************/
     private void quitItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitItemActionPerformed
         System.exit(0);
     }//GEN-LAST:event_quitItemActionPerformed
-
-    private void chooseFilesItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseFilesItemActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_chooseFilesItemActionPerformed
-
+    
+    /************************************************************************
+       Class:
+       Author:
+       Description:
+       Parameters:
+     ************************************************************************/
     private void specifyDirectoryItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_specifyDirectoryItemActionPerformed
         //Schedule a job for the event dispatch thread:
         //creating and showing this application's GUI.
@@ -344,7 +348,13 @@ public class MainDisplay extends javax.swing.JFrame {
             }
         });
     }//GEN-LAST:event_specifyDirectoryItemActionPerformed
-
+    
+    /************************************************************************
+       Class:
+       Author:
+       Description:
+       Parameters:
+     ************************************************************************/
     private void dailyTabComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_dailyTabComponentShown
         // TODO add your handling code here:
         tabFlag = 1;
@@ -352,11 +362,23 @@ public class MainDisplay extends javax.swing.JFrame {
         generateGraph(dailyTab);
     }//GEN-LAST:event_dailyTabComponentShown
 
+    /************************************************************************
+       Class:
+       Author:
+       Description:
+       Parameters:
+     ************************************************************************/
     private void dailyTabComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_dailyTabComponentResized
         // TODO add your handling code here:
         generateGraph(dailyTab);
     }//GEN-LAST:event_dailyTabComponentResized
 
+    /************************************************************************
+       Class:
+       Author:
+       Description:
+       Parameters:
+     ************************************************************************/
     private void weeklyTabComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_weeklyTabComponentShown
         // TODO add your handling code here:
         tabFlag = 2;
@@ -364,11 +386,23 @@ public class MainDisplay extends javax.swing.JFrame {
         generateGraph(weeklyTab);
     }//GEN-LAST:event_weeklyTabComponentShown
 
+    /************************************************************************
+       Class:
+       Author:
+       Description:
+       Parameters:
+     ************************************************************************/
     private void weeklyTabComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_weeklyTabComponentResized
         // TODO add your handling code here:
         generateGraph(weeklyTab);
     }//GEN-LAST:event_weeklyTabComponentResized
 
+    /************************************************************************
+       Class:
+       Author:
+       Description:
+       Parameters:
+     ************************************************************************/
     private void monthlyTabComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_monthlyTabComponentShown
         // TODO add your handling code here:
         tabFlag = 3;
@@ -376,11 +410,23 @@ public class MainDisplay extends javax.swing.JFrame {
         generateGraph(monthlyTab);
     }//GEN-LAST:event_monthlyTabComponentShown
 
+    /************************************************************************
+       Class:
+       Author:
+       Description:
+       Parameters:
+     ************************************************************************/
     private void monthlyTabComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_monthlyTabComponentResized
         // TODO add your handling code here:
         generateGraph(monthlyTab);
     }//GEN-LAST:event_monthlyTabComponentResized
 
+    /************************************************************************
+       Class:
+       Author:
+       Description:
+       Parameters:
+     ************************************************************************/
     private void yearlyTabComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_yearlyTabComponentShown
         // TODO add your handling code here:
         tabFlag = 4;
@@ -388,26 +434,56 @@ public class MainDisplay extends javax.swing.JFrame {
         generateGraph(yearlyTab);
     }//GEN-LAST:event_yearlyTabComponentShown
 
+    /************************************************************************
+       Class:
+       Author:
+       Description:
+       Parameters:
+     ************************************************************************/
     private void yearlyTabComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_yearlyTabComponentResized
         // TODO add your handling code here:
         generateGraph(yearlyTab);
     }//GEN-LAST:event_yearlyTabComponentResized
 
+    /************************************************************************
+       Class:
+       Author:
+       Description:
+       Parameters:
+     ************************************************************************/
     private void averageTempItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_averageTempItemActionPerformed
         // TODO add your handling code here:
         JOptionPane.showMessageDialog(null, "Average: ##F\nHigh:       ##F  (#/##/## @#:##)\nLow:        ##F  (#/##/## @#:##)", "Temperature Stats", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_averageTempItemActionPerformed
 
+    /************************************************************************
+       Class:
+       Author:
+       Description:
+       Parameters:
+     ************************************************************************/
     private void averageWindItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_averageWindItemActionPerformed
         // TODO add your handling code here:
         JOptionPane.showMessageDialog(null, "Average:   ## mph\nHigh:         ## mph  (#/##/## @#:##)\nDirection:  E", "Wind Stats", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_averageWindItemActionPerformed
 
+    /************************************************************************
+       Class:
+       Author:
+       Description:
+       Parameters:
+     ************************************************************************/
     private void averagePrecipItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_averagePrecipItemActionPerformed
         // TODO add your handling code here:
         JOptionPane.showMessageDialog(null, "Rainfall: ## in", "Rain Stats", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_averagePrecipItemActionPerformed
 
+    /************************************************************************
+       Class:
+       Author:
+       Description:
+       Parameters:
+     ************************************************************************/
     private void temperatureRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_temperatureRadioButtonActionPerformed
         // TODO add your handling code here:
         radioFlag = 1;
@@ -415,6 +491,12 @@ public class MainDisplay extends javax.swing.JFrame {
         callTabs();
     }//GEN-LAST:event_temperatureRadioButtonActionPerformed
 
+    /************************************************************************
+       Class:
+       Author:
+       Description:
+       Parameters:
+     ************************************************************************/
     private void windsRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_windsRadioButtonActionPerformed
         // TODO add your handling code here:
         radioFlag = 2;
@@ -422,6 +504,12 @@ public class MainDisplay extends javax.swing.JFrame {
         callTabs();
     }//GEN-LAST:event_windsRadioButtonActionPerformed
 
+    /************************************************************************
+       Class:
+       Author:
+       Description:
+       Parameters:
+     ************************************************************************/
     private void barometricRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_barometricRadioButtonActionPerformed
         // TODO add your handling code here:
         radioFlag = 3;
@@ -429,6 +517,12 @@ public class MainDisplay extends javax.swing.JFrame {
         callTabs();
     }//GEN-LAST:event_barometricRadioButtonActionPerformed
 
+    /************************************************************************
+       Class:
+       Author:
+       Description:
+       Parameters:
+     ************************************************************************/
     private void heatUVindexActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_heatUVindexActionPerformed
         // TODO add your handling code here:
         radioFlag = 4;
@@ -436,6 +530,12 @@ public class MainDisplay extends javax.swing.JFrame {
         callTabs();
     }//GEN-LAST:event_heatUVindexActionPerformed
 
+    /************************************************************************
+       Class:
+       Author:
+       Description:
+       Parameters:
+     ************************************************************************/
     private void humidityRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_humidityRadioButtonActionPerformed
         // TODO add your handling code here:
         radioFlag = 5;
@@ -443,6 +543,12 @@ public class MainDisplay extends javax.swing.JFrame {
         callTabs();
     }//GEN-LAST:event_humidityRadioButtonActionPerformed
 
+    /************************************************************************
+       Class:
+       Author:
+       Description:
+       Parameters:
+     ************************************************************************/
     private void rainfallRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rainfallRadioButtonActionPerformed
         // TODO add your handling code here:
         radioFlag = 6;
@@ -450,6 +556,12 @@ public class MainDisplay extends javax.swing.JFrame {
         callTabs();
     }//GEN-LAST:event_rainfallRadioButtonActionPerformed
 
+    /************************************************************************
+       Class:
+       Author:
+       Description:
+       Parameters:
+     ************************************************************************/
     public JFreeChart makeChart() {
         JFreeChart chart = ChartFactory.createXYLineChart(
                 chartTitle, // chart title
@@ -465,6 +577,12 @@ public class MainDisplay extends javax.swing.JFrame {
         return chart;
     }
 
+    /************************************************************************
+       Class:
+       Author:
+       Description:
+       Parameters:
+     ************************************************************************/
     public void generateGraph(JPanel tab) {
         tab.removeAll();
 
@@ -476,6 +594,12 @@ public class MainDisplay extends javax.swing.JFrame {
         tab.repaint();
     }
 
+    /************************************************************************
+       Class:
+       Author:
+       Description:
+       Parameters:
+     ************************************************************************/
     public void callTabs() {
         switch (tabFlag) {
             case 1:
@@ -494,6 +618,12 @@ public class MainDisplay extends javax.swing.JFrame {
 
     }
 
+    /************************************************************************
+       Class:
+       Author:
+       Description:
+       Parameters:
+     ************************************************************************/
     public void setChartTitle(int radioFlag) {
         String name = jTabbedPane1.getTitleAt(tabFlag - 1);
 
@@ -529,30 +659,72 @@ public class MainDisplay extends javax.swing.JFrame {
 
     }
 
+    /************************************************************************
+       Class:
+       Author:
+       Description:
+       Parameters:
+     ************************************************************************/
     public String getChartTitle() {
         return chartTitle;
     }
 
+    /************************************************************************
+       Class:
+       Author:
+       Description:
+       Parameters:
+     ************************************************************************/
     public void setXlabel(String xLabel) {
         this.xLabel = xLabel;
     }
 
+    /************************************************************************
+       Class:
+       Author:
+       Description:
+       Parameters:
+     ************************************************************************/
     public String getXlabel() {
         return xLabel;
     }
 
+    /************************************************************************
+       Class:
+       Author:
+       Description:
+       Parameters:
+     ************************************************************************/
     public void setYlabel(String yLabel) {
         this.yLabel = yLabel;
     }
 
+    /************************************************************************
+       Class:
+       Author:
+       Description:
+       Parameters:
+     ************************************************************************/
     public String getYlabel() {
         return yLabel;
     }
 
+    /************************************************************************
+       Class:
+       Author:
+       Description:
+       Parameters:
+     ************************************************************************/
     public void setDataSet(XYDataset dataSet) {
         this.dataSet = dataSet;
     }
 
+    /************************************************************************
+       Class:
+       Author:
+       Description:
+       Parameters:
+     ************************************************************************/
     public XYDataset getDataSet() {
         return dataSet;
     }
@@ -560,6 +732,12 @@ public class MainDisplay extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
+    /************************************************************************
+       Class:
+       Author:
+       Description:
+       Parameters:
+     ************************************************************************/
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -597,12 +775,12 @@ public class MainDisplay extends javax.swing.JFrame {
     private javax.swing.JMenuItem averageTempItem;
     private javax.swing.JMenuItem averageWindItem;
     private javax.swing.JRadioButton barometricRadioButton;
-    private javax.swing.JMenuItem chooseFilesItem;
     private javax.swing.JPanel dailyTab;
     private javax.swing.JSlider dataSelector;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JRadioButton heatUVindex;
     private javax.swing.JRadioButton humidityRadioButton;
+    private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JMenuBar maindisplayMenuBar;
     private javax.swing.JPanel monthlyTab;
