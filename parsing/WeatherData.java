@@ -111,9 +111,83 @@ public class WeatherData
 		dataset.addSeries( uvindexz );
 		
 		return dataset;				
+				
+	}
+	
+	public static XYSeriesCollection getWeekSetOfData( int yearIndex, int monthIndex, int weekIndex )
+	{
+		XYSeries tempz = new XYSeries("Temperature");
+		XYSeries windz = new XYSeries("Wind");
+		XYSeries baroz = new XYSeries("Barometer");
+		XYSeries heatindexz = new XYSeries("Heat Index" );
+		XYSeries uvindexz = new XYSeries("UV Index" );
+		
+		XYSeriesCollection dataset = new XYSeriesCollection();
+		
+		Year year = WeatherData.dictOfYears.get( yearIndex ); // grab the year of data in question
+		
+		Month mun = year.getMonthlySamplesByMonth( monthIndex );  // grab the month of data in question
+		
+		if( mun == null ) // if month doesn't exist, create uninteresting data for JFreeChart and return
+		{
+			tempz.add( 1, 0.0 );
+			windz.add( 1, 0.0 );
+			baroz.add( 1, 0.0 );
+			heatindexz.add( 1, 0.0 );
+			uvindexz.add( 1, 0.0 ) ;	
+			
+			dataset.addSeries( tempz );
+		    dataset.addSeries( windz );
+		    dataset.addSeries( baroz );
+		    dataset.addSeries( heatindexz );
+		    dataset.addSeries( uvindexz );
+		
+		    return dataset;
+		}
+		
+		Hashtable<Integer, ArrayList<Day>> weeks = mun.getAllWeekSamples();  // get all samples in weekly chunks
+		
+		System.out.println( "There are " + weeks.size() + " in the month of " + mun.getMonth() );
+		
+		int i = 1;
+		
+		int j = 0;
+		
+		for( i = 1; i <= weeks.size(); i++ )  // for each of the weeks in this month
+		{
+			ArrayList<Day> week = weeks.get(i);
+			
+			for( Day daa : week )
+			{
+				ArrayList<wItem> samples = daa.getSamples();					
+				
+			    for (wItem item: samples) // for each sample in a day
+			    {			
+				    // convert data into xy coordinate sets for JFreeChart use
+                    tempz.add( j, item.getTemperature() );
+			        windz.add( j, item.getWindspeed() );
+				    baroz.add( j, item.getBarometer() );
+				    heatindexz.add( j, item.getHeatindex() );
+				    uvindexz.add( j, item.getUvindex() );
+				
+				    j += 1;				
+			    }  			
+			}
+		}
+		
+		// construct the graph-able data set for the year
+		dataset.addSeries( tempz );
+		dataset.addSeries( windz );
+		dataset.addSeries( baroz );
+		dataset.addSeries( heatindexz );
+		dataset.addSeries( uvindexz );
+		
+		return dataset;	
 		
 		
 	}
+	
+	
 	
 	public static XYSeriesCollection getMonthSetOfData( int yearIndex, int monthIndex )
 	{
@@ -283,11 +357,7 @@ public class WeatherData
 		
 		return dataset;
     }
-
-
-
-	
-	
+		
 	
     public static void getWeatherData( File dir )//String dirName )//main( String[] args )
     {        	
@@ -432,10 +502,14 @@ public class WeatherData
 							
 							mun.setDailySamples( currDay, daa ); 
 							
+							mun.setWeeklySamples();
+							
 							mun.setMonth( currMonth );
 							mun.setYear( currYear );
 								
 							Month tempMonth = new Month( mun ); // create a new month in memory
+							
+							//tempMonth.setWeeklySamples();
 										
 							year.setMonthlySamples( currMonth, tempMonth );  // add month to year
 							
@@ -480,17 +554,21 @@ public class WeatherData
 							
 							
 							mun.setDailySamples( prevDay, daa );  // set that day of samples in a month object
+							//mun.setWeeklySamples();  // set weekly chunks of samples
 																				
 							
 							if( prevMonth != currMonth )  // check to see if the next day is in a new month
 							{							    							
 							
 								mun.setMonth( prevMonth );
+								
 								mun.setYear( prevYear );
 								
+								mun.setWeeklySamples();
 								
 								Month tempMonth = new Month( mun ); // create a new month in memory
 								
+								//tempMonth.setWeeklySamples();
 									
 								year.setMonthlySamples( prevMonth, tempMonth );  // add month to year
 								
@@ -504,6 +582,7 @@ public class WeatherData
 									WeatherData.dictOfYears.put( prevYear, savedYear ); 
 									
 								    year.reset();
+									
 									prevYear = currYear;
 								}
 							
@@ -523,7 +602,9 @@ public class WeatherData
 							daySamples.add( item ); // if we are still processing the same day, keep adding samples 
 						}
 						
-                    }			
+                    }
+  
+                    //WeatherData.setWeeklySamples(); // create the weekly sample sets from the .xml data  
 					
                 }
                 // JDOMException indicates a well-formedness error
@@ -577,9 +658,11 @@ public class WeatherData
 		
 		//System.out.println( "Got data from .xml" );
 		
-		XYSeriesCollection dataSet = WeatherData.getYearSetOfData( 15 ); // grab year 2010 weather data
+		//XYSeriesCollection dataSet = WeatherData.getYearSetOfData( 15 ); // grab year 2010 weather data
 		
 	    //XYSeriesCollection dataSet = WeatherData.getMonthSetOfData( 10, 1 );
+		
+		XYSeriesCollection dataSet = WeatherData.getWeekSetOfData( 10, 2, 1 ); // grab data from the first week in Feb. 2010
 		
 		//XYSeriesCollection dataSet = WeatherData.getDaySetOfData( 10, 1, 1 );  // grab jan. 1st 2010
 		
@@ -587,6 +670,11 @@ public class WeatherData
 		
 		//  debug for getYearSetOfData
 		XYSeries series0 = dataSet.getSeries("Temperature");
+		
+		if( series0.isEmpty() )
+		{
+			System.out.println("THERE IS NO WEEKLY DATA!" );
+		}
 		
 		int count = 0;
         for (Object i : series0.getItems()) 
