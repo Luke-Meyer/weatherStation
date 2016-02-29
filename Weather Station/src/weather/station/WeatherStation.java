@@ -55,12 +55,9 @@ public class WeatherStation {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-<<<<<<< HEAD
             File dir = new File("C:\\Users\\7142885\\Documents\\NetBeansProjects\\weatherStation\\Weather Station\\src\\weather\\station");
             WeatherData data = new WeatherData();
             data.getWeatherData(dir);
-=======
->>>>>>> d45835ce55cf327a6e9b43116b0e009ba2934b13
             new MainDisplay().setVisible(true);
         });
     }
