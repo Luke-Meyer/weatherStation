@@ -1,5 +1,4 @@
 package weather.station;
-
 import java.util.*;
 
 public class Year
@@ -34,6 +33,39 @@ public class Year
 		this.year = tempYear.getYear();
 		
 		this.monthlySamples.putAll( tempYear.getAllMonthlySamples() );		
+	}
+	
+	public int getSampleCount()
+	{
+		int count = 0;
+		
+		Hashtable<Integer, Month> muns = this.getAllMonthlySamples();
+		
+        // for each month in the year
+		for( int i = 1; i <= muns.size(); i++ )
+		{
+			Month month = muns.get(i);
+			
+			if( month == null )
+			{
+				continue;
+			}
+			Hashtable<Integer, Day> daas = month.getAllDaySamples();
+			
+			 // for each day in the month
+			for( int j = 1; j <=daas.size(); j++ )
+			{
+				Day day = daas.get(j);
+				
+				if(day == null )
+				{
+					continue;
+				}
+				count += day.getSampleCount();  // sum the number of samples in each day
+			}			
+		}
+		
+		return count;
 	}
 	
 	public void calcStats()
@@ -105,6 +137,8 @@ public class Year
 					temp = item.getWindspeed();  // get running sum of wind speed for the month
 			
 					windSum += temp;
+					
+					temp = item.getWindgust();
 			
 					if( temp > maxWind )
 					{
@@ -255,6 +289,8 @@ public class Year
 	
 	public Month getMonthlySamplesByMonth( int monthKey )
 	{
+		System.out.println( "Made it so get Month Samples" );
+		
 		return this.monthlySamples.get(monthKey);
 	}
 	
