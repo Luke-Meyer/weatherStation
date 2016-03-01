@@ -27,6 +27,11 @@ public class Day
 		this.samples = new ArrayList<wItem>();
 	}
 	
+	public int getSampleCount()
+	{
+		return this.samples.size();
+	}
+	
 	public void calcStats()
 	{
 		float tempSum = 0.0f;
@@ -230,6 +235,8 @@ public class Day
 	public void setSamples( List<wItem> tempSamples )
 	{
 		this.samples = new ArrayList( tempSamples );
+		
+		this.calcStats(); // set the stats for the day
 	}
 	
 	public ArrayList<wItem> getSamples()

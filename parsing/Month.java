@@ -1,23 +1,5 @@
 import java.util.*;
 
-/*
-public class WeeklyStats
-{
-	private float meanTemp;
-	private float maxTemp;
-	private String maxTempDate;
-	private String maxTempTime;
-	private float minTemp;
-	private String minTempDate;
-	private String minTempTime;
-	private float meanWind;
-	private float maxWind;
-	private String windDate;
-	private String windTime;
-    private float rainfall;
-	
-}
-*/
 
 public class Month
 {
@@ -26,8 +8,7 @@ public class Month
 	private Hashtable<Integer, Day> dailySamples;
 	private Hashtable<Integer, ArrayList<Day> > weeklySamples;
 	
-	private Hashtable<Integer, ArrayList<WeekStats>> weekStats;
-	
+	private Hashtable<Integer, ArrayList<WeekStats>> weekStats;	
 	
 	private float meanTemp;
 	private float highTemp;
@@ -60,9 +41,42 @@ public class Month
 		this.month = tempMonth.getMonth();
 		
 		this.dailySamples.putAll( tempMonth.getAllDaySamples() );
-		this.weeklySamples.putAll( tempMonth.getAllWeekSamples() );        		
+		this.weeklySamples.putAll( tempMonth.getAllWeekSamples() ); 	
 
 	}
+	
+	public int getSampleCount()
+	{
+		int count = 0;
+		Hashtable<Integer, Day> daas = this.getAllDaySamples();
+		
+		// for each day in the month
+		for( int i = 1; i <= daas.size(); i++ )
+		{
+			Day day = daas.get(i);
+			if( day == null )
+			{
+				continue;
+			}
+			
+			count += day.getSampleCount();  // sum the number of samples in each day			
+		}
+		
+		return count;
+	}
+	
+	/*
+	public int getWeeklySampleCount()
+	{
+		int count = 0;
+		for( Day day : this.dailySamples ) // for each day in the month
+		{
+			count += day.getSampleCount();  // sum the number of samples in each day			
+		}
+		
+		return count;
+	}
+	*/
 	
     public void calcStats()
 	{
@@ -130,8 +144,7 @@ public class Month
 			
 				rainSum += item.getRainfall();						
 			
-			}			
-			
+			}					
 		}
 		
 		this.setHighTemp( maxTemp, maxTempDate, maxTempTime );  // set the max temp for month
@@ -147,6 +160,7 @@ public class Month
 		this.setRainfall( rainSum );  // set accumulated precipitation		
 		
 	}
+	
 	
 	public float getMeanTemp()
 	{
@@ -255,6 +269,7 @@ public class Month
 	
 	public void setWeeklySamples()
 	{
+		
 		int numOdays = this.dailySamples.size();  // number of days in the month
 		
 		ArrayList<Day> daze = new ArrayList<Day>();
@@ -351,6 +366,7 @@ public class Month
 		this.month = -1;
 		this.year = -1;
 	}
+	
 	
 	public class WeekStats
 	{
@@ -463,8 +479,7 @@ public class Month
 		public void setRainfall( float rain )
 		{
 			this.rainfall = rain;
-		}
-		
+		}	
 	
 	}
 	

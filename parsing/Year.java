@@ -35,6 +35,39 @@ public class Year
 		this.monthlySamples.putAll( tempYear.getAllMonthlySamples() );		
 	}
 	
+	public int getSampleCount()
+	{
+		int count = 0;
+		
+		Hashtable<Integer, Month> muns = this.getAllMonthlySamples();
+		
+        // for each month in the year
+		for( int i = 1; i <= muns.size(); i++ )
+		{
+			Month month = muns.get(i);
+			
+			if( month == null )
+			{
+				continue;
+			}
+			Hashtable<Integer, Day> daas = month.getAllDaySamples();
+			
+			 // for each day in the month
+			for( int j = 1; j <=daas.size(); j++ )
+			{
+				Day day = daas.get(j);
+				
+				if(day == null )
+				{
+					continue;
+				}
+				count += day.getSampleCount();  // sum the number of samples in each day
+			}			
+		}
+		
+		return count;
+	}
+	
 	public void calcStats()
 	{
 		float tempSum = 0.0f;

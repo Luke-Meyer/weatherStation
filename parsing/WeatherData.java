@@ -53,6 +53,33 @@ public class WeatherData
 		return attr;
 	}
 	
+	public static int getDaySampleCount( int yearIndex, int monthIndex, int dayIndex )
+	{
+		Day day = WeatherData.dictOfYears.get( yearIndex ).getMonthlySamplesByMonth( monthIndex ).getDayofSamples( dayIndex );
+		
+		int count = day.getSampleCount();
+		
+		return count;
+	}
+	
+	public static int getMonthSampleCount( int yearIndex, int monthIndex )
+	{
+		Month month = WeatherData.dictOfYears.get( yearIndex ).getMonthlySamplesByMonth( monthIndex );
+		
+		int count = month.getSampleCount();
+		
+		return count;
+	}
+	
+	public static int getYearSampleCount( int yearIndex )
+	{
+		Year year = WeatherData.dictOfYears.get( yearIndex );
+		
+		int count = year.getSampleCount();
+		
+		return count;
+	}
+	
 	public static float getDayAvgTemp( int yearIndex, int monthIndex, int dayIndex )
 	{
 		Day day = WeatherData.dictOfYears.get( yearIndex ).getMonthlySamplesByMonth( monthIndex ).getDayofSamples( dayIndex );
@@ -924,12 +951,13 @@ public static float getYearAvgTemp( int yearIndex)
     }
 		
 	
-    public static void getWeatherData( File dir )//String dirName )//main( String[] args )
+    public static void getWeatherData( File folder )//String dirName )//main( String[] args )
     {        	
-		String dirName = dir.getName();
+		//String dirName = dir.getName();
 		
-		File folder;
+		//File folder = new File( dir);
 		
+		/*
 		if( dirName.isEmpty() )  // default behaviour if a null/empty string is supplied
 		{
 			 folder = new File( "..\\data\\" );
@@ -939,6 +967,7 @@ public static float getYearAvgTemp( int yearIndex)
 			dirName = dir.getAbsolutePath();
 			folder = new File( dirName );
 		}	
+		*/
 		
 
 		
@@ -1070,6 +1099,8 @@ public static float getYearAvgTemp( int yearIndex)
 							mun.setYear( currYear );
 							
 							mun.setWeeklySamples();
+							
+							mun.calcStats();
 							
 							//System.out.println( "The last month is " + currMonth );
 							
