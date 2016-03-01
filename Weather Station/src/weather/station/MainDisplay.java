@@ -43,9 +43,11 @@ public class MainDisplay extends javax.swing.JFrame {
     public MainDisplay() {
         super("Weather Station");
         initComponents();
-        File dir = new File("/home/turkk/Documents/gui/weatherStation/Weather Station/src/weather/station");
-        //File dir = new File("C:\\Users\\7142885\\Documents\\NetBeansProjects\\weatherStation\\Weather Station\\src\\weather\\station\\");
-        //File dir = new File("C:\\Users\\1640636\\Documents\\school\\Spring 2106\\GUI\\prog1\\Weather Station\\src\\weather\\station\\");
+        
+        String workingDir = System.getProperty("user.dir");
+	System.out.println("Current working directory: " + workingDir);
+        File dir = new File(workingDir);
+        
         this.data = new WeatherData();
         data.getWeatherData(dir);
     }
@@ -107,6 +109,7 @@ public class MainDisplay extends javax.swing.JFrame {
     private void initComponents() {
 
         radioButtonGroup = new javax.swing.ButtonGroup();
+        fileChooser = new javax.swing.JFileChooser();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         dailyTab = new javax.swing.JPanel();
         weeklyTab = new javax.swing.JPanel();
@@ -417,27 +420,6 @@ public class MainDisplay extends javax.swing.JFrame {
 
     /**
      * **********************************************************************
-     * Function: specifyDirectoryItemActionPerformed Author: All Description:
-     * Specifies a directory to choose xml files Parameters: Action Event
-     ***********************************************************************
-     */
-    private void specifyDirectoryItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_specifyDirectoryItemActionPerformed
-        //Schedule a job for the event dispatch thread:
-        //creating and showing this application's GUI.
-
-        //System.out.println("Specify directory was clicked");
-        DirectoryChooser dir = new DirectoryChooser();
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                //Turn off metal's use of bold fonts
-                UIManager.put("swing.boldMetal", Boolean.FALSE);
-                dir.createAndShowGUI();
-            }
-        });
-    }//GEN-LAST:event_specifyDirectoryItemActionPerformed
-
-    /**
-     * **********************************************************************
      * Function: dailyTabComponentShown Author: All Description: Displays the
      * daily tab Parameters: Component Event
      ***********************************************************************
@@ -678,6 +660,27 @@ public class MainDisplay extends javax.swing.JFrame {
         dataSelector.setValue(data);
     }//GEN-LAST:event_incrementActionPerformed
 
+    private void specifyDirectoryItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_specifyDirectoryItemActionPerformed
+        // TODO add your handling code here:
+        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int returnVal = fileChooser.showOpenDialog(this);
+        
+        if(returnVal == JFileChooser.APPROVE_OPTION)
+        {
+            File file = fileChooser.getSelectedFile();
+            String path = file.getAbsolutePath();
+            
+            
+            File abspath = new File(path);
+            
+            System.out.println("Opening: " + abspath);
+            data = null;
+            this.data = new WeatherData();
+            data.getWeatherData(abspath);
+            callTabs();
+        }
+    }//GEN-LAST:event_specifyDirectoryItemActionPerformed
+
     /**
      * **********************************************************************
      * Function: makeChart Author: All Description: creates a chart using
@@ -904,6 +907,7 @@ public class MainDisplay extends javax.swing.JFrame {
             }
         });
     }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem averagePrecipItem;
@@ -913,6 +917,7 @@ public class MainDisplay extends javax.swing.JFrame {
     private javax.swing.JPanel dailyTab;
     private javax.swing.JSlider dataSelector;
     private javax.swing.JButton decrement;
+    private javax.swing.JFileChooser fileChooser;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JRadioButton heatUVindex;
     private javax.swing.JRadioButton humidityRadioButton;

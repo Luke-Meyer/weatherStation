@@ -4,6 +4,8 @@
   <NonVisualComponents>
     <Component class="javax.swing.ButtonGroup" name="radioButtonGroup">
     </Component>
+    <Component class="javax.swing.JFileChooser" name="fileChooser">
+    </Component>
     <Menu class="javax.swing.JMenuBar" name="maindisplayMenuBar">
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="fileMenu">
