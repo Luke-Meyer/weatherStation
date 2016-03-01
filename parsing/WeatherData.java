@@ -219,8 +219,7 @@ public class WeatherData
 		return dataset;	
 		
 		
-	}
-	
+	}	
 	
 	
 	public static XYSeriesCollection getMonthSetOfData( int yearIndex, int monthIndex )
