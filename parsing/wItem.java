@@ -6,6 +6,8 @@ public class wItem {
     private int month;
     private int day;
     private String time;
+	private int hour;
+	private int minute;
     private float temperature;
 	//private int temperature;
     private float humidity;
@@ -45,8 +47,18 @@ public class wItem {
     public String getTime() {
         return time;
     }
-    public void setTime(String time) {
+    public void setTime(String time) 
+	{
         this.time = time;
+		
+		String temp = date.trim();
+		String delims = "[:AP]";
+        String[] token = temp.split(delims);
+		
+		
+		this.hour = Integer.parseInt(token[0]);
+		this.minute = Integer.parseInt(token[1]);
+		
     }
     public float getTemperature() {
         return temperature;
