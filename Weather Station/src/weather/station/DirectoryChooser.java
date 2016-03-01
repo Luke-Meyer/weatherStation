@@ -17,7 +17,7 @@ public class DirectoryChooser extends JPanel implements ActionListener {
     JButton openButton;//, saveButton;
     JTextArea log;
     JFileChooser fc;
-    
+    String dirPath = "";    
     /************************************************************************
        Class: public DirectoryChooser()
        Author: All
@@ -83,33 +83,16 @@ public class DirectoryChooser extends JPanel implements ActionListener {
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 File file = fc.getSelectedFile();
                 //This is where a real application would open the file.
-                log.append("Opening: " + file.getName() + "." + newline);
+                setPath(file.getAbsolutePath());
+                
+                log.append("Opening: " + file.getAbsolutePath() + "." + newline);
+            
             } else {
                 log.append("Open command cancelled by user." + newline);
             }
             log.setCaretPosition(log.getDocument().getLength());
 
             //Handle save button action.
-        }
-    }
-
-    /**
-     * Returns an ImageIcon, or null if the path was invalid.
-     */
-    /************************************************************************
-       Function: createImageIcon()
-       Author: all
-       Description: This method creates the icon to be displayed next to the
-       * file name in the file chooser.
-       Parameters: String path - string holding path name
-     ************************************************************************/
-    protected static ImageIcon createImageIcon(String path) {
-        java.net.URL imgURL = DirectoryChooser.class.getResource(path);
-        if (imgURL != null) {
-            return new ImageIcon(imgURL);
-        } else {
-            System.err.println("Couldn't find file: " + path);
-            return null;
         }
     }
 
@@ -137,6 +120,14 @@ public class DirectoryChooser extends JPanel implements ActionListener {
         //Display the window.
         frame.pack();
         frame.setVisible(true);
+    }
+    
+    public String getPath() {
+        return dirPath;
+    }
+    
+    public void setPath(String path) {
+        this.dirPath = path;
     }
 
 }
