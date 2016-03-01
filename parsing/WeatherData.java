@@ -443,10 +443,10 @@ public static float getYearAvgTemp( int yearIndex)
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
-	//public static XYSeriesCollection getDaySetOfData( int yearIndex, int monthIndex, int dayIndex )
-	public static TimeSeriesCollection getDaySetOfData( int yearIndex, int monthIndex, int dayIndex )
+	public static XYSeriesCollection getDaySetOfData( int yearIndex, int monthIndex, int dayIndex )
+	//public static TimeSeriesCollection getDaySetOfData( int yearIndex, int monthIndex, int dayIndex )
 	{
-		/*
+		
 		XYSeries tempz = new XYSeries("Temperature");
 		XYSeries windz = new XYSeries("Wind");
 		XYSeries baroz = new XYSeries("Barometer");
@@ -458,8 +458,8 @@ public static float getYearAvgTemp( int yearIndex)
 		//XYSeries winddirection = new XYSeries("Winddirection" );
 		//XYSeries windgust = new XYSeries("Windgust");
 		//XYSeries windchill = new XYSeries("Windchill");
-		*/
 		
+		/*
 		TimeSeries tempz = new TimeSeries("Temperature");
 		TimeSeries windz = new TimeSeries("Wind");
 		TimeSeries baroz = new TimeSeries("Barometer");
@@ -468,9 +468,10 @@ public static float getYearAvgTemp( int yearIndex)
 		TimeSeries humidity = new TimeSeries("Humidity" );
 		TimeSeries precipitation = new TimeSeries("Precipitation");
 		TimeSeries windspeed = new TimeSeries("Windspeed" );
+		*/
 		
-		//XYSeriesCollection dataset = new XYSeriesCollection();
-		TimeSeriesCollection dataset = new TimeSeriesCollection();
+		XYSeriesCollection dataset = new XYSeriesCollection();
+		//TimeSeriesCollection dataset = new TimeSeriesCollection();
 		
 		
 		Year year = WeatherData.dictOfYears.get( yearIndex ); // grab the year of data in question
@@ -490,7 +491,7 @@ public static float getYearAvgTemp( int yearIndex)
 			//System.out.println( "Day key: " + j );			
 			//continue;
 			//daa = mun.getDayofSamples( dayIndex - 1 ); // if the day doesn't exist, just duplicate the previous day
-			/*
+			
 			tempz.add( 1, 0.0 );
 			windz.add( 1, 0.0 );
 			baroz.add( 1, 0.0 );
@@ -507,15 +508,16 @@ public static float getYearAvgTemp( int yearIndex)
 			dataset.addSeries( humidity );
 			dataset.addSeries( precipitation );
 			dataset.addSeries( windspeed );
-			*/
-			tempz.add( new Minute( 0, 0, 0, 0, 0 ), 0.0);
-			windz.add( new Minute(0,0,0,0,0 ), 0.0);
-			baroz.add( new Minute(0,0,0,0,0 ), 0.0);
-			heatindexz.add( new Minute( 0,0,0,0,0 ), 0.0);
-			uvindexz.add( new Minute(0,0,0,0,0 ), 0.0);
-			humidity.add( new Minute(0,0,0,0,0 ), 0.0);
-			precipitation.add( new Minute(0,0,0,0,0 ), 0.0);
-			windspeed.add( new Minute(0,0,0,0,0 ), 0.0);
+			
+			/*
+			tempz.addOrUpdate( new Minute( 0, 0, 0, 0, 1900 ), 0.0);
+			windz.add( new Minute(0,0,0,0,1900 ), 0.0);
+			baroz.add( new Minute(0,0,0,0,1900 ), 0.0);
+			heatindexz.add( new Minute( 0,0,0,0,1900 ), 0.0);
+			uvindexz.add( new Minute(0,0,0,0,1900 ), 0.0);
+			humidity.add( new Minute(0,0,0,0,1900 ), 0.0);
+			precipitation.add( new Minute(0,0,0,0,1900 ), 0.0);
+			windspeed.add( new Minute(0,0,0,0,1900 ), 0.0);
 			
 			dataset.addSeries( tempz );
 			dataset.addSeries( windz );
@@ -525,6 +527,7 @@ public static float getYearAvgTemp( int yearIndex)
 			dataset.addSeries( humidity );
 			dataset.addSeries( precipitation);
 			dataset.addSeries( windspeed );
+			*/
 		
 		    return dataset;					
 			
@@ -533,9 +536,11 @@ public static float getYearAvgTemp( int yearIndex)
 		ArrayList<wItem> samples = daa.getSamples();
 				
 		int i = 0;
+		
+		System.out.println( "Made it here" );
 		for (wItem item: samples) // for each sample in a day
 		{
-			/*
+			
 		    // convert data into xy coordinate sets for JFreeChart use
             tempz.add( i, item.getTemperature() );
 			windz.add( i, item.getWindspeed() );
@@ -545,15 +550,19 @@ public static float getYearAvgTemp( int yearIndex)
 			humidity.add( i, item.getHumidity() );
 			precipitation.add( i, item.getRainfall() );
 			windspeed.add( i, item.getWindspeed() );
+			
+			//System.out.println( "Loop count: " + i );
+			
+			/*
+			tempz.add( new Minute( item.getMinute(), item.getHour(), item.getDay(), item.getMonth(), 2000+item.getYear() ), item.getTemperature());
+			windz.add( new Minute( item.getMinute(), item.getHour(), item.getDay(), item.getMonth(), 2000+item.getYear() ), item.getWindspeed());
+			baroz.add( new Minute( item.getMinute(), item.getHour(), item.getDay(), item.getMonth(), 2000+item.getYear() ), item.getBarometer());
+			heatindexz.add( new Minute( item.getMinute(), item.getHour(), item.getDay(), item.getMonth(), 2000+item.getYear() ), item.getHeatindex());
+			uvindexz.add( new Minute( item.getMinute(), item.getHour(), item.getDay(), item.getMonth(), 2000+item.getYear() ), item.getUvindex());
+			humidity.add( new Minute( item.getMinute(), item.getHour(), item.getDay(), item.getMonth(), 2000+item.getYear() ), item.getHumidity());
+			precipitation.add( new Minute( item.getMinute(), item.getHour(), item.getDay(), item.getMonth(), 2000+item.getYear() ), item.getRainfall());
+			windspeed.add( new Minute( item.getMinute(), item.getHour(), item.getDay(), item.getMonth(), 2000+item.getYear() ), item.getWindspeed());
 			*/
-			tempz.add( new Minute( item.getMinute(), item.getHour(), item.getDay(), item.getMonth(), item.getYear() ), item.getTemperature());
-			windz.add( new Minute( item.getMinute(), item.getHour(), item.getDay(), item.getMonth(), item.getYear() ), item.getWindspeed());
-			baroz.add( new Minute( item.getMinute(), item.getHour(), item.getDay(), item.getMonth(), item.getYear() ), item.getBarometer());
-			heatindexz.add( new Minute( item.getMinute(), item.getHour(), item.getDay(), item.getMonth(), item.getYear() ), item.getHeatindex());
-			uvindexz.add( new Minute( item.getMinute(), item.getHour(), item.getDay(), item.getMonth(), item.getYear() ), item.getUvindex());
-			humidity.add( new Minute( item.getMinute(), item.getHour(), item.getDay(), item.getMonth(), item.getYear() ), item.getHumidity());
-			precipitation.add( new Minute( item.getMinute(), item.getHour(), item.getDay(), item.getMonth(), item.getYear() ), item.getRainfall());
-			windspeed.add( new Minute( item.getMinute(), item.getHour(), item.getDay(), item.getMonth(), item.getYear() ), item.getWindspeed());
 			
 			i += 1;
 					
@@ -573,10 +582,10 @@ public static float getYearAvgTemp( int yearIndex)
 				
 	}
 	
-	//public static XYSeriesCollection getWeekSetOfData( int yearIndex, int monthIndex, int weekIndex )
-	public static TimeSeriesCollection getWeekSetOfData( int yearIndex, int monthIndex, int weekIndex )
+	public static XYSeriesCollection getWeekSetOfData( int yearIndex, int monthIndex, int weekIndex )
+	//public static TimeSeriesCollection getWeekSetOfData( int yearIndex, int monthIndex, int weekIndex )
 	{
-		/*
+		
 		XYSeries tempz = new XYSeries("Temperature");
 		XYSeries windz = new XYSeries("Wind");
 		XYSeries baroz = new XYSeries("Barometer");
@@ -587,8 +596,8 @@ public static float getYearAvgTemp( int yearIndex)
 		XYSeries windspeed = new XYSeries("Windspeed" );
 		
 		XYSeriesCollection dataset = new XYSeriesCollection();
-		*/
 		
+		/*
 		TimeSeries tempz = new TimeSeries("Temperature");
 		TimeSeries windz = new TimeSeries("Wind");
 		TimeSeries baroz = new TimeSeries("Barometer");
@@ -600,6 +609,7 @@ public static float getYearAvgTemp( int yearIndex)
 		
 
 		TimeSeriesCollection dataset = new TimeSeriesCollection();
+		*/
 		
 		Year year = WeatherData.dictOfYears.get( yearIndex ); // grab the year of data in question
 		
@@ -607,7 +617,7 @@ public static float getYearAvgTemp( int yearIndex)
 		
 		if( mun == null ) // if month doesn't exist, create uninteresting data for JFreeChart and return
 		{
-			/*
+			
 			tempz.add( 1, 0.0 );
 			windz.add( 1, 0.0 );
 			baroz.add( 1, 0.0 );
@@ -624,15 +634,17 @@ public static float getYearAvgTemp( int yearIndex)
 			dataset.addSeries( humidity );
 			dataset.addSeries( precipitation );
 			dataset.addSeries( windspeed );
-			*/
-			tempz.add( new Minute( 0, 0, 0, 0, 0 ), 0.0);
-			windz.add( new Minute(0,0,0,0,0 ), 0.0);
-			baroz.add( new Minute(0,0,0,0,0 ), 0.0);
-			heatindexz.add( new Minute( 0,0,0,0,0 ), 0.0);
-			uvindexz.add( new Minute(0,0,0,0,0 ), 0.0);
-			humidity.add( new Minute(0,0,0,0,0 ), 0.0);
-			precipitation.add( new Minute(0,0,0,0,0 ), 0.0);
-			windspeed.add( new Minute(0,0,0,0,0 ), 0.0);
+			
+			
+			/*
+			tempz.add( new Minute( 0, 0, 0, 0, 1900 ), 0.0);
+			windz.add( new Minute(0,0,0,0,1900 ), 0.0);
+			baroz.add( new Minute(0,0,0,0,1900 ), 0.0);
+			heatindexz.add( new Minute( 0,0,0,0,1900 ), 0.0);
+			uvindexz.add( new Minute(0,0,0,0,1900 ), 0.0);
+			humidity.add( new Minute(0,0,0,0,1900 ), 0.0);
+			precipitation.add( new Minute(0,0,0,0,1900 ), 0.0);
+			windspeed.add( new Minute(0,0,0,0,1900 ), 0.0);
 			
 			dataset.addSeries( tempz );
 			dataset.addSeries( windz );
@@ -642,6 +654,7 @@ public static float getYearAvgTemp( int yearIndex)
 			dataset.addSeries( humidity );
 			dataset.addSeries( precipitation);
 			dataset.addSeries( windspeed );
+			*/
 			
 		
 		    return dataset;					
@@ -664,7 +677,7 @@ public static float getYearAvgTemp( int yearIndex)
 				ArrayList<wItem> samples = daa.getSamples();					
 				
 			    for (wItem item: samples) // for each sample in a day
-			    {	/*		
+			    {			
 				    // convert data into xy coordinate sets for JFreeChart use
                     tempz.add( j, item.getTemperature() );
 					windz.add( j, item.getWindspeed() );
@@ -674,15 +687,17 @@ public static float getYearAvgTemp( int yearIndex)
 					humidity.add( j, item.getHumidity() );
 					precipitation.add( j, item.getRainfall() );
 					windspeed.add( j, item.getWindspeed() );
+					
+					/*
+					tempz.add( new Minute( item.getMinute(), item.getHour(), item.getDay(), item.getMonth(), 2000+item.getYear() ), item.getTemperature());
+					windz.add( new Minute( item.getMinute(), item.getHour(), item.getDay(), item.getMonth(), 2000+item.getYear() ), item.getWindspeed());
+					baroz.add( new Minute( item.getMinute(), item.getHour(), item.getDay(), item.getMonth(), 2000+item.getYear() ), item.getBarometer());
+					heatindexz.add( new Minute( item.getMinute(), item.getHour(), item.getDay(), item.getMonth(), 2000+item.getYear() ), item.getHeatindex());
+					uvindexz.add( new Minute( item.getMinute(), item.getHour(), item.getDay(), item.getMonth(), 2000+item.getYear() ), item.getUvindex());
+					humidity.add( new Minute( item.getMinute(), item.getHour(), item.getDay(), item.getMonth(), 2000+item.getYear() ), item.getHumidity());
+					precipitation.add( new Minute( item.getMinute(), item.getHour(), item.getDay(), item.getMonth(), 2000+item.getYear() ), item.getRainfall());
+					windspeed.add( new Minute( item.getMinute(), item.getHour(), item.getDay(), item.getMonth(), 2000+item.getYear() ), item.getWindspeed());
 					*/
-					tempz.add( new Minute( item.getMinute(), item.getHour(), item.getDay(), item.getMonth(), item.getYear() ), item.getTemperature());
-					windz.add( new Minute( item.getMinute(), item.getHour(), item.getDay(), item.getMonth(), item.getYear() ), item.getWindspeed());
-					baroz.add( new Minute( item.getMinute(), item.getHour(), item.getDay(), item.getMonth(), item.getYear() ), item.getBarometer());
-					heatindexz.add( new Minute( item.getMinute(), item.getHour(), item.getDay(), item.getMonth(), item.getYear() ), item.getHeatindex());
-					uvindexz.add( new Minute( item.getMinute(), item.getHour(), item.getDay(), item.getMonth(), item.getYear() ), item.getUvindex());
-					humidity.add( new Minute( item.getMinute(), item.getHour(), item.getDay(), item.getMonth(), item.getYear() ), item.getHumidity());
-					precipitation.add( new Minute( item.getMinute(), item.getHour(), item.getDay(), item.getMonth(), item.getYear() ), item.getRainfall());
-					windspeed.add( new Minute( item.getMinute(), item.getHour(), item.getDay(), item.getMonth(), item.getYear() ), item.getWindspeed());
 				
 				    j += 1;				
 			    }  			
@@ -705,10 +720,10 @@ public static float getYearAvgTemp( int yearIndex)
 	}	
 	
 	
-	//public static XYSeriesCollection getMonthSetOfData( int yearIndex, int monthIndex )
-	public static TimeSeriesCollection getMonthSetOfData( int yearIndex, int monthIndex )
+	public static XYSeriesCollection getMonthSetOfData( int yearIndex, int monthIndex )
+	//public static TimeSeriesCollection getMonthSetOfData( int yearIndex, int monthIndex )
 	{
-		/*
+		
 		XYSeries tempz = new XYSeries("Temperature");
 		XYSeries windz = new XYSeries("Wind");
 		XYSeries baroz = new XYSeries("Barometer");
@@ -719,8 +734,9 @@ public static float getYearAvgTemp( int yearIndex)
 		XYSeries windspeed = new XYSeries("Windspeed" );
 		
 		XYSeriesCollection dataset = new XYSeriesCollection();
-		*/
 		
+		
+		/*
 		TimeSeries tempz = new TimeSeries("Temperature");
 		TimeSeries windz = new TimeSeries("Wind");
 		TimeSeries baroz = new TimeSeries("Barometer");
@@ -732,6 +748,7 @@ public static float getYearAvgTemp( int yearIndex)
 		
 
 		TimeSeriesCollection dataset = new TimeSeriesCollection();
+		*/
 		
 		Year year = WeatherData.dictOfYears.get( yearIndex ); // grab the year of data in question
 		
@@ -739,9 +756,9 @@ public static float getYearAvgTemp( int yearIndex)
 		
 		if( mun == null ) // if month doesn't exist, create uninteresting data for JFreeChart and return
 		{
-			/*
+			
 			tempz.add( 1, 0.0 );
-			windz.add( 1,, 0.0 );
+			windz.add( 1, 0.0 );
 			baroz.add( 1, 0.0 );
 			heatindexz.add( 1, 0.0 );
 			uvindexz.add( 1, 0.0 ) ;
@@ -756,7 +773,7 @@ public static float getYearAvgTemp( int yearIndex)
 			dataset.addSeries( humidity );
 			dataset.addSeries( precipitation );
 			dataset.addSeries( windspeed );
-			*/
+			
 			/*
 			tempz.add( 0, 0.0 );
 			windz.add( 0, 0.0 );
@@ -776,14 +793,15 @@ public static float getYearAvgTemp( int yearIndex)
 			dataset.addSeries( windspeed );
 			
 			*/
-			tempz.add( new Minute( 0, 0, 0, 0, 0 ), 0.0);
-			windz.add( new Minute(0,0,0,0,0 ), 0.0);
-			baroz.add( new Minute(0,0,0,0,0 ), 0.0);
-			heatindexz.add( new Minute( 0,0,0,0,0 ), 0.0);
-			uvindexz.add( new Minute(0,0,0,0,0 ), 0.0);
-			humidity.add( new Minute(0,0,0,0,0 ), 0.0);
-			precipitation.add( new Minute(0,0,0,0,0 ), 0.0);
-			windspeed.add( new Minute(0,0,0,0,0 ), 0.0);
+			/*
+			tempz.add( new Minute( 0, 0, 0, 0, 1900 ), 0.0);
+			windz.add( new Minute(0,0,0,0,1900 ), 0.0);
+			baroz.add( new Minute(0,0,0,0,1900 ), 0.0);
+			heatindexz.add( new Minute( 0,0,0,0,1900 ), 0.0);
+			uvindexz.add( new Minute(0,0,0,0,1900 ), 0.0);
+			humidity.add( new Minute(0,0,0,0,1900 ), 0.0);
+			precipitation.add( new Minute(0,0,0,0,1900 ), 0.0);
+			windspeed.add( new Minute(0,0,0,0,1900 ), 0.0);
 			
 			dataset.addSeries( tempz );
 			dataset.addSeries( windz );
@@ -793,6 +811,7 @@ public static float getYearAvgTemp( int yearIndex)
 			dataset.addSeries( humidity );
 			dataset.addSeries( precipitation);
 			dataset.addSeries( windspeed );
+			*/
 		
 		    return dataset;
 		}
@@ -820,7 +839,7 @@ public static float getYearAvgTemp( int yearIndex)
 				
 			for (wItem item: samples) // for each sample in a day
 			{
-				/*
+				
 				// convert data into xy coordinate sets for JFreeChart use
                 tempz.add( j, item.getTemperature() );
 				windz.add( j, item.getWindspeed() );
@@ -830,15 +849,18 @@ public static float getYearAvgTemp( int yearIndex)
 				humidity.add( j, item.getHumidity() );					
 				precipitation.add( j, item.getRainfall() );
 				windspeed.add( j, item.getWindspeed() );
+				
+				
+				/*
+				tempz.add( new Minute( item.getMinute(), item.getHour(), item.getDay(), item.getMonth(), 2000+item.getYear() ), item.getTemperature());
+				windz.add( new Minute( item.getMinute(), item.getHour(), item.getDay(), item.getMonth(), 2000+item.getYear() ), item.getWindspeed());
+				baroz.add( new Minute( item.getMinute(), item.getHour(), item.getDay(), item.getMonth(), 2000+item.getYear() ), item.getBarometer());
+				heatindexz.add( new Minute( item.getMinute(), item.getHour(), item.getDay(), item.getMonth(), 2000+item.getYear() ), item.getHeatindex());
+				uvindexz.add( new Minute( item.getMinute(), item.getHour(), item.getDay(), item.getMonth(), 2000+item.getYear() ), item.getUvindex());
+				humidity.add( new Minute( item.getMinute(), item.getHour(), item.getDay(), item.getMonth(), 2000+item.getYear() ), item.getHumidity());
+				precipitation.add( new Minute( item.getMinute(), item.getHour(), item.getDay(), item.getMonth(), 2000+item.getYear() ), item.getRainfall());
+				windspeed.add( new Minute( item.getMinute(), item.getHour(), item.getDay(), item.getMonth(), 2000+item.getYear() ), item.getWindspeed());
 				*/
-				tempz.add( new Minute( item.getMinute(), item.getHour(), item.getDay(), item.getMonth(), item.getYear() ), item.getTemperature());
-				windz.add( new Minute( item.getMinute(), item.getHour(), item.getDay(), item.getMonth(), item.getYear() ), item.getWindspeed());
-				baroz.add( new Minute( item.getMinute(), item.getHour(), item.getDay(), item.getMonth(), item.getYear() ), item.getBarometer());
-				heatindexz.add( new Minute( item.getMinute(), item.getHour(), item.getDay(), item.getMonth(), item.getYear() ), item.getHeatindex());
-				uvindexz.add( new Minute( item.getMinute(), item.getHour(), item.getDay(), item.getMonth(), item.getYear() ), item.getUvindex());
-				humidity.add( new Minute( item.getMinute(), item.getHour(), item.getDay(), item.getMonth(), item.getYear() ), item.getHumidity());
-				precipitation.add( new Minute( item.getMinute(), item.getHour(), item.getDay(), item.getMonth(), item.getYear() ), item.getRainfall());
-				windspeed.add( new Minute( item.getMinute(), item.getHour(), item.getDay(), item.getMonth(), item.getYear() ), item.getWindspeed());
 				
 				j += 1;
 					
@@ -860,10 +882,10 @@ public static float getYearAvgTemp( int yearIndex)
 	}
 	
 	
-	//public static XYSeriesCollection getYearSetOfData( int yearIndex )
-	public static TimeSeriesCollection getYearSetOfData( int yearIndex )
+	public static XYSeriesCollection getYearSetOfData( int yearIndex )
+	//public static TimeSeriesCollection getYearSetOfData( int yearIndex )
 	{
-		/*
+		
 		XYSeries tempz = new XYSeries("Temperature");
 		XYSeries windz = new XYSeries("Wind");
 		XYSeries baroz = new XYSeries("Barometer");
@@ -872,8 +894,9 @@ public static float getYearAvgTemp( int yearIndex)
 		XYSeries humidity = new XYSeries("Humidity" );
 		XYSeries precipitation = new XYSeries("Precipitation");
 		XYSeries windspeed = new XYSeries( "Windspeed");
-		*/
 		
+		
+		/*
 		TimeSeries tempz = new TimeSeries("Temperature");
 		TimeSeries windz = new TimeSeries("Wind");
 		TimeSeries baroz = new TimeSeries("Barometer");
@@ -882,15 +905,16 @@ public static float getYearAvgTemp( int yearIndex)
 		TimeSeries humidity = new TimeSeries("Humidity" );
 		TimeSeries precipitation = new TimeSeries("Precipitation");
 		TimeSeries windspeed = new TimeSeries( "Windspeed");
+		*/
 		
-		//XYSeriesCollection dataset = new XYSeriesCollection();
-		TimeSeriesCollection dataset = new TimeSeriesCollection();
+		XYSeriesCollection dataset = new XYSeriesCollection();
+		//TimeSeriesCollection dataset = new TimeSeriesCollection();
 		
 		Year year = WeatherData.dictOfYears.get( yearIndex ); // grab the year of data in question
 		
 		if( year == null )  // if year doesn't exist, create uniteresting data to graph and return;
 		{
-			/*
+			
 			tempz.add( 1, 0.0 );
 			windz.add( 1, 0.0 );
 			baroz.add( 1, 0.0 );
@@ -907,16 +931,17 @@ public static float getYearAvgTemp( int yearIndex)
 			dataset.addSeries( humidity );
 			dataset.addSeries( precipitation );
 			dataset.addSeries( windspeed );
-			*/
 			
-			tempz.add( new Minute( 0, 0, 0, 0, 0 ), 0.0);
-			windz.add( new Minute(0,0,0,0,0 ), 0.0);
-			baroz.add( new Minute(0,0,0,0,0 ), 0.0);
-			heatindexz.add( new Minute( 0,0,0,0,0 ), 0.0);
-			uvindexz.add( new Minute(0,0,0,0,0 ), 0.0);
-			humidity.add( new Minute(0,0,0,0,0 ), 0.0);
-			precipitation.add( new Minute(0,0,0,0,0 ), 0.0);
-			windspeed.add( new Minute(0,0,0,0,0 ), 0.0);
+			
+			/*
+			tempz.add( new Minute( 0, 0, 0, 0, 1900 ), 0.0);
+			windz.add( new Minute(0,0,0,0,1900 ), 0.0);
+			baroz.add( new Minute(0,0,0,0,1900 ), 0.0);
+			heatindexz.add( new Minute( 0,0,0,0,1900 ), 0.0);
+			uvindexz.add( new Minute(0,0,0,0,1900 ), 0.0);
+			humidity.add( new Minute(0,0,0,0,1900 ), 0.0);
+			precipitation.add( new Minute(0,0,0,0,1900 ), 0.0);
+			windspeed.add( new Minute(0,0,0,0,1900 ), 0.0);
 			
 			dataset.addSeries( tempz );
 			dataset.addSeries( windz );
@@ -926,6 +951,7 @@ public static float getYearAvgTemp( int yearIndex)
 			dataset.addSeries( humidity );
 			dataset.addSeries( precipitation);
 			dataset.addSeries( windspeed );
+			*/
 		
 		    return dataset;
 		}
@@ -970,7 +996,7 @@ public static float getYearAvgTemp( int yearIndex)
 				for (wItem item: samples) // for each sample in a day
 				{
 					// convert data into xy coordinate sets for JFreeChart use
-					/*
+					
                     tempz.add( i, item.getTemperature() );
 					windz.add( i, item.getWindspeed() );
 					baroz.add( i, item.getBarometer() );
@@ -979,16 +1005,18 @@ public static float getYearAvgTemp( int yearIndex)
 					humidity.add( i, item.getHumidity() );					
 					precipitation.add( i, item.getRainfall() );
 					windspeed.add( i, item.getWindspeed() );
-					*/
 					
-					tempz.add( new Minute( item.getMinute(), item.getHour(), item.getDay(), item.getMonth(), item.getYear() ), item.getTemperature());
-					windz.add( new Minute( item.getMinute(), item.getHour(), item.getDay(), item.getMonth(), item.getYear() ), item.getWindspeed());
-					baroz.add( new Minute( item.getMinute(), item.getHour(), item.getDay(), item.getMonth(), item.getYear() ), item.getBarometer());
-					heatindexz.add( new Minute( item.getMinute(), item.getHour(), item.getDay(), item.getMonth(), item.getYear() ), item.getHeatindex());
-					uvindexz.add( new Minute( item.getMinute(), item.getHour(), item.getDay(), item.getMonth(), item.getYear() ), item.getUvindex());
-					humidity.add( new Minute( item.getMinute(), item.getHour(), item.getDay(), item.getMonth(), item.getYear() ), item.getHumidity());
-					precipitation.add( new Minute( item.getMinute(), item.getHour(), item.getDay(), item.getMonth(), item.getYear() ), item.getRainfall());
-					windspeed.add( new Minute( item.getMinute(), item.getHour(), item.getDay(), item.getMonth(), item.getYear() ), item.getWindspeed());
+					
+					/*
+					tempz.add( new Minute( item.getMinute(), item.getHour(), item.getDay(), item.getMonth(), 2000+item.getYear() ), item.getTemperature());
+					windz.add( new Minute( item.getMinute(), item.getHour(), item.getDay(), item.getMonth(), 2000+item.getYear() ), item.getWindspeed());
+					baroz.add( new Minute( item.getMinute(), item.getHour(), item.getDay(), item.getMonth(), 2000+item.getYear() ), item.getBarometer());
+					heatindexz.add( new Minute( item.getMinute(), item.getHour(), item.getDay(), item.getMonth(), 2000+item.getYear() ), item.getHeatindex());
+					uvindexz.add( new Minute( item.getMinute(), item.getHour(), item.getDay(), item.getMonth(), 2000+item.getYear() ), item.getUvindex());
+					humidity.add( new Minute( item.getMinute(), item.getHour(), item.getDay(), item.getMonth(), 2000+item.getYear() ), item.getHumidity());
+					precipitation.add( new Minute( item.getMinute(), item.getHour(), item.getDay(), item.getMonth(), 2000+item.getYear() ), item.getRainfall());
+					windspeed.add( new Minute( item.getMinute(), item.getHour(), item.getDay(), item.getMonth(), 2000+item.getYear() ), item.getWindspeed());
+					*/
 					
 					i += 1;
                 }
@@ -1321,14 +1349,14 @@ public static float getYearAvgTemp( int yearIndex)
 		
 		//TimeSeriesCollection dataSet = WeatherData.getWeekSetOfData( 14, 12, 5 ); // grab data from the first week in Feb. 2010
 		
-		//XYSeriesCollection dataSet = WeatherData.getDaySetOfData( 15, 2, 29 );  // grab jan. 1st 2010
-		 TimeSeriesCollection dataSet = WeatherData.getDaySetOfData( 10, 1, 1 );  // grab jan. 1st 2010
+		XYSeriesCollection dataSet = WeatherData.getDaySetOfData( 15, 2, 28 );  // grab jan. 1st 2010
+		 //TimeSeriesCollection dataSet = WeatherData.getDaySetOfData( 10, 1, 1 );  // grab jan. 1st 2010
 		
 		//System.out.println( "Created XY coord sets for graphing" );		
 		
 		//  debug for getYearSetOfData
-		//XYSeries series0 = dataSet.getSeries("Temperature");
-		TimeSeries series0 = dataSet.getSeries("Temperature");
+		XYSeries series0 = dataSet.getSeries("Temperature");
+		//TimeSeries series0 = dataSet.getSeries("Temperature");
 		
 		if( series0.isEmpty() )
 		{
