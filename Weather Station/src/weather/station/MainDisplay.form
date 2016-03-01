@@ -110,12 +110,18 @@
                   <Component id="humidityRadioButton" min="-2" max="-2" attributes="0"/>
                   <Component id="rainfallRadioButton" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="dataSelector" max="32767" attributes="0"/>
-                  <Component id="jTabbedPane1" max="32767" attributes="0"/>
+              <EmptySpace type="unrelated" pref="17" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="jTabbedPane1" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <Component id="decrement" min="-2" pref="45" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="increment" min="-2" pref="45" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="dataSelector" min="-2" pref="914" max="-2" attributes="0"/>
+                  </Group>
               </Group>
-              <EmptySpace pref="37" max="32767" attributes="0"/>
+              <EmptySpace pref="32" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -123,7 +129,13 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
-              <Component id="dataSelector" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="increment" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="decrement" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Component id="dataSelector" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jTabbedPane1" min="-2" pref="357" max="-2" attributes="0"/>
@@ -142,7 +154,7 @@
                       <Component id="rainfallRadioButton" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="28" max="32767" attributes="0"/>
+              <EmptySpace pref="43" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -315,6 +327,9 @@
       </AuxValues>
     </Component>
     <Component class="javax.swing.JSlider" name="dataSelector">
+      <Events>
+        <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="dataSelectorStateChanged"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JRadioButton" name="humidityRadioButton">
       <Properties>
@@ -339,6 +354,22 @@
         <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="rainfallRadioButton.setToolTipText(&quot;Plot Rainfall Data&quot;);"/>
         <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="radioButtonGroup.add(rainfallRadioButton);"/>
       </AuxValues>
+    </Component>
+    <Component class="javax.swing.JButton" name="decrement">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="&lt;"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="decrementActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="increment">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="&gt;"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="incrementActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

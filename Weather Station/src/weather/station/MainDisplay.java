@@ -1,5 +1,7 @@
 package weather.station;
 
+import java.awt.Shape;
+import java.awt.geom.Ellipse2D;
 import java.io.File;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
@@ -7,7 +9,10 @@ import javax.swing.*;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.labels.StandardXYToolTipGenerator;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.xy.XYItemRenderer;
+import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
@@ -27,6 +32,7 @@ public class MainDisplay extends javax.swing.JFrame {
     private int tabFlag = 1;
     private int radioFlag = 0;
     private WeatherData data;
+    private String radioLabel = "";
 
     /**
      * **********************************************************************
@@ -43,7 +49,7 @@ public class MainDisplay extends javax.swing.JFrame {
         this.data = new WeatherData();
         data.getWeatherData(dir);
     }
-
+    
     public void setTheData(String dataSpec) {
         if (tabFlag == 1) //if we want to look at the temp of one day
         {
@@ -113,6 +119,8 @@ public class MainDisplay extends javax.swing.JFrame {
         dataSelector = new javax.swing.JSlider();
         humidityRadioButton = new javax.swing.JRadioButton();
         rainfallRadioButton = new javax.swing.JRadioButton();
+        decrement = new javax.swing.JButton();
+        increment = new javax.swing.JButton();
         maindisplayMenuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         specifyDirectoryItem = new javax.swing.JMenuItem();
@@ -250,6 +258,12 @@ public class MainDisplay extends javax.swing.JFrame {
             }
         });
 
+        dataSelector.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                dataSelectorStateChanged(evt);
+            }
+        });
+
         radioButtonGroup.add(humidityRadioButton);
         humidityRadioButton.setText("Humidity");
         humidityRadioButton.setToolTipText("Plot Humidity Data");
@@ -265,6 +279,20 @@ public class MainDisplay extends javax.swing.JFrame {
         rainfallRadioButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rainfallRadioButtonActionPerformed(evt);
+            }
+        });
+
+        decrement.setText("<");
+        decrement.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                decrementActionPerformed(evt);
+            }
+        });
+
+        increment.setText(">");
+        increment.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                incrementActionPerformed(evt);
             }
         });
 
@@ -335,17 +363,26 @@ public class MainDisplay extends javax.swing.JFrame {
                     .addComponent(temperatureRadioButton)
                     .addComponent(humidityRadioButton)
                     .addComponent(rainfallRadioButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(dataSelector, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTabbedPane1))
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 17, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(decrement, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(increment, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(dataSelector, javax.swing.GroupLayout.PREFERRED_SIZE, 914, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(37, 37, 37)
-                .addComponent(dataSelector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(increment)
+                        .addComponent(decrement))
+                    .addComponent(dataSelector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -362,7 +399,7 @@ public class MainDisplay extends javax.swing.JFrame {
                         .addComponent(humidityRadioButton)
                         .addGap(18, 18, 18)
                         .addComponent(rainfallRadioButton)))
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
 
         pack();
@@ -389,9 +426,8 @@ public class MainDisplay extends javax.swing.JFrame {
         //creating and showing this application's GUI.
 
         //System.out.println("Specify directory was clicked");
+        DirectoryChooser dir = new DirectoryChooser();
         SwingUtilities.invokeLater(new Runnable() {
-            DirectoryChooser dir = new DirectoryChooser();
-
             public void run() {
                 //Turn off metal's use of bold fonts
                 UIManager.put("swing.boldMetal", Boolean.FALSE);
@@ -542,6 +578,7 @@ public class MainDisplay extends javax.swing.JFrame {
     private void temperatureRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_temperatureRadioButtonActionPerformed
         // TODO add your handling code here:
         radioFlag = 1;
+        radioLabel = "Temperature";
         setChartTitle(radioFlag);
         callTabs();
 
@@ -556,6 +593,7 @@ public class MainDisplay extends javax.swing.JFrame {
     private void windsRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_windsRadioButtonActionPerformed
         // TODO add your handling code here:
         radioFlag = 2;
+        radioLabel = "Wind Speed";
         setChartTitle(radioFlag);
         callTabs();
     }//GEN-LAST:event_windsRadioButtonActionPerformed
@@ -569,6 +607,7 @@ public class MainDisplay extends javax.swing.JFrame {
     private void barometricRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_barometricRadioButtonActionPerformed
         // TODO add your handling code here:
         radioFlag = 3;
+        radioLabel = "Barometric Presure";
         setChartTitle(radioFlag);
         callTabs();
     }//GEN-LAST:event_barometricRadioButtonActionPerformed
@@ -582,6 +621,7 @@ public class MainDisplay extends javax.swing.JFrame {
     private void heatUVindexActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_heatUVindexActionPerformed
         // TODO add your handling code here:
         radioFlag = 4;
+        radioLabel = "UV Index";
         setChartTitle(radioFlag);
         callTabs();
     }//GEN-LAST:event_heatUVindexActionPerformed
@@ -595,6 +635,7 @@ public class MainDisplay extends javax.swing.JFrame {
     private void humidityRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_humidityRadioButtonActionPerformed
         // TODO add your handling code here:
         radioFlag = 5;
+        radioLabel = "Humidity";
         setChartTitle(radioFlag);
         callTabs();
     }//GEN-LAST:event_humidityRadioButtonActionPerformed
@@ -608,9 +649,34 @@ public class MainDisplay extends javax.swing.JFrame {
     private void rainfallRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rainfallRadioButtonActionPerformed
         // TODO add your handling code here:
         radioFlag = 6;
+        radioLabel = "Rainfall";
         setChartTitle(radioFlag);
         callTabs();
     }//GEN-LAST:event_rainfallRadioButtonActionPerformed
+
+    private void dataSelectorStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_dataSelectorStateChanged
+        // TODO add your handling code here:
+        JSlider source = ( JSlider )evt.getSource(); // get slider
+                if ( !source.getValueIsAdjusting() )    // when user quits fiddling
+                {
+                    int val = source.getValue();    // get slider value
+                    System.out.println( val );        // print it
+                }
+    }//GEN-LAST:event_dataSelectorStateChanged
+
+    private void decrementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_decrementActionPerformed
+        // TODO add your handling code here:
+        int data = dataSelector.getValue();
+        data--;
+        dataSelector.setValue(data);
+    }//GEN-LAST:event_decrementActionPerformed
+
+    private void incrementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_incrementActionPerformed
+        // TODO add your handling code here:
+        int data = dataSelector.getValue();
+        data++;
+        dataSelector.setValue(data);
+    }//GEN-LAST:event_incrementActionPerformed
 
     /**
      * **********************************************************************
@@ -619,16 +685,40 @@ public class MainDisplay extends javax.swing.JFrame {
      ***********************************************************************
      */
     public JFreeChart makeChart() {
-        JFreeChart chart = ChartFactory.createXYLineChart(
+        JFreeChart chart = ChartFactory.createTimeSeriesChart(
                 chartTitle, // chart title
                 xLabel, // x axis label
                 yLabel, // y axis label
                 dataSet, // data
-                PlotOrientation.VERTICAL,
+                //PlotOrientation.VERTICAL,
                 true, // include legend
                 true, // tooltips
                 false // urls
         );
+        
+        XYPlot plot = chart.getXYPlot();
+        XYItemRenderer r = plot.getRenderer();
+        
+        
+        XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) plot.getRenderer();
+        double size = 3;
+        double delta = size / 2.0;
+        Shape shape1 = new Ellipse2D.Double(-delta, -delta, size, size);
+        renderer.setSeriesShape(0, shape1);
+        //renderer.setSeriesShape(1, shape2); 
+        renderer.setBaseShapesVisible(true);
+        
+        // define your own tooltip generator   
+        StandardXYToolTipGenerator tooltipGenerator = new StandardXYToolTipGenerator()
+        {
+            @Override
+            public String generateToolTip(XYDataset dataset, int series, int item)
+            {
+                return radioLabel + ": " + dataset.getYValue(series, item) + "  |  Date: x/xx/xx  |  Time: " + dataset.getXValue(series, item);
+            }
+        };
+        // and assign it to the renderer
+        r.setBaseToolTipGenerator(tooltipGenerator);
 
         return chart;
     }
@@ -699,26 +789,32 @@ public class MainDisplay extends javax.swing.JFrame {
             case 1:
                 this.chartTitle = name + " Temperature";
                 setYlabel("Degrees Farenheit (F)");
+                setXlabel("Time");
                 break;
             case 2:
                 this.chartTitle = name + " Wind Speed";
                 setYlabel("Miles per Hour (MPH)");
+                setXlabel("Time");
                 break;
             case 3:
                 this.chartTitle = name + " Barometric Pressure";
                 setYlabel("Inches of Mercury (inHg)");
+                setXlabel("Time");
                 break;
             case 4:
                 this.chartTitle = name + " UV Index";
                 setYlabel("Index");
+                setXlabel("Time");
                 break;
             case 5:
                 this.chartTitle = name + " Humidity";
                 setYlabel("Percent (%)");
+                setXlabel("Time");
                 break;
             case 6:
                 this.chartTitle = name + " Rainfall";
                 setYlabel("Inches (in)");
+                setXlabel("Time");
                 break;
             default:
                 this.chartTitle = "Please Select Data Types on Left";
@@ -816,9 +912,11 @@ public class MainDisplay extends javax.swing.JFrame {
     private javax.swing.JRadioButton barometricRadioButton;
     private javax.swing.JPanel dailyTab;
     private javax.swing.JSlider dataSelector;
+    private javax.swing.JButton decrement;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JRadioButton heatUVindex;
     private javax.swing.JRadioButton humidityRadioButton;
+    private javax.swing.JButton increment;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JMenuBar maindisplayMenuBar;
