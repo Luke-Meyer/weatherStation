@@ -89,6 +89,12 @@ public class Month
 	}
 	*/
 	
+	public WeekStats getWeekStats( int weekIndex )
+	{
+		return this.weekStats.get(weekIndex);
+	}
+	
+	
 	public void calcWeekStats()
 	{
 		float tempSum = 0.0f;
@@ -479,7 +485,7 @@ public class Month
 		this.year = -1;
 	}
 	
-	
+	/*
 	public class WeekStats
 	{
 		private float meanTemp;
@@ -594,5 +600,6 @@ public class Month
 		}	
 	
 	}
+	*/
 	
 }

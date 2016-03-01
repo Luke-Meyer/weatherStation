@@ -121,6 +121,128 @@ public class WeatherData
 		return WeatherData.yearCount;
 	}
 	
+	
+	
+	public static float getWeekAvgTemp( int yearIndex, int monthIndex, int weekIndex )
+	{
+		Month month = WeatherData.dictOfYears.get( yearIndex ).getMonthlySamplesByMonth( monthIndex );
+		
+		WeekStats temp = month.getWeekStats( weekIndex );
+		
+		float avg = temp.getMeanTemp();
+		
+		return avg;	
+		
+	}
+	
+	public static float getWeekMaxTemp( int yearIndex, int monthIndex, int weekIndex )
+	{
+		Month month = WeatherData.dictOfYears.get( yearIndex ).getMonthlySamplesByMonth( monthIndex );
+		
+		WeekStats temp = month.getWeekStats( weekIndex );
+		
+		return temp.getMaxTemp();
+	}
+	
+	public static String getWeekMaxTempDate( int yearIndex, int monthIndex, int weekIndex )
+	{
+		Month month = WeatherData.dictOfYears.get( yearIndex ).getMonthlySamplesByMonth( monthIndex );
+		
+		WeekStats temp = month.getWeekStats( weekIndex );
+		
+		return temp.getMaxTempDate();
+	}
+	
+	public static String getWeekMaxTempTime( int yearIndex, int monthIndex, int weekIndex )
+	{
+		Month month = WeatherData.dictOfYears.get( yearIndex ).getMonthlySamplesByMonth( monthIndex );
+		
+		WeekStats temp = month.getWeekStats( weekIndex );
+		
+		return temp.getMaxTempTime();
+	}
+
+	public static float getWeekLowTemp( int yearIndex, int monthIndex, int weekIndex )
+	{
+		Month month = WeatherData.dictOfYears.get( yearIndex ).getMonthlySamplesByMonth( monthIndex );
+		
+		WeekStats temp = month.getWeekStats( weekIndex );
+		
+		return temp.getLowTemp();
+	}
+	
+	public static String getWeekLowTempDate( int yearIndex, int monthIndex, int weekIndex )
+	{
+		Month month = WeatherData.dictOfYears.get( yearIndex ).getMonthlySamplesByMonth( monthIndex );
+		
+		WeekStats temp = month.getWeekStats( weekIndex );
+		
+		return temp.getLowTempDate();
+	}
+	
+	public static String getWeekLowTempTime( int yearIndex, int monthIndex, int weekIndex )
+	{
+		Month month = WeatherData.dictOfYears.get( yearIndex ).getMonthlySamplesByMonth( monthIndex );
+		
+		WeekStats temp = month.getWeekStats( weekIndex );
+		
+		return temp.getLowTempTime();
+	}
+	
+	
+	public static float getWeekMeanWind( int yearIndex, int monthIndex, int weekIndex )
+	{
+		Month month = WeatherData.dictOfYears.get( yearIndex ).getMonthlySamplesByMonth( monthIndex );
+		
+		WeekStats temp = month.getWeekStats( weekIndex );
+		
+		float avg = temp.getMeanWind();
+		
+		return avg;		
+		
+	}
+	
+	public static float getWeekMaxWind( int yearIndex, int monthIndex, int weekIndex )
+	{
+		Month month = WeatherData.dictOfYears.get( yearIndex ).getMonthlySamplesByMonth( monthIndex );
+		
+		WeekStats temp = month.getWeekStats( weekIndex );
+		
+		return temp.getMaxWind();
+	}
+	
+	public static String getWeekMaxWindDate( int yearIndex, int monthIndex, int weekIndex )
+	{
+		Month month = WeatherData.dictOfYears.get( yearIndex ).getMonthlySamplesByMonth( monthIndex );
+		
+		WeekStats temp = month.getWeekStats( weekIndex );
+		
+		return temp.getMaxWindDate();
+	}
+	
+	public static String getWeekMaxWindTime( int yearIndex, int monthIndex, int weekIndex )
+	{
+		Month month = WeatherData.dictOfYears.get( yearIndex ).getMonthlySamplesByMonth( monthIndex );
+		
+		WeekStats temp = month.getWeekStats( weekIndex );
+		
+		return temp.getMaxWindTime();
+	}
+	
+	public static float getWeekRainfall( int yearIndex, int monthIndex, int weekIndex )
+	{
+		Month month = WeatherData.dictOfYears.get( yearIndex ).getMonthlySamplesByMonth( monthIndex );
+		
+		WeekStats temp = month.getWeekStats( weekIndex );
+		
+		return temp.getRainfall();
+	}
+	
+	
+	
+	///////////////////////////////////////////////////////////////////
+	
+	
 	public static float getDayAvgTemp( int yearIndex, int monthIndex, int dayIndex )
 	{
 		Day day = WeatherData.dictOfYears.get( yearIndex ).getMonthlySamplesByMonth( monthIndex ).getDayofSamples( dayIndex );
