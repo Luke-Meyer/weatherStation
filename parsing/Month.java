@@ -1,11 +1,30 @@
 import java.util.*;
 
+/*
+public class WeeklyStats
+{
+	private float meanTemp;
+	private float maxTemp;
+	private String maxTempDate;
+	private String maxTempTime;
+	private float minTemp;
+	private String minTempDate;
+	private String minTempTime;
+	//private 
+	
+	//private 
+	
+}
+*/
+
 public class Month
 {
 	private int month;
 	private int year;
 	private Hashtable<Integer, Day> dailySamples;
 	private Hashtable<Integer, ArrayList<Day> > weeklySamples;
+	
+	
 	private float meanTemp;
 	private float highTemp;
 	private String hTempDate;

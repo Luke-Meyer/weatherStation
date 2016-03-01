@@ -9,7 +9,6 @@ public class wItem {
 	private int hour;
 	private int minute;
     private float temperature;
-	//private int temperature;
     private float humidity;
     private float barometer;
     private float windspeed;
@@ -20,7 +19,8 @@ public class wItem {
     private float uvindex;
     private float rainfall;
      
-    public String getDate() {
+    public String getDate() 
+	{
         return date;
     }
     public void setDate(String date) {
@@ -47,11 +47,21 @@ public class wItem {
     public String getTime() {
         return time;
     }
-    public void setTime(String time) 
+	
+	public int getHour()
 	{
-        this.time = time;
+		return this.hour;
+	}
+	
+	public int getMinute()
+	{
+		return this.minute;
+	}
+    public void setTime(String ttime) 
+	{
+        this.time = ttime;
 		
-		String temp = date.trim();
+		String temp = ttime.trim();
 		String delims = "[:AP]";
         String[] token = temp.split(delims);
 		
