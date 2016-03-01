@@ -137,6 +137,8 @@ public class Year
 					temp = item.getWindspeed();  // get running sum of wind speed for the month
 			
 					windSum += temp;
+					
+					temp = item.getWindgust();
 			
 					if( temp > maxWind )
 					{

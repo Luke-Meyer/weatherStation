@@ -78,6 +78,8 @@ public class Day
 			
 			windSum += temp;
 			
+			temp = item.getWindgust();
+			
 			if( temp > maxWind )
 			{
 				maxWind = temp;

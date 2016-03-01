@@ -8,7 +8,11 @@ public class Month
 	private Hashtable<Integer, Day> dailySamples;
 	private Hashtable<Integer, ArrayList<Day> > weeklySamples;
 	
-	private Hashtable<Integer, ArrayList<WeekStats>> weekStats;	
+	private int weekCount;
+	
+	//private Hashtable<Integer, ArrayList<WeekStats>> weekStats;	
+	
+	private Hashtable<Integer, WeekStats> weekStats;
 	
 	private float meanTemp;
 	private float highTemp;
@@ -28,6 +32,7 @@ public class Month
 	{
 		this.dailySamples = new Hashtable<Integer, Day>();
 		this.weeklySamples = new Hashtable<Integer, ArrayList<Day> >();
+		this.weekStats = new Hashtable< Integer, WeekStats>();
 		this.month = -1;
 		this.year = -1;
 	}
@@ -36,13 +41,19 @@ public class Month
 	{
 		this.dailySamples = new Hashtable<Integer, Day>();
 		this.weeklySamples = new Hashtable<Integer, ArrayList<Day> >();
-		
+		this.weekStats = new Hashtable< Integer, WeekStats>();
+				
 		this.year = tempMonth.getYear();
 		this.month = tempMonth.getMonth();
 		
 		this.dailySamples.putAll( tempMonth.getAllDaySamples() );
 		this.weeklySamples.putAll( tempMonth.getAllWeekSamples() ); 	
 
+	}
+	
+	public int getWeekCount()
+	{
+		return this.weekCount;
 	}
 	
 	public int getSampleCount()
@@ -77,6 +88,101 @@ public class Month
 		return count;
 	}
 	*/
+	
+	public void calcWeekStats()
+	{
+		float tempSum = 0.0f;
+		float sampCount = 0.0f;
+		float windSum = 0.0f;
+		float maxTemp = -50.0f;
+		float minTemp = 1000.0f;
+		String maxTempDate = "";
+		String maxTempTime = "";
+		String minTempDate = "";
+		String minTempTime = "";
+		float maxWind = 0.0f;
+		String windDate = "";
+		String windTime = "";
+		float rainSum = 0.0f;
+		float windGust = 0.0f;
+		
+	    Hashtable<Integer, ArrayList<Day> > weeks = this.getAllWeekSamples();
+		
+		for( int i = 1; i <= weeks.size(); i++ )
+		{
+			//int month = this.getMonth();
+			//System.out.println( "Made it here: " + month + "iteration: " + i );
+			ArrayList<Day> week = weeks.get(i);
+			
+			WeekStats stats = new WeekStats();
+			
+			for( int j = 0; j < week.size(); j++ )
+			{
+				Day day = week.get(j);
+				
+				if( day == null )
+				{
+					continue;
+				}
+				
+				ArrayList<wItem> samples = day.getSamples();
+				
+				for( wItem item : samples )
+				{
+					sampCount += 1.0;  // count for upcoming mean calculation
+			
+					float temp = item.getTemperature();  // get relevant sample info to save later
+					String tempDate = item.getDate();
+					String tempTime = item.getTime();
+			
+					tempSum += temp;  // get running sum of temp for the day
+			
+					if( temp > maxTemp )  // find max temp for day
+					{
+						maxTemp = temp;
+						maxTempDate = tempDate;
+						maxTempTime = tempTime;
+					}
+			
+					if( temp < minTemp )  // find min temp for day
+					{		
+						minTemp = temp;
+						minTempDate = tempDate;
+						minTempTime = tempTime;
+					}
+			
+					temp = item.getWindspeed();  // get running sum of wind speed for the month
+			
+					windSum += temp;	
+
+					temp = item.getWindgust();
+			
+					if( temp > maxWind )
+					{
+						maxWind = temp;
+						windDate = tempDate;
+						windTime = tempTime;
+					}
+			
+					rainSum += item.getRainfall();
+				}
+				
+				//WeekStats stats = new WeekStats();
+				
+				stats.setMaxTemp( maxTemp, maxTempDate, maxTempTime );
+				stats.setMeanTemp( (float) tempSum / sampCount );
+				stats.setLowTemp( minTemp, minTempDate, minTempTime );
+				stats.setMeanWind( (float) windSum / sampCount );
+				stats.setMaxWind( maxWind, windDate, windTime );
+				stats.setRainfall( rainSum );								
+				
+			}
+			
+			this.weekStats.put( i, stats );
+		}
+		
+		
+	}
 	
     public void calcStats()
 	{
@@ -134,6 +240,8 @@ public class Month
 				temp = item.getWindspeed();  // get running sum of wind speed for the month
 			
 				windSum += temp;
+				
+				temp = item.getWindgust();
 			
 				if( temp > maxWind )
 				{
@@ -294,6 +402,8 @@ public class Month
 				ArrayList<Day> temp = new ArrayList<Day>(daze);
 				this.weeklySamples.put( weekIndex, temp );
 				
+				this.weekCount += 1;
+				
 				//System.out.println( "THere are : " + temp.size() + "number of days in temp week" + weekIndex );
 			
 				daze.clear(); 
@@ -305,6 +415,8 @@ public class Month
 			{
 				// add the last incomplete week to the week list
 				this.weeklySamples.put( weekIndex, daze );
+				
+				this.weekCount += 1;
 				//System.out.println( "THere are : " + daze.size() + "number of days in week" + weekIndex + "LAST WEEK IN MONTH!");
 				
 			}												

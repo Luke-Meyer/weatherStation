@@ -41,6 +41,14 @@ public class WeatherData
 {
 	private static Hashtable<Integer, Year> dictOfYears;  // data structure to hold the weather data
 	
+	private static int dayCount;
+	
+	private static int weekCount;
+	
+	private static int monthCount;
+	
+	private static int yearCount;
+	
 	public static String checkNullTag( String tag )  // used to check for null tags in a .xml file
 	{
 		String attr = tag;
@@ -60,13 +68,16 @@ public class WeatherData
 	}
 	*/
 	
-	public static int getDaySampleCount( int yearIndex, int monthIndex, int dayIndex )
+	public static int getDayCount()//( int yearIndex, int monthIndex, int dayIndex )
 	{
+		/*
 		Day day = WeatherData.dictOfYears.get( yearIndex ).getMonthlySamplesByMonth( monthIndex ).getDayofSamples( dayIndex );
 		
 		int count = day.getSampleCount();
 		
 		return count;
+		*/
+		return WeatherData.dayCount;
 	}
 	
 	/*
@@ -78,22 +89,36 @@ public class WeatherData
 	}
 	*/
 	
-	public static int getMonthSampleCount( int yearIndex, int monthIndex )
+	public static int getWeekCount()
 	{
+		return WeatherData.weekCount;
+	}
+	
+	public static int getMonthCount()//( int yearIndex, int monthIndex )
+	{
+		/*
 		Month month = WeatherData.dictOfYears.get( yearIndex ).getMonthlySamplesByMonth( monthIndex );
 		
 		int count = month.getSampleCount();
 		
 		return count;
+		*/
+		
+		return WeatherData.monthCount;
 	}
 	
-	public static int getYearSampleCount( int yearIndex )
+	public static int getYearCount()//( int yearIndex )
 	{
+		/*
 		Year year = WeatherData.dictOfYears.get( yearIndex );
 		
 		int count = year.getSampleCount();
 		
 		return count;
+		
+		*/
+		
+		return WeatherData.yearCount;
 	}
 	
 	public static float getDayAvgTemp( int yearIndex, int monthIndex, int dayIndex )
@@ -421,7 +446,7 @@ public static float getYearAvgTemp( int yearIndex)
 		return date;
 	}
 	
-	public static String getMonthMaxWindTime( int yearIndex)
+	public static String getYearMaxWindTime( int yearIndex)
 	{
 		Year year = WeatherData.dictOfYears.get( yearIndex );
 		
@@ -1177,7 +1202,9 @@ public static float getYearAvgTemp( int yearIndex)
 							
 							daa.setYear( currYear );
 							
+							daa.calcStats();
 							
+							WeatherData.dayCount += 1;
 							mun.setDailySamples( currDay, daa ); 
 							
 							mun.setMonth( currMonth );
@@ -1186,7 +1213,9 @@ public static float getYearAvgTemp( int yearIndex)
 							
 							mun.setWeeklySamples();
 							
-							mun.calcStats();
+							//mun.calcStats();						
+							
+							//mun.calcWeekStats();
 							
 							//System.out.println( "The last month is " + currMonth );
 							
@@ -1195,11 +1224,25 @@ public static float getYearAvgTemp( int yearIndex)
 							Month tempMonth = new Month( mun ); // create a new month in memory
 							
 							//tempMonth.setWeeklySamples();
-										
+							
+							tempMonth.calcStats();
+							tempMonth.calcWeekStats();
+							
+							weekCount += tempMonth.getWeekCount();
+							
+							WeatherData.monthCount += 1;
+							
 							year.setMonthlySamples( currMonth, tempMonth );  // add month to year
 							
 							year.setYear( currYear );
+							
+							year.calcStats();
+							
 							Year savedYear = new Year( year );
+							
+							year.calcStats();
+							
+							WeatherData.yearCount += 1;
 							
 							WeatherData.dictOfYears.put( currYear, savedYear );
 						}
@@ -1235,8 +1278,12 @@ public static float getYearAvgTemp( int yearIndex)
 							daa.setDay( prevDay );  // set the day field
 							
 							daa.setMonth( prevMonth );
+							
 							daa.setYear( prevYear );
 							
+							daa.calcStats();
+							
+							WeatherData.dayCount += 1;
 							
 							mun.setDailySamples( prevDay, daa );  // set that day of samples in a month object
 							//mun.setWeeklySamples();  // set weekly chunks of samples
@@ -1251,10 +1298,20 @@ public static float getYearAvgTemp( int yearIndex)
 								
 								mun.setWeeklySamples();
 								
+								//mun.calcStats();
+								
 								Month tempMonth = new Month( mun ); // create a new month in memory
 								
+								tempMonth.calcStats();
+								
+								tempMonth.calcWeekStats();
+								
 								//tempMonth.setWeeklySamples();
-									
+								
+								WeatherData.monthCount += 1;
+								
+								weekCount += tempMonth.getWeekCount();
+								
 								year.setMonthlySamples( prevMonth, tempMonth );  // add month to year
 								
 								mun.reset();
@@ -1263,7 +1320,13 @@ public static float getYearAvgTemp( int yearIndex)
 								if( prevYear != currYear )
 								{									
 									year.setYear( prevYear );
+									
 									Year savedYear = new Year( year );
+									
+									savedYear.calcStats();
+									
+									WeatherData.yearCount += 1;
+									
 									WeatherData.dictOfYears.put( prevYear, savedYear ); 
 									
 								    year.reset();
