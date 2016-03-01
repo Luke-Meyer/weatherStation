@@ -1,5 +1,4 @@
 package weather.station;
-
 import java.util.*;
 
 public class Day
@@ -27,6 +26,11 @@ public class Day
 		this.month = -1;
 		this.year = -1;
 		this.samples = new ArrayList<wItem>();
+	}
+	
+	public int getSampleCount()
+	{
+		return this.samples.size();
 	}
 	
 	public void calcStats()
@@ -74,6 +78,8 @@ public class Day
 			temp = item.getWindspeed();  // get running sum of wind speed for the day
 			
 			windSum += temp;
+			
+			temp = item.getWindgust();
 			
 			if( temp > maxWind )
 			{
@@ -232,6 +238,8 @@ public class Day
 	public void setSamples( List<wItem> tempSamples )
 	{
 		this.samples = new ArrayList( tempSamples );
+		
+		this.calcStats(); // set the stats for the day
 	}
 	
 	public ArrayList<wItem> getSamples()

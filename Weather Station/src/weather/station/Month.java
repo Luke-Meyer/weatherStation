@@ -1,6 +1,6 @@
 package weather.station;
-
 import java.util.*;
+
 
 public class Month
 {
@@ -8,6 +8,13 @@ public class Month
 	private int year;
 	private Hashtable<Integer, Day> dailySamples;
 	private Hashtable<Integer, ArrayList<Day> > weeklySamples;
+	
+	private int weekCount;
+	
+	//private Hashtable<Integer, ArrayList<WeekStats>> weekStats;	
+	
+	private Hashtable<Integer, WeekStats> weekStats;
+	
 	private float meanTemp;
 	private float highTemp;
 	private String hTempDate;
@@ -26,6 +33,7 @@ public class Month
 	{
 		this.dailySamples = new Hashtable<Integer, Day>();
 		this.weeklySamples = new Hashtable<Integer, ArrayList<Day> >();
+		this.weekStats = new Hashtable< Integer, WeekStats>();
 		this.month = -1;
 		this.year = -1;
 	}
@@ -34,13 +42,147 @@ public class Month
 	{
 		this.dailySamples = new Hashtable<Integer, Day>();
 		this.weeklySamples = new Hashtable<Integer, ArrayList<Day> >();
-		
+		this.weekStats = new Hashtable< Integer, WeekStats>();
+				
 		this.year = tempMonth.getYear();
 		this.month = tempMonth.getMonth();
 		
 		this.dailySamples.putAll( tempMonth.getAllDaySamples() );
-		this.weeklySamples.putAll( tempMonth.getAllWeekSamples() );        		
+		this.weeklySamples.putAll( tempMonth.getAllWeekSamples() ); 	
 
+	}
+	
+	public int getWeekCount()
+	{
+		return this.weekCount;
+	}
+	
+	public int getSampleCount()
+	{
+		int count = 0;
+		Hashtable<Integer, Day> daas = this.getAllDaySamples();
+		
+		// for each day in the month
+		for( int i = 1; i <= daas.size(); i++ )
+		{
+			Day day = daas.get(i);
+			if( day == null )
+			{
+				continue;
+			}
+			
+			count += day.getSampleCount();  // sum the number of samples in each day			
+		}
+		
+		return count;
+	}
+	
+	/*
+	public int getWeeklySampleCount()
+	{
+		int count = 0;
+		for( Day day : this.dailySamples ) // for each day in the month
+		{
+			count += day.getSampleCount();  // sum the number of samples in each day			
+		}
+		
+		return count;
+	}
+	*/
+	
+	public void calcWeekStats()
+	{
+		float tempSum = 0.0f;
+		float sampCount = 0.0f;
+		float windSum = 0.0f;
+		float maxTemp = -50.0f;
+		float minTemp = 1000.0f;
+		String maxTempDate = "";
+		String maxTempTime = "";
+		String minTempDate = "";
+		String minTempTime = "";
+		float maxWind = 0.0f;
+		String windDate = "";
+		String windTime = "";
+		float rainSum = 0.0f;
+		float windGust = 0.0f;
+		
+	    Hashtable<Integer, ArrayList<Day> > weeks = this.getAllWeekSamples();
+		
+		for( int i = 1; i <= weeks.size(); i++ )
+		{
+			//int month = this.getMonth();
+			//System.out.println( "Made it here: " + month + "iteration: " + i );
+			ArrayList<Day> week = weeks.get(i);
+			
+			WeekStats stats = new WeekStats();
+			
+			for( int j = 0; j < week.size(); j++ )
+			{
+				Day day = week.get(j);
+				
+				if( day == null )
+				{
+					continue;
+				}
+				
+				ArrayList<wItem> samples = day.getSamples();
+				
+				for( wItem item : samples )
+				{
+					sampCount += 1.0;  // count for upcoming mean calculation
+			
+					float temp = item.getTemperature();  // get relevant sample info to save later
+					String tempDate = item.getDate();
+					String tempTime = item.getTime();
+			
+					tempSum += temp;  // get running sum of temp for the day
+			
+					if( temp > maxTemp )  // find max temp for day
+					{
+						maxTemp = temp;
+						maxTempDate = tempDate;
+						maxTempTime = tempTime;
+					}
+			
+					if( temp < minTemp )  // find min temp for day
+					{		
+						minTemp = temp;
+						minTempDate = tempDate;
+						minTempTime = tempTime;
+					}
+			
+					temp = item.getWindspeed();  // get running sum of wind speed for the month
+			
+					windSum += temp;	
+
+					temp = item.getWindgust();
+			
+					if( temp > maxWind )
+					{
+						maxWind = temp;
+						windDate = tempDate;
+						windTime = tempTime;
+					}
+			
+					rainSum += item.getRainfall();
+				}
+				
+				//WeekStats stats = new WeekStats();
+				
+				stats.setMaxTemp( maxTemp, maxTempDate, maxTempTime );
+				stats.setMeanTemp( (float) tempSum / sampCount );
+				stats.setLowTemp( minTemp, minTempDate, minTempTime );
+				stats.setMeanWind( (float) windSum / sampCount );
+				stats.setMaxWind( maxWind, windDate, windTime );
+				stats.setRainfall( rainSum );								
+				
+			}
+			
+			this.weekStats.put( i, stats );
+		}
+		
+		
 	}
 	
     public void calcStats()
@@ -99,6 +241,8 @@ public class Month
 				temp = item.getWindspeed();  // get running sum of wind speed for the month
 			
 				windSum += temp;
+				
+				temp = item.getWindgust();
 			
 				if( temp > maxWind )
 				{
@@ -109,8 +253,7 @@ public class Month
 			
 				rainSum += item.getRainfall();						
 			
-			}			
-			
+			}					
 		}
 		
 		this.setHighTemp( maxTemp, maxTempDate, maxTempTime );  // set the max temp for month
@@ -126,6 +269,7 @@ public class Month
 		this.setRainfall( rainSum );  // set accumulated precipitation		
 		
 	}
+	
 	
 	public float getMeanTemp()
 	{
@@ -234,6 +378,7 @@ public class Month
 	
 	public void setWeeklySamples()
 	{
+		
 		int numOdays = this.dailySamples.size();  // number of days in the month
 		
 		ArrayList<Day> daze = new ArrayList<Day>();
@@ -258,6 +403,8 @@ public class Month
 				ArrayList<Day> temp = new ArrayList<Day>(daze);
 				this.weeklySamples.put( weekIndex, temp );
 				
+				this.weekCount += 1;
+				
 				//System.out.println( "THere are : " + temp.size() + "number of days in temp week" + weekIndex );
 			
 				daze.clear(); 
@@ -269,6 +416,8 @@ public class Month
 			{
 				// add the last incomplete week to the week list
 				this.weeklySamples.put( weekIndex, daze );
+				
+				this.weekCount += 1;
 				//System.out.println( "THere are : " + daze.size() + "number of days in week" + weekIndex + "LAST WEEK IN MONTH!");
 				
 			}												
@@ -288,12 +437,6 @@ public class Month
 		return this.weeklySamples.get( weekKey );
 	}
 	
-	/*
-	public float getWeekMeanTemp()
-	{
-		
-	}
-	*/
 	
 	public int getMonth()
 	{
@@ -337,8 +480,120 @@ public class Month
 		this.year = -1;
 	}
 	
-	/*(public ArrayList<Day> getWeekOfSamples( int weekKey )
+	
+	public class WeekStats
 	{
+		private float meanTemp;
+		private float maxTemp;
+		private String maxTempDate;
+		private String maxTempTime;
+		private float minTemp;
+		private String minTempDate;
+		private String minTempTime;
+		private float meanWind;
+		private float maxWind;
+		private String windDate;
+		private String windTime;
+		private float rainfall;
 		
-	}*/
+		
+		public float getMeanTemp()
+		{
+			return this.meanTemp;
+		}
+		
+		public void setMeanTemp( float avg)
+		{
+			this.meanTemp = avg;
+		}
+		
+		public float getMaxTemp()
+		{
+			return this.maxTemp;
+		}
+		
+		public void setMaxTemp( float max, String date, String time )
+		{
+			this.maxTemp = max;
+			this.maxTempDate = date;
+			this.maxTempTime = time;
+		}
+		
+		public String getMaxTempDate()
+		{
+			return this.maxTempDate;
+		}
+		
+		
+		public String getMaxTempTime()
+		{
+			return this.maxTempTime;
+		}
+		
+		public float getLowTemp()
+		{
+			return this.minTemp;
+		}
+		
+		public void setLowTemp( float low, String date, String time )
+		{
+			this.minTemp = low;
+			this.minTempDate = date;
+			this.minTempTime = time;
+		}
+		
+		public String getLowTempDate()
+		{
+			return this.minTempDate;
+		}
+		
+		public String getLowTempTime()
+		{
+			return this.minTempTime;
+		}
+		
+		public float getMeanWind()
+		{
+			return this.meanWind;
+		}
+		
+		public void setMeanWind( float avg )
+		{
+			this.meanWind = avg;
+		}
+		
+		public float getMaxWind()
+		{
+			return this.maxWind;
+		}
+		
+		public void setMaxWind( float max, String date, String time )
+		{
+			this.maxWind = max;
+			this.windDate = date;
+			this.windTime = time;
+		}
+		
+		public String getMaxWindDate()
+		{
+			return this.windDate;
+		}
+		
+		public String getMaxWindTime()
+		{
+			return this.windTime;
+		}
+		
+		public float getRainfall()
+		{
+			return this.rainfall;
+		}
+		
+		public void setRainfall( float rain )
+		{
+			this.rainfall = rain;
+		}	
+	
+	}
+	
 }
