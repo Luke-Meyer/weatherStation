@@ -421,9 +421,9 @@ public class WeatherData
     }
 		
 	
-    public void getWeatherData( File dir )//String dirName )//main( String[] args )
+    public void getWeatherData( File folder )//String dirName )//main( String[] args )
     {        	
-		String dirName = dir.getName();
+		/*String dirName = dir.getName();
 		
 		File folder;
 		
@@ -435,7 +435,7 @@ public class WeatherData
 		{
 			dirName = dir.getAbsolutePath();
 			folder = new File( dirName );
-		}	
+		}*/	
 		
 
 		
@@ -450,7 +450,7 @@ public class WeatherData
 		
 		
 		//System.out.println( "Number of .xml files: " + totalDataFileCount );
-		
+                
 		int fileCount = 0;
 		int currYear = -1;
 		int prevYear = -1;
@@ -480,6 +480,7 @@ public class WeatherData
                     System.out.println( e );
                 }                      					
 				
+                System.out.println(file);
                 
                 // read and parse XML document
                 SAXBuilder builder = new SAXBuilder();
