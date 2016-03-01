@@ -34,6 +34,8 @@ public class wItem {
 		this.month = Integer.valueOf(token[0]);
 		this.day = Integer.valueOf(token[1]);
 		this.year = Integer.valueOf(token[2]);
+		
+	
     }    
     public int getYear() {
         return year;

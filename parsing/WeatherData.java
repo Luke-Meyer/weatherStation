@@ -53,6 +53,13 @@ public class WeatherData
 		return attr;
 	}
 	
+	/*
+	public String getStartDate()
+	{
+		
+	}
+	*/
+	
 	public static int getDaySampleCount( int yearIndex, int monthIndex, int dayIndex )
 	{
 		Day day = WeatherData.dictOfYears.get( yearIndex ).getMonthlySamplesByMonth( monthIndex ).getDayofSamples( dayIndex );
@@ -61,6 +68,15 @@ public class WeatherData
 		
 		return count;
 	}
+	
+	/*
+	public static int getWeekSampleCount( int yearIndex, int monthIndex, int weekIndex )
+	{
+		Month month = WeatherData.dictOfYears.get( yearIndex ).getMonthlySamplesByMonth( monthIndex );
+		
+		Hashtable<Integer, ArrayList<Day> > weeks = month.getAllWeekSamples();
+	}
+	*/
 	
 	public static int getMonthSampleCount( int yearIndex, int monthIndex )
 	{
@@ -459,6 +475,12 @@ public static float getYearAvgTemp( int yearIndex)
 		
 		Year year = WeatherData.dictOfYears.get( yearIndex ); // grab the year of data in question
 		
+		System.out.println( "The year index is: " + yearIndex );
+		
+		System.out.println( "The month index is: " + monthIndex );
+		
+		System.out.println( "The day index is: " + dayIndex );				
+		
 		Month mun = year.getMonthlySamplesByMonth( monthIndex );  // grab the month of data in question
 		
 		Day daa = mun.getDayofSamples( dayIndex );
@@ -494,6 +516,15 @@ public static float getYearAvgTemp( int yearIndex)
 			humidity.add( new Minute(0,0,0,0,0 ), 0.0);
 			precipitation.add( new Minute(0,0,0,0,0 ), 0.0);
 			windspeed.add( new Minute(0,0,0,0,0 ), 0.0);
+			
+			dataset.addSeries( tempz );
+			dataset.addSeries( windz );
+			dataset.addSeries( baroz );
+			dataset.addSeries( heatindexz );
+			dataset.addSeries( uvindexz );
+			dataset.addSeries( humidity );
+			dataset.addSeries( precipitation);
+			dataset.addSeries( windspeed );
 		
 		    return dataset;					
 			
@@ -602,6 +633,15 @@ public static float getYearAvgTemp( int yearIndex)
 			humidity.add( new Minute(0,0,0,0,0 ), 0.0);
 			precipitation.add( new Minute(0,0,0,0,0 ), 0.0);
 			windspeed.add( new Minute(0,0,0,0,0 ), 0.0);
+			
+			dataset.addSeries( tempz );
+			dataset.addSeries( windz );
+			dataset.addSeries( baroz );
+			dataset.addSeries( heatindexz );
+			dataset.addSeries( uvindexz );
+			dataset.addSeries( humidity );
+			dataset.addSeries( precipitation);
+			dataset.addSeries( windspeed );
 			
 		
 		    return dataset;					
@@ -744,6 +784,15 @@ public static float getYearAvgTemp( int yearIndex)
 			humidity.add( new Minute(0,0,0,0,0 ), 0.0);
 			precipitation.add( new Minute(0,0,0,0,0 ), 0.0);
 			windspeed.add( new Minute(0,0,0,0,0 ), 0.0);
+			
+			dataset.addSeries( tempz );
+			dataset.addSeries( windz );
+			dataset.addSeries( baroz );
+			dataset.addSeries( heatindexz );
+			dataset.addSeries( uvindexz );
+			dataset.addSeries( humidity );
+			dataset.addSeries( precipitation);
+			dataset.addSeries( windspeed );
 		
 		    return dataset;
 		}
@@ -868,6 +917,15 @@ public static float getYearAvgTemp( int yearIndex)
 			humidity.add( new Minute(0,0,0,0,0 ), 0.0);
 			precipitation.add( new Minute(0,0,0,0,0 ), 0.0);
 			windspeed.add( new Minute(0,0,0,0,0 ), 0.0);
+			
+			dataset.addSeries( tempz );
+			dataset.addSeries( windz );
+			dataset.addSeries( baroz );
+			dataset.addSeries( heatindexz );
+			dataset.addSeries( uvindexz );
+			dataset.addSeries( humidity );
+			dataset.addSeries( precipitation);
+			dataset.addSeries( windspeed );
 		
 		    return dataset;
 		}
@@ -1219,27 +1277,27 @@ public static float getYearAvgTemp( int yearIndex)
             } 
         }
 		
-		/*
+		
         System.out.println(dictOfYears);
-		Year tempYear = dictOfYears.get(13);
+		Year tempYear = dictOfYears.get(10);
 		System.out.println( tempYear.getYear() );
 		Hashtable<Integer, Month> dictofMonths = new Hashtable<Integer, Month>();
 		dictofMonths.putAll(tempYear.getAllMonthlySamples() );
 		System.out.println(dictofMonths);
 		
 		Hashtable<Integer, Day> dictOfDays = new Hashtable<Integer, Day>();
-		Month tempMonth = dictofMonths.get(9);
+		Month tempMonth = dictofMonths.get(1);
 		System.out.println( tempMonth.getMonth() );
 		dictOfDays.putAll( tempMonth.getAllDaySamples() );
 		System.out.println(dictOfDays);
 		
 		Hashtable<Integer, ArrayList<wItem> > dictOfSamples = new Hashtable<Integer, ArrayList<wItem>>();
-		Day tempDay = dictOfDays.get(30);
+		Day tempDay = dictOfDays.get(1);
 		System.out.println( tempDay.getDay() );
 		dictOfSamples.put( 1,  tempDay.getSamples() );
 		System.out.println( dictOfSamples );
 		
-		*/
+		
 		
 		
 		
@@ -1261,9 +1319,10 @@ public static float getYearAvgTemp( int yearIndex)
 		
 	    //XYSeriesCollection dataSet = WeatherData.getMonthSetOfData( 10, 1 );
 		
-		TimeSeriesCollection dataSet = WeatherData.getWeekSetOfData( 14, 12, 5 ); // grab data from the first week in Feb. 2010
+		//TimeSeriesCollection dataSet = WeatherData.getWeekSetOfData( 14, 12, 5 ); // grab data from the first week in Feb. 2010
 		
 		//XYSeriesCollection dataSet = WeatherData.getDaySetOfData( 15, 2, 29 );  // grab jan. 1st 2010
+		 TimeSeriesCollection dataSet = WeatherData.getDaySetOfData( 10, 1, 1 );  // grab jan. 1st 2010
 		
 		//System.out.println( "Created XY coord sets for graphing" );		
 		

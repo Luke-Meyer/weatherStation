@@ -287,6 +287,8 @@ public class Year
 	
 	public Month getMonthlySamplesByMonth( int monthKey )
 	{
+		System.out.println( "Made it so get Month Samples" );
+		
 		return this.monthlySamples.get(monthKey);
 	}
 	
