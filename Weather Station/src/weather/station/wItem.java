@@ -1,5 +1,11 @@
 package weather.station;
 
+/************************************************************************
+    Class:  wItem
+    Author: All
+    Description: Class representing a "sample" object that contains 
+	weather data gathered at 10-15 minute intervals
+ ************************************************************************/
 public class wItem {
     private String date;
     private int year;

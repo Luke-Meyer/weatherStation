@@ -1,4 +1,5 @@
 package weather.station;
+
 import java.util.*;
 
 
@@ -9,11 +10,12 @@ public class Month
 	private Hashtable<Integer, Day> dailySamples;
 	private Hashtable<Integer, ArrayList<Day> > weeklySamples;
 	
-	private int weekCount;
-	
-	//private Hashtable<Integer, ArrayList<WeekStats>> weekStats;	
+	private String prevailingWindDir;	
 	
 	private Hashtable<Integer, WeekStats> weekStats;
+	
+	
+	private Hashtable< Integer, String > weekPrevailingWindDir;
 	
 	private float meanTemp;
 	private float highTemp;
@@ -52,10 +54,19 @@ public class Month
 
 	}
 	
-	public int getWeekCount()
+	public String getPrevailingWindDir()
 	{
-		return this.weekCount;
+		return this.prevailingWindDir;
 	}
+	
+	public String getWeekPrevailingWindDir( int weekIndex )
+	{
+		String dir = this.weekPrevailingWindDir.get( weekIndex );
+		
+		return dir;
+		
+	}
+	
 	
 	public int getSampleCount()
 	{
@@ -77,18 +88,6 @@ public class Month
 		return count;
 	}
 	
-	/*
-	public int getWeeklySampleCount()
-	{
-		int count = 0;
-		for( Day day : this.dailySamples ) // for each day in the month
-		{
-			count += day.getSampleCount();  // sum the number of samples in each day			
-		}
-		
-		return count;
-	}
-	*/
 	
 	public WeekStats getWeekStats( int weekIndex )
 	{
@@ -113,21 +112,38 @@ public class Month
 		float rainSum = 0.0f;
 		float windGust = 0.0f;
 		
-	    Hashtable<Integer, ArrayList<Day> > weeks = this.getAllWeekSamples();
+		String north = "N";
+		int nCount = 0;
+		String east = "E";
+		int eCount = 0;
+		String south = "S";
+		int sCount = 0;
+		String west = "W";
+		int wCount = 0;
+		String nEast = "NE";
+		int neCount = 0;
+		String sEast = "SE";
+		int seCount = 0;
+		String sWest = "SW";
+		int swCount = 0;
+		String nWest = "NW";
+		int nwCount = 0;
 		
-		for( int i = 1; i <= weeks.size(); i++ )
+		int maxCount = -1;
+		
+	    Hashtable<Integer, ArrayList<Day> > weeks = this.getAllWeekSamples();  
+		
+		for( int i = 1; i <= weeks.size(); i++ )  // for all weeks in the month
 		{
-			//int month = this.getMonth();
-			//System.out.println( "Made it here: " + month + "iteration: " + i );
 			ArrayList<Day> week = weeks.get(i);
 			
 			WeekStats stats = new WeekStats();
 			
-			for( int j = 0; j < week.size(); j++ )
+			for( int j = 0; j < week.size(); j++ )  // for each day in the week
 			{
 				Day day = week.get(j);
 				
-				if( day == null )
+				if( day == null )  // if day doesn't exist, skip it
 				{
 					continue;
 				}
@@ -164,17 +180,99 @@ public class Month
 
 					temp = item.getWindgust();
 			
-					if( temp > maxWind )
+					if( temp > maxWind )  // track max wind gust
 					{
 						maxWind = temp;
 						windDate = tempDate;
 						windTime = tempTime;
 					}
 			
-					rainSum += item.getRainfall();
+					rainSum += item.getRainfall();  // accumulate rainfall
+					
+					String windDir = item.getWinddirection();
+			
+					// calculate prevailing wind direction
+					if( north.equals( windDir ) )
+					{
+						nCount += 1;
+						
+						if( nCount > maxCount )
+						{
+							maxCount = nCount;
+							this.weekPrevailingWindDir.put( i, "N" );
+						}
+					}
+					else if( east.equals( windDir ) )
+					{
+						eCount +=1;
+						
+						if( eCount > maxCount )
+						{
+							maxCount = eCount;
+							this.weekPrevailingWindDir.put( i, "E" );
+						}
+					}
+					else if( south.equals( windDir ) )
+					{
+						sCount += 1;
+						
+						if( sCount > maxCount )
+						{
+							maxCount = sCount;
+							this.weekPrevailingWindDir.put( i, "S" );
+						}
+					}
+					else if( west.equals( windDir ) )
+					{
+						wCount +=1;
+						
+						if( wCount > maxCount )
+						{
+							maxCount = wCount;
+							this.weekPrevailingWindDir.put( i, "W" );
+						}
+					}
+					else if( nEast.equals( windDir ) )
+					{
+						neCount += 1;
+						
+						if( neCount > maxCount )
+						{
+							maxCount = neCount;
+							this.weekPrevailingWindDir.put( i, "NE" );
+						}
+					}
+					else if( sEast.equals( windDir ) )
+					{
+						seCount += 1;
+						
+						if( seCount > maxCount )
+						{
+							maxCount = seCount;
+							this.weekPrevailingWindDir.put( i, "SE" );
+						}
+					}
+					else if( sWest.equals( windDir ) )
+					{
+						swCount += 1;
+						
+						if( swCount > maxCount )
+						{
+							maxCount = swCount;
+							this.weekPrevailingWindDir.put( i, "SW" );
+						}
+					}
+					else if( nWest.equals( windDir ) )
+					{
+						nwCount += 1;
+						
+						if( nwCount > maxCount )
+						{
+							maxCount = nwCount;
+							this.weekPrevailingWindDir.put( i, "NW" );
+						}
+					}			
 				}
-				
-				//WeekStats stats = new WeekStats();
 				
 				stats.setMaxTemp( maxTemp, maxTempDate, maxTempTime );
 				stats.setMeanTemp( (float) tempSum / sampCount );
@@ -191,6 +289,15 @@ public class Month
 		
 	}
 	
+	/**
+     * **********************************************************************
+     * Function: calcStats()
+	 * Author: All 
+	 * Description: calculates avg temp, high/low temp, avg wind speed, 
+	 * max wind gust, and accumulated rainfall for the month
+     * Parameters: n/a
+     * **********************************************************************
+     */
     public void calcStats()
 	{
 		float tempSum = 0.0f;
@@ -207,16 +314,35 @@ public class Month
 		String windTime = "";
 		float rainSum = 0.0f;
 		
+		String north = "N";
+		int nCount = 0;
+		String east = "E";
+		int eCount = 0;
+		String south = "S";
+		int sCount = 0;
+		String west = "W";
+		int wCount = 0;
+		String nEast = "NE";
+		int neCount = 0;
+		String sEast = "SE";
+		int seCount = 0;
+		String sWest = "SW";
+		int swCount = 0;
+		String nWest = "NW";
+		int nwCount = 0;
+		
+		int maxCount = -1;
+		
 		Hashtable<Integer, Day> days = this.getAllDaySamples();
 		
-		for( int i = 1; i <= days.size(); i++ )
+		for( int i = 1; i <= days.size(); i++ )  // for each day in the month
 		{
 			Day daa = days.get( i );//dkey );
 			
 			if( daa == null )  // if day doesn't exist, skip to next day lookup
-				{
-					continue;
-				}
+			{
+				continue;
+			}
 				
 			ArrayList<wItem> samples = daa.getSamples();
 			
@@ -257,7 +383,91 @@ public class Month
 					windTime = tempTime;
 				}
 			
-				rainSum += item.getRainfall();						
+				rainSum += item.getRainfall();	
+
+				String windDir = item.getWinddirection();
+			
+				// calculate prevailing wind direction
+				if( north.equals( windDir ) )
+				{
+					nCount += 1;
+					
+					if( nCount > maxCount )
+					{
+						maxCount = nCount;
+						this.prevailingWindDir = "N";
+					}
+				}
+				else if( east.equals( windDir ) )
+				{
+					eCount +=1;
+					
+					if( eCount > maxCount )
+					{
+						maxCount = eCount;
+						this.prevailingWindDir = "E";
+					}
+				}
+				else if( south.equals( windDir ) )
+				{
+					sCount += 1;
+					
+					if( sCount > maxCount )
+					{
+						maxCount = sCount;
+						this.prevailingWindDir = "S";
+					}
+				}
+				else if( west.equals( windDir ) )
+				{
+					wCount +=1;
+					
+					if( wCount > maxCount )
+					{
+						maxCount = wCount;
+						this.prevailingWindDir = "W";
+					}
+				}
+				else if( nEast.equals( windDir ) )
+				{
+					neCount += 1;
+					
+					if( neCount > maxCount )
+					{
+						maxCount = neCount;
+						this.prevailingWindDir = "NE";
+					}
+				}
+				else if( sEast.equals( windDir ) )
+				{
+					seCount += 1;
+					
+					if( seCount > maxCount )
+					{
+						maxCount = seCount;
+						this.prevailingWindDir = "SE";
+					}
+				}
+				else if( sWest.equals( windDir ) )
+				{
+					swCount += 1;
+					
+					if( swCount > maxCount )
+					{
+						maxCount = swCount;
+						this.prevailingWindDir = "SW";
+					}
+				}
+				else if( nWest.equals( windDir ) )
+				{
+					nwCount += 1;
+					
+					if( nwCount > maxCount )
+					{
+						maxCount = nwCount;
+						this.prevailingWindDir = "NW";
+					}
+				}			
 			
 			}					
 		}
@@ -390,8 +600,6 @@ public class Month
 		ArrayList<Day> daze = new ArrayList<Day>();
 		
 		int weekIndex = 1;
-		
-		//System.out.println( "THere are : " + numOdays + "number of days in the month");
 
 		
 		for( int i = 1; i <= numOdays; i++ )  // for each day in the month
@@ -404,32 +612,23 @@ public class Month
 			
 			if( i % 7 == 0 ) // if we have processed seven days, consider this a week
 			{
-				//System.out.println( "THere are : " + daze.size() + "number of days in week" + weekIndex );
 
 				ArrayList<Day> temp = new ArrayList<Day>(daze);
 				this.weeklySamples.put( weekIndex, temp );
 				
-				this.weekCount += 1;
-				
-				//System.out.println( "THere are : " + temp.size() + "number of days in temp week" + weekIndex );
-			
 				daze.clear(); 
 				weekIndex += 1;
 				flag = true;
 			}
 			
-			if( i == numOdays && !flag )//weekIndex == 5 && numOweeks == 5 ) // if we have processed the last day in the fifth week of a month
+			if( i == numOdays && !flag ) // if we have processed the last day in the fifth week of a month
 			{
 				// add the last incomplete week to the week list
 				this.weeklySamples.put( weekIndex, daze );
 				
-				this.weekCount += 1;
-				//System.out.println( "THere are : " + daze.size() + "number of days in week" + weekIndex + "LAST WEEK IN MONTH!");
-				
 			}												
 		}	
 
-         //System.out.println( "THere are " + this.weeklySamples.size() + " weeks of samples in " + this.getMonth() );		
 	}
 	
 	
@@ -464,7 +663,7 @@ public class Month
 		this.year = tempYear;
 	}
 	
-	public void setDailySamples( int dayKey, Day dayOfSamples ) //Day dayOfSamples, int dayKey )
+	public void setDailySamples( int dayKey, Day dayOfSamples )
 	{		
 		this.dailySamples.put( dayKey, dayOfSamples );
 	}
@@ -486,121 +685,5 @@ public class Month
 		this.year = -1;
 	}
 	
-	/*
-	public class WeekStats
-	{
-		private float meanTemp;
-		private float maxTemp;
-		private String maxTempDate;
-		private String maxTempTime;
-		private float minTemp;
-		private String minTempDate;
-		private String minTempTime;
-		private float meanWind;
-		private float maxWind;
-		private String windDate;
-		private String windTime;
-		private float rainfall;
-		
-		
-		public float getMeanTemp()
-		{
-			return this.meanTemp;
-		}
-		
-		public void setMeanTemp( float avg)
-		{
-			this.meanTemp = avg;
-		}
-		
-		public float getMaxTemp()
-		{
-			return this.maxTemp;
-		}
-		
-		public void setMaxTemp( float max, String date, String time )
-		{
-			this.maxTemp = max;
-			this.maxTempDate = date;
-			this.maxTempTime = time;
-		}
-		
-		public String getMaxTempDate()
-		{
-			return this.maxTempDate;
-		}
-		
-		
-		public String getMaxTempTime()
-		{
-			return this.maxTempTime;
-		}
-		
-		public float getLowTemp()
-		{
-			return this.minTemp;
-		}
-		
-		public void setLowTemp( float low, String date, String time )
-		{
-			this.minTemp = low;
-			this.minTempDate = date;
-			this.minTempTime = time;
-		}
-		
-		public String getLowTempDate()
-		{
-			return this.minTempDate;
-		}
-		
-		public String getLowTempTime()
-		{
-			return this.minTempTime;
-		}
-		
-		public float getMeanWind()
-		{
-			return this.meanWind;
-		}
-		
-		public void setMeanWind( float avg )
-		{
-			this.meanWind = avg;
-		}
-		
-		public float getMaxWind()
-		{
-			return this.maxWind;
-		}
-		
-		public void setMaxWind( float max, String date, String time )
-		{
-			this.maxWind = max;
-			this.windDate = date;
-			this.windTime = time;
-		}
-		
-		public String getMaxWindDate()
-		{
-			return this.windDate;
-		}
-		
-		public String getMaxWindTime()
-		{
-			return this.windTime;
-		}
-		
-		public float getRainfall()
-		{
-			return this.rainfall;
-		}
-		
-		public void setRainfall( float rain )
-		{
-			this.rainfall = rain;
-		}	
-	
-	}
-	*/
 	
 }

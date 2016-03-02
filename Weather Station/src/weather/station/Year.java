@@ -19,6 +19,7 @@ public class Year
 	private String mWindDate;
 	private String mWindTime;
 	private float rainfall;
+	private String prevailingWindDir;
 	
 	public Year()
 	{
@@ -33,6 +34,11 @@ public class Year
 		this.year = tempYear.getYear();
 		
 		this.monthlySamples.putAll( tempYear.getAllMonthlySamples() );		
+	}
+	
+	public String getPrevailingWindDir()
+	{
+		return this.prevailingWindDir;
 	}
 	
 	public int getSampleCount()
@@ -84,6 +90,25 @@ public class Year
 		String windTime = "";
 		float rainSum = 0.0f;
 		
+		String north = "N";
+		int nCount = 0;
+		String east = "E";
+		int eCount = 0;
+		String south = "S";
+		int sCount = 0;
+		String west = "W";
+		int wCount = 0;
+		String nEast = "NE";
+		int neCount = 0;
+		String sEast = "SE";
+		int seCount = 0;
+		String sWest = "SW";
+		int swCount = 0;
+		String nWest = "NW";
+		int nwCount = 0;
+		
+		int maxCount = -1;
+		
 		
 		Hashtable<Integer, Month> months = this.getAllMonthlySamples(); // grab the months in the current year
 		
@@ -101,7 +126,7 @@ public class Year
 		
 			for( int j = 1; j <= days.size(); j++ )  // for each day 
 			{
-				Day daa = days.get( j );//dkey );
+				Day daa = days.get( j );
 			
 				if( daa == null )  // if day doesn't exist, skip to next day lookup
 				{
@@ -140,14 +165,98 @@ public class Year
 					
 					temp = item.getWindgust();
 			
-					if( temp > maxWind )
+					if( temp > maxWind )  // track max wind gust
 					{
 						maxWind = temp;
 						windDate = tempDate;
 						windTime = tempTime;
 					}
 			
-					rainSum += item.getRainfall();						
+					rainSum += item.getRainfall();	// accumulate rainfall
+
+					String windDir = item.getWinddirection();  
+			
+					// calculate prevailing wind direction
+					if( north.equals( windDir ) )
+					{
+						nCount += 1;
+						
+						if( nCount > maxCount )
+						{
+							maxCount = nCount;
+							this.prevailingWindDir = "N";
+						}
+					}
+					else if( east.equals( windDir ) )
+					{
+						eCount +=1;
+						
+						if( eCount > maxCount )
+						{
+							maxCount = eCount;
+							this.prevailingWindDir = "E";
+						}
+					}
+					else if( south.equals( windDir ) )
+					{
+						sCount += 1;
+						
+						if( sCount > maxCount )
+						{
+							maxCount = sCount;
+							this.prevailingWindDir = "S";
+						}
+					}
+					else if( west.equals( windDir ) )
+					{
+						wCount +=1;
+						
+						if( wCount > maxCount )
+						{
+							maxCount = wCount;
+							this.prevailingWindDir = "W";
+						}
+					}
+					else if( nEast.equals( windDir ) )
+					{
+						neCount += 1;
+						
+						if( neCount > maxCount )
+						{
+							maxCount = neCount;
+							this.prevailingWindDir = "NE";
+						}
+					}
+					else if( sEast.equals( windDir ) )
+					{
+						seCount += 1;
+						
+						if( seCount > maxCount )
+						{
+							maxCount = seCount;
+							this.prevailingWindDir = "SE";
+						}
+					}
+					else if( sWest.equals( windDir ) )
+					{
+						swCount += 1;
+						
+						if( swCount > maxCount )
+						{
+							maxCount = swCount;
+							this.prevailingWindDir = "SW";
+						}
+					}
+					else if( nWest.equals( windDir ) )
+					{
+						nwCount += 1;
+						
+						if( nwCount > maxCount )
+						{
+							maxCount = nwCount;
+							this.prevailingWindDir = "NW";
+						}
+					}			
 			
 				}			
 			
@@ -164,7 +273,8 @@ public class Year
 		
 		this.setMeanTemp( (float) tempSum / sampCount ); // set avg temp speed 
 		
-		this.setRainfall( rainSum );  // set accumulated precipitation		
+		this.setRainfall( rainSum );  // set accumulated precipitation	
+		
 		
 		
 		
@@ -276,7 +386,7 @@ public class Year
 		this.year = tempYear;
 	}
 	
-	public void setMonthlySamples( int monthKey, Month monthOfSamples )//Month monthOfSamples, int monthKey )
+	public void setMonthlySamples( int monthKey, Month monthOfSamples )
 	{
 		
 		this.monthlySamples.put( monthKey, monthOfSamples );
