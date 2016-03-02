@@ -32,6 +32,9 @@ public class MainDisplay extends javax.swing.JFrame {
     private int radioFlag = 0;
     private WeatherData data;
     private String radioLabel = "";
+    int month = 1;
+    int day = 1;
+    int week = 1;
 
     /**
      * **********************************************************************
@@ -51,18 +54,57 @@ public class MainDisplay extends javax.swing.JFrame {
         data.getWeatherData(dir);
     }
 
-    public void setTheData(String dataSpec) {
+    public void setTheData(String dataSpec, int count) {
         if (tabFlag == 1) //if we want to look at the temp of one day
         {
-            XYSeriesCollection dataCollection = this.data.getDaySetOfData(10, 1, 1); //Jan. 1, 2010
+            
+            
+            
+            
+            day = count;
+            month = this.getMonth(day);
+            day = this.getDay(day);
+            
+            
+            
+            
+            
+            
+            
+            XYSeriesCollection dataCollection = this.data.getDaySetOfData(10, month, day); //Jan. 1, 2010
             XYSeries temp = dataCollection.getSeries(dataSpec);
             this.dataSet = new XYSeriesCollection(temp);
         } else if (tabFlag == 2) {
-            XYSeriesCollection dataCollection = this.data.getWeekSetOfData(10, 1, 1); //Jan. 1, 2010
+            
+            day = ((count - 1) * 7) + 1;
+            
+           month = this.getMonth(day);
+           day = this.getDay(day);
+           
+           week = count % 5;
+           
+           if(count % 5 == 0 && month == 2)
+           {
+               week = 1;
+           }
+           else if(count % 5 == 0)
+           {
+               week = 5;
+           }
+           
+            
+            
+            
+            
+            XYSeriesCollection dataCollection = this.data.getWeekSetOfData(10, month, week); //Jan. 1, 2010
             XYSeries temp = dataCollection.getSeries(dataSpec);
             this.dataSet = new XYSeriesCollection(temp);
         } else if (tabFlag == 3) {
-            XYSeriesCollection dataCollection = this.data.getMonthSetOfData(10, 1); //Jan. 1, 2010
+            
+            
+            month = count;
+            
+            XYSeriesCollection dataCollection = this.data.getMonthSetOfData(10, month); //Jan. 1, 2010
             XYSeries temp = dataCollection.getSeries(dataSpec);
             this.dataSet = new XYSeriesCollection(temp);
         } else if (tabFlag == 4) {
@@ -75,27 +117,200 @@ public class MainDisplay extends javax.swing.JFrame {
     public void setDataset() {
         switch (radioFlag) {
             case 1:  // Temp
-                setTheData("Temperature");
+                setTheData("Temperature", dataSelector.getValue());
                 break;
             case 2: // Wind
-                setTheData("Wind");
+                setTheData("Wind", dataSelector.getValue());
                 break;
             case 3:  // Baro
-                setTheData("Barometer");
+                setTheData("Barometer", dataSelector.getValue());
                 break;
             case 4: // UV inde
-                setTheData("UV Index");
+                setTheData("UV Index", dataSelector.getValue());
                 break;
 
             case 5: //humid
-                setTheData("Humidity");
+                setTheData("Humidity", dataSelector.getValue());
                 break;
 
             case 6: //rainfall
-                setTheData("Precipitation");
+                setTheData("Precipitation", dataSelector.getValue());
                 break;
         }
     }
+    
+    public int getMonth(int count){
+        
+        //rolls over to Feb
+            if (count > 31)
+            {
+                month = 2;
+                day = count - 31;
+              
+            //rolls over to Mar    
+            if(count > 59)
+            {
+                month = 3;
+                day = count - 59;
+            }
+            
+            //rolls over to Apr
+            if(count > 90)
+            {
+                month = 4;
+                day = count - 90;
+            }
+            
+            //rolls over to May
+            if(count > 120)
+            {
+                month = 5;
+                day = count - 120;
+            }
+            
+            //rolls over to June
+            if(count > 151)
+            {
+                month = 6;
+                day = count - 151;
+            }
+            
+            //rolls over to July
+            if(count > 181)
+            {
+                month = 7;
+                day = count - 181;
+            }
+            
+            //rolls over to Aug
+            if(count > 212)
+            {
+                month = 8;
+                day = count - 212;
+            }
+            
+            //rolls over to Sep
+            if(count > 243)
+            {
+                month = 9;
+                day = count - 243;
+            }
+            
+            //rolls over to Oct
+            if(count > 273)
+            {
+                month = 10;
+                day = count - 273;
+            }
+            
+            //rolls over to Nov
+            if(count > 304)
+            {
+                month = 11;
+                day = count - 304;
+            }
+            
+            //rolls over to Dec
+            if(count > 334)
+            {
+                month = 12;
+                day = count - 334;
+            }
+                
+                
+            }
+        
+            
+            return month;
+    }
+    
+    
+    public int getDay(int count){
+        
+        //rolls over to Feb
+            if (count > 31)
+            {
+                month = 2;
+                day = count - 31;
+              
+            //rolls over to Mar    
+            if(count > 59)
+            {
+                month = 3;
+                day = count - 59;
+            }
+            
+            //rolls over to Apr
+            if(count > 90)
+            {
+                month = 4;
+                day = count - 90;
+            }
+            
+            //rolls over to May
+            if(count > 120)
+            {
+                month = 5;
+                day = count - 120;
+            }
+            
+            //rolls over to June
+            if(count > 151)
+            {
+                month = 6;
+                day = count - 151;
+            }
+            
+            //rolls over to July
+            if(count > 181)
+            {
+                month = 7;
+                day = count - 181;
+            }
+            
+            //rolls over to Aug
+            if(count > 212)
+            {
+                month = 8;
+                day = count - 212;
+            }
+            
+            //rolls over to Sep
+            if(count > 243)
+            {
+                month = 9;
+                day = count - 243;
+            }
+            
+            //rolls over to Oct
+            if(count > 273)
+            {
+                month = 10;
+                day = count - 273;
+            }
+            
+            //rolls over to Nov
+            if(count > 304)
+            {
+                month = 11;
+                day = count - 304;
+            }
+            
+            //rolls over to Dec
+            if(count > 334)
+            {
+                month = 12;
+                day = count - 334;
+            }
+                
+                
+            }
+        
+            
+            return day;
+    }
+    
+    
 
     /**
      * **********************************************************************
@@ -265,6 +480,7 @@ public class MainDisplay extends javax.swing.JFrame {
                 dataSelectorStateChanged(evt);
             }
         });
+        dataSelector.setMinimum(1);
 
         radioButtonGroup.add(humidityRadioButton);
         humidityRadioButton.setText("Humidity");
@@ -426,9 +642,9 @@ public class MainDisplay extends javax.swing.JFrame {
     private void dailyTabComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_dailyTabComponentShown
         // TODO add your handling code here:
         tabFlag = 1;
-        setChartTitle(radioFlag);
-        setDataset();
-        generateGraph(dailyTab);
+        setChartTitle(radioFlag, month ,day);
+        //setDataset();
+        callTabs();
     }//GEN-LAST:event_dailyTabComponentShown
 
     /**
@@ -451,9 +667,9 @@ public class MainDisplay extends javax.swing.JFrame {
     private void weeklyTabComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_weeklyTabComponentShown
         // TODO add your handling code here:
         tabFlag = 2;
-        setChartTitle(radioFlag);
+        setChartTitle(radioFlag, month, day);
         setDataset();
-        generateGraph(weeklyTab);
+        callTabs();
     }//GEN-LAST:event_weeklyTabComponentShown
 
     /**
@@ -476,9 +692,9 @@ public class MainDisplay extends javax.swing.JFrame {
     private void monthlyTabComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_monthlyTabComponentShown
         // TODO add your handling code here:
         tabFlag = 3;
-        setChartTitle(radioFlag);
+        setChartTitle(radioFlag, month , 0);
         setDataset();
-        generateGraph(monthlyTab);
+        callTabs();
     }//GEN-LAST:event_monthlyTabComponentShown
 
     /**
@@ -501,9 +717,9 @@ public class MainDisplay extends javax.swing.JFrame {
     private void yearlyTabComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_yearlyTabComponentShown
         // TODO add your handling code here:
         tabFlag = 4;
-        setChartTitle(radioFlag);
+        setChartTitle(radioFlag, 0, 0);
         setDataset();
-        generateGraph(yearlyTab);
+        callTabs();
     }//GEN-LAST:event_yearlyTabComponentShown
 
     /**
@@ -599,7 +815,7 @@ public class MainDisplay extends javax.swing.JFrame {
         // TODO add your handling code here:
         radioFlag = 1;
         radioLabel = "Temperature";
-        setChartTitle(radioFlag);
+        setChartTitle(radioFlag, month, day);
         callTabs();
 
     }//GEN-LAST:event_temperatureRadioButtonActionPerformed
@@ -614,7 +830,7 @@ public class MainDisplay extends javax.swing.JFrame {
         // TODO add your handling code here:
         radioFlag = 2;
         radioLabel = "Wind Speed";
-        setChartTitle(radioFlag);
+        setChartTitle(radioFlag, month, day);
         callTabs();
     }//GEN-LAST:event_windsRadioButtonActionPerformed
 
@@ -628,7 +844,7 @@ public class MainDisplay extends javax.swing.JFrame {
         // TODO add your handling code here:
         radioFlag = 3;
         radioLabel = "Barometric Presure";
-        setChartTitle(radioFlag);
+        setChartTitle(radioFlag, month, day);
         callTabs();
     }//GEN-LAST:event_barometricRadioButtonActionPerformed
 
@@ -642,7 +858,7 @@ public class MainDisplay extends javax.swing.JFrame {
         // TODO add your handling code here:
         radioFlag = 4;
         radioLabel = "UV Index";
-        setChartTitle(radioFlag);
+        setChartTitle(radioFlag, month, day);
         callTabs();
     }//GEN-LAST:event_heatUVindexActionPerformed
 
@@ -656,7 +872,7 @@ public class MainDisplay extends javax.swing.JFrame {
         // TODO add your handling code here:
         radioFlag = 5;
         radioLabel = "Humidity";
-        setChartTitle(radioFlag);
+        setChartTitle(radioFlag, month, day);
         callTabs();
     }//GEN-LAST:event_humidityRadioButtonActionPerformed
 
@@ -670,7 +886,7 @@ public class MainDisplay extends javax.swing.JFrame {
         // TODO add your handling code here:
         radioFlag = 6;
         radioLabel = "Rainfall";
-        setChartTitle(radioFlag);
+        setChartTitle(radioFlag, month, day);
         callTabs();
     }//GEN-LAST:event_rainfallRadioButtonActionPerformed
 
@@ -679,7 +895,47 @@ public class MainDisplay extends javax.swing.JFrame {
         JSlider source = (JSlider) evt.getSource(); // get slider
         if (!source.getValueIsAdjusting()) // when user quits fiddling
         {
-            int val = source.getValue();    // get slider value
+            int val = source.getValue(); 
+            setDataset();
+            switch (tabFlag) {
+            case 1:
+                
+                setDataset();
+                setChartTitle(radioFlag, month, day);
+                generateGraph(dailyTab);
+               
+                break;
+            case 2:
+                
+                setDataset();
+                setChartTitle(radioFlag, month, day);
+                generateGraph(weeklyTab);
+               
+                break;
+            case 3:
+               
+                setDataset();
+                setChartTitle(radioFlag, month, day);
+                generateGraph(monthlyTab);
+               
+                break;
+            case 4:
+                
+                setDataset();
+                setChartTitle(radioFlag, month, day);
+                generateGraph(yearlyTab);
+               
+                break;
+        }
+            
+            
+            
+            
+            
+            
+            
+            
+            generateGraph(dailyTab);// get slider value
             System.out.println(val);        // print it
         }
     }//GEN-LAST:event_dataSelectorStateChanged
@@ -696,6 +952,8 @@ public class MainDisplay extends javax.swing.JFrame {
         int data = dataSelector.getValue();
         data++;
         dataSelector.setValue(data);
+        
+        
     }//GEN-LAST:event_incrementActionPerformed
 
     private void specifyDirectoryItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_specifyDirectoryItemActionPerformed
@@ -784,36 +1042,50 @@ public class MainDisplay extends javax.swing.JFrame {
      * **********************************************************************
      */
     public void callTabs() {
+        day = 1;
+        month = 1;
         switch (tabFlag) {
             case 1:
                 dailyTab.removeAll();
-                setDataset();
+                
                 dataSelector.setMaximum(data.getDayCount());
                 dataSelector.setValue(1);
+                month = 1;
+                day = 1;
+                setDataset();
                 generateGraph(dailyTab);
                 dailyTab.repaint();
                 break;
             case 2:
                 weeklyTab.removeAll();
-                setDataset();
+                
                 dataSelector.setMaximum(data.getDayCount() / 4);
                 dataSelector.setValue(1);
+                month = 1;
+                day = 1;
+                setDataset();
                 generateGraph(weeklyTab);
                 weeklyTab.repaint();
                 break;
             case 3:
                 monthlyTab.removeAll();
-                setDataset();
+                
                 dataSelector.setMaximum(data.getMonthCount());
                 dataSelector.setValue(1);
+                month = 1;
+                day = 1;
+                setDataset();
                 generateGraph(monthlyTab);
                 monthlyTab.repaint();
                 break;
             case 4:
                 yearlyTab.removeAll();
-                setDataset();
+                
                 dataSelector.setMaximum(data.getYearCount());
                 dataSelector.setValue(1);
+                month = 1;
+                day = 1;
+                setDataset();
                 generateGraph(yearlyTab);
                 yearlyTab.repaint();
                 break;
@@ -826,37 +1098,40 @@ public class MainDisplay extends javax.swing.JFrame {
      * chart Parameters: radioFlag - denotes which radio button is selected
      * **********************************************************************
      */
-    public void setChartTitle(int radioFlag) {
+    public void setChartTitle(int radioFlag, int month, int day) {
         String name = jTabbedPane1.getTitleAt(tabFlag - 1);
+        
+        
+        String m = Integer.toString(month);
+        String d = Integer.toString(day);
 
         switch (radioFlag) {
             case 1:
-                this.chartTitle = name + " Temperature";
+                this.chartTitle = name + " Temperature " + m + "/" + d; 
                 setYlabel("Degrees Farenheit (F)");
                 setXlabel("Samples");
                 break;
             case 2:
-                this.chartTitle = name + " Wind Speed";
-                setYlabel("Miles per Hour (MPH)");
+                this.chartTitle = name + " Wind Speed " + m + "/" + d; 
                 setXlabel("Samples");
                 break;
             case 3:
-                this.chartTitle = name + " Barometric Pressure";
+                this.chartTitle = name + " Barometric Pressure "  + m + "/" + d; ;
                 setYlabel("Inches of Mercury (inHg)");
                 setXlabel("Samples");
                 break;
             case 4:
-                this.chartTitle = name + " UV Index";
+                this.chartTitle = name + " UV Index "  + m + "/" + d;
                 setYlabel("Index");
                 setXlabel("Samples");
                 break;
             case 5:
-                this.chartTitle = name + " Humidity";
+                this.chartTitle = name + " Humidity "  + m + "/" + d;
                 setYlabel("Percent (%)");
                 setXlabel("Samples");
                 break;
             case 6:
-                this.chartTitle = name + " Rainfall";
+                this.chartTitle = name + " Rainfall "  + m + "/" + d; 
                 setYlabel("Inches (in)");
                 setXlabel("Samples");
                 break;
