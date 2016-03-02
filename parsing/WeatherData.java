@@ -68,6 +68,42 @@ public class WeatherData
 	}
 	*/
 	
+	public static String getDayPrevailingWindDir( int yearIndex, int monthIndex, int dayIndex )
+	{
+		Day day = WeatherData.dictOfYears.get( yearIndex ).getMonthlySamplesByMonth( monthIndex ).getDayofSamples( dayIndex );
+		
+		String dir = day.getPrevailingWindDir();
+		
+		return dir;
+	}
+	
+	public static String getWeekPrevailingWindDir( int yearIndex, int monthIndex, int weekIndex )
+	{
+		Month month = WeatherData.dictOfYears.get( yearIndex ).getMonthlySamplesByMonth( monthIndex );
+		
+		String dir = month.getWeekPrevailingWindDir( weekIndex );
+		
+		return dir;
+	}
+	
+	public static String getMonthPrevailingWindDir( int yearIndex, int monthIndex )
+	{
+		Month month = WeatherData.dictOfYears.get( yearIndex ).getMonthlySamplesByMonth( monthIndex );
+		
+		String dir = month.getPrevailingWindDir();
+		
+		return dir;
+	}
+	
+	public static String getYearPrevailingWindCir( int yearIndex )
+	{
+		Year year = WeatherData.dictOfYears.get( yearIndex );
+		
+		String dir = year.getPrevailingWindDir();
+		
+		return dir; 
+	}
+	
 	public static int getDayCount()//( int yearIndex, int monthIndex, int dayIndex )
 	{
 		/*
@@ -1327,6 +1363,8 @@ public static float getYearAvgTemp( int yearIndex)
 							daa.calcStats();
 							
 							WeatherData.dayCount += 1;
+							
+							System.out.println( "The number of days is: " + WeatherData.dayCount );
 							mun.setDailySamples( currDay, daa ); 
 							
 							mun.setMonth( currMonth );
@@ -1334,6 +1372,15 @@ public static float getYearAvgTemp( int yearIndex)
 							mun.setYear( currYear );
 							
 							mun.setWeeklySamples();
+							
+							if( mun.getMonth() == 2 )
+							{
+								WeatherData.weekCount += 5;
+							}
+							else
+							{
+								WeatherData.weekCount += 4;
+							}
 							
 							//mun.calcStats();						
 							
@@ -1350,11 +1397,27 @@ public static float getYearAvgTemp( int yearIndex)
 							tempMonth.calcStats();
 							tempMonth.calcWeekStats();
 							
-							weekCount += tempMonth.getWeekCount();
+							//weekCount += tempMonth.getWeekCount();
+							
+							System.out.println( "The number of weeks is: " + WeatherData.weekCount );
 							
 							WeatherData.monthCount += 1;
 							
-							year.setMonthlySamples( currMonth, tempMonth );  // add month to year
+							System.out.println( "The number of months is: " + WeatherData.monthCount );
+							
+							
+							/*
+							if( currYear == prevYear )
+							{
+								year.setMonthlySamples( currMonth, tempMonth );  // add month to year
+								
+								year.setYear( prevYear );												
+							
+							}
+							*/
+							
+							
+							
 							
 							year.setYear( currYear );
 							
@@ -1365,6 +1428,8 @@ public static float getYearAvgTemp( int yearIndex)
 							year.calcStats();
 							
 							WeatherData.yearCount += 1;
+							
+							System.out.println( "The number of years is: " + WeatherData.yearCount );
 							
 							WeatherData.dictOfYears.put( currYear, savedYear );
 						}
@@ -1407,6 +1472,8 @@ public static float getYearAvgTemp( int yearIndex)
 							
 							WeatherData.dayCount += 1;
 							
+							
+							
 							mun.setDailySamples( prevDay, daa );  // set that day of samples in a month object
 							//mun.setWeeklySamples();  // set weekly chunks of samples
 																				
@@ -1420,6 +1487,15 @@ public static float getYearAvgTemp( int yearIndex)
 								
 								mun.setWeeklySamples();
 								
+								if( mun.getMonth() == 2 )
+								{
+									WeatherData.weekCount += 5;
+								}
+								else
+								{
+									WeatherData.weekCount += 4;
+								}
+								
 								//mun.calcStats();
 								
 								Month tempMonth = new Month( mun ); // create a new month in memory
@@ -1432,7 +1508,7 @@ public static float getYearAvgTemp( int yearIndex)
 								
 								WeatherData.monthCount += 1;
 								
-								weekCount += tempMonth.getWeekCount();
+								//weekCount += tempMonth.getWeekCount();
 								
 								year.setMonthlySamples( prevMonth, tempMonth );  // add month to year
 								
@@ -1490,7 +1566,7 @@ public static float getYearAvgTemp( int yearIndex)
             } 
         }
 		
-		
+		/*
         System.out.println(dictOfYears);
 		Year tempYear = dictOfYears.get(10);
 		System.out.println( tempYear.getYear() );
@@ -1509,6 +1585,7 @@ public static float getYearAvgTemp( int yearIndex)
 		System.out.println( tempDay.getDay() );
 		dictOfSamples.put( 1,  tempDay.getSamples() );
 		System.out.println( dictOfSamples );
+		*/
 		
 		
 		
@@ -1533,6 +1610,15 @@ public static float getYearAvgTemp( int yearIndex)
 	    //XYSeriesCollection dataSet = WeatherData.getMonthSetOfData( 10, 1 );
 		
 		//TimeSeriesCollection dataSet = WeatherData.getWeekSetOfData( 14, 12, 5 ); // grab data from the first week in Feb. 2010
+		
+		System.out.println( "The number of days is: " + WeatherData.dayCount );
+		
+		System.out.println( "The number of weeks is: " + WeatherData.weekCount );
+		
+		System.out.println( "The number of months is: " + WeatherData.monthCount );
+		
+		System.out.println( "The number of years is: " + WeatherData.yearCount );
+		
 		
 		XYSeriesCollection dataSet = WeatherData.getDaySetOfData( 15, 2, 28 );  // grab jan. 1st 2010
 		 //TimeSeriesCollection dataSet = WeatherData.getDaySetOfData( 10, 1, 1 );  // grab jan. 1st 2010

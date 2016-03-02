@@ -8,11 +8,17 @@ public class Month
 	private Hashtable<Integer, Day> dailySamples;
 	private Hashtable<Integer, ArrayList<Day> > weeklySamples;
 	
-	private int weekCount;
+	private String prevailingWindDir;
+	
+	//private int weekCount;
 	
 	//private Hashtable<Integer, ArrayList<WeekStats>> weekStats;	
 	
 	private Hashtable<Integer, WeekStats> weekStats;
+	
+	//private String weekPrevailingWindDir;
+	
+	private Hashtable< Integer, String > weekPrevailingWindDir;
 	
 	private float meanTemp;
 	private float highTemp;
@@ -51,10 +57,25 @@ public class Month
 
 	}
 	
+	public String getPrevailingWindDir()
+	{
+		return this.prevailingWindDir;
+	}
+	
+	public String getWeekPrevailingWindDir( int weekIndex )
+	{
+		String dir = this.weekPrevailingWindDir.get( weekIndex );
+		
+		return dir;
+		
+	}
+	
+	/*
 	public int getWeekCount()
 	{
 		return this.weekCount;
 	}
+	*/
 	
 	public int getSampleCount()
 	{
@@ -111,6 +132,25 @@ public class Month
 		String windTime = "";
 		float rainSum = 0.0f;
 		float windGust = 0.0f;
+		
+		String north = "N";
+		int nCount = 0;
+		String east = "E";
+		int eCount = 0;
+		String south = "S";
+		int sCount = 0;
+		String west = "W";
+		int wCount = 0;
+		String nEast = "NE";
+		int neCount = 0;
+		String sEast = "SE";
+		int seCount = 0;
+		String sWest = "SW";
+		int swCount = 0;
+		String nWest = "NW";
+		int nwCount = 0;
+		
+		int maxCount = -1;
 		
 	    Hashtable<Integer, ArrayList<Day> > weeks = this.getAllWeekSamples();
 		
@@ -171,6 +211,90 @@ public class Month
 					}
 			
 					rainSum += item.getRainfall();
+					
+					String windDir = item.getWinddirection();
+			
+					// calculate prevailing wind direction
+					if( north.equals( windDir ) )
+					{
+						nCount += 1;
+						
+						if( nCount > maxCount )
+						{
+							maxCount = nCount;
+							this.weekPrevailingWindDir.put( i, "N" );
+						}
+					}
+					else if( east.equals( windDir ) )
+					{
+						eCount +=1;
+						
+						if( eCount > maxCount )
+						{
+							maxCount = eCount;
+							this.weekPrevailingWindDir.put( i, "E" );
+						}
+					}
+					else if( south.equals( windDir ) )
+					{
+						sCount += 1;
+						
+						if( sCount > maxCount )
+						{
+							maxCount = sCount;
+							this.weekPrevailingWindDir.put( i, "S" );
+						}
+					}
+					else if( west.equals( windDir ) )
+					{
+						wCount +=1;
+						
+						if( wCount > maxCount )
+						{
+							maxCount = wCount;
+							this.weekPrevailingWindDir.put( i, "W" );
+						}
+					}
+					else if( nEast.equals( windDir ) )
+					{
+						neCount += 1;
+						
+						if( neCount > maxCount )
+						{
+							maxCount = neCount;
+							this.weekPrevailingWindDir.put( i, "NE" );
+						}
+					}
+					else if( sEast.equals( windDir ) )
+					{
+						seCount += 1;
+						
+						if( seCount > maxCount )
+						{
+							maxCount = seCount;
+							this.weekPrevailingWindDir.put( i, "SE" );
+						}
+					}
+					else if( sWest.equals( windDir ) )
+					{
+						swCount += 1;
+						
+						if( swCount > maxCount )
+						{
+							maxCount = swCount;
+							this.weekPrevailingWindDir.put( i, "SW" );
+						}
+					}
+					else if( nWest.equals( windDir ) )
+					{
+						nwCount += 1;
+						
+						if( nwCount > maxCount )
+						{
+							maxCount = nwCount;
+							this.weekPrevailingWindDir.put( i, "NW" );
+						}
+					}			
 				}
 				
 				//WeekStats stats = new WeekStats();
@@ -206,6 +330,25 @@ public class Month
 		String windTime = "";
 		float rainSum = 0.0f;
 		
+		String north = "N";
+		int nCount = 0;
+		String east = "E";
+		int eCount = 0;
+		String south = "S";
+		int sCount = 0;
+		String west = "W";
+		int wCount = 0;
+		String nEast = "NE";
+		int neCount = 0;
+		String sEast = "SE";
+		int seCount = 0;
+		String sWest = "SW";
+		int swCount = 0;
+		String nWest = "NW";
+		int nwCount = 0;
+		
+		int maxCount = -1;
+		
 		Hashtable<Integer, Day> days = this.getAllDaySamples();
 		
 		for( int i = 1; i <= days.size(); i++ )
@@ -213,9 +356,9 @@ public class Month
 			Day daa = days.get( i );//dkey );
 			
 			if( daa == null )  // if day doesn't exist, skip to next day lookup
-				{
-					continue;
-				}
+			{
+				continue;
+			}
 				
 			ArrayList<wItem> samples = daa.getSamples();
 			
@@ -256,7 +399,91 @@ public class Month
 					windTime = tempTime;
 				}
 			
-				rainSum += item.getRainfall();						
+				rainSum += item.getRainfall();	
+
+				String windDir = item.getWinddirection();
+			
+				// calculate prevailing wind direction
+				if( north.equals( windDir ) )
+				{
+					nCount += 1;
+					
+					if( nCount > maxCount )
+					{
+						maxCount = nCount;
+						this.prevailingWindDir = "N";
+					}
+				}
+				else if( east.equals( windDir ) )
+				{
+					eCount +=1;
+					
+					if( eCount > maxCount )
+					{
+						maxCount = eCount;
+						this.prevailingWindDir = "E";
+					}
+				}
+				else if( south.equals( windDir ) )
+				{
+					sCount += 1;
+					
+					if( sCount > maxCount )
+					{
+						maxCount = sCount;
+						this.prevailingWindDir = "S";
+					}
+				}
+				else if( west.equals( windDir ) )
+				{
+					wCount +=1;
+					
+					if( wCount > maxCount )
+					{
+						maxCount = wCount;
+						this.prevailingWindDir = "W";
+					}
+				}
+				else if( nEast.equals( windDir ) )
+				{
+					neCount += 1;
+					
+					if( neCount > maxCount )
+					{
+						maxCount = neCount;
+						this.prevailingWindDir = "NE";
+					}
+				}
+				else if( sEast.equals( windDir ) )
+				{
+					seCount += 1;
+					
+					if( seCount > maxCount )
+					{
+						maxCount = seCount;
+						this.prevailingWindDir = "SE";
+					}
+				}
+				else if( sWest.equals( windDir ) )
+				{
+					swCount += 1;
+					
+					if( swCount > maxCount )
+					{
+						maxCount = swCount;
+						this.prevailingWindDir = "SW";
+					}
+				}
+				else if( nWest.equals( windDir ) )
+				{
+					nwCount += 1;
+					
+					if( nwCount > maxCount )
+					{
+						maxCount = nwCount;
+						this.prevailingWindDir = "NW";
+					}
+				}			
 			
 			}					
 		}
@@ -408,7 +635,7 @@ public class Month
 				ArrayList<Day> temp = new ArrayList<Day>(daze);
 				this.weeklySamples.put( weekIndex, temp );
 				
-				this.weekCount += 1;
+				//this.weekCount += 1;
 				
 				//System.out.println( "THere are : " + temp.size() + "number of days in temp week" + weekIndex );
 			
@@ -422,13 +649,13 @@ public class Month
 				// add the last incomplete week to the week list
 				this.weeklySamples.put( weekIndex, daze );
 				
-				this.weekCount += 1;
+				//this.weekCount += 1;
 				//System.out.println( "THere are : " + daze.size() + "number of days in week" + weekIndex + "LAST WEEK IN MONTH!");
 				
 			}												
 		}	
 
-         //System.out.println( "THere are " + this.weeklySamples.size() + " weeks of samples in " + this.getMonth() );		
+         //System.out.println( "THere are " + this.weekCount + " weeks of samples in " + this.getMonth() );		
 	}
 	
 	
