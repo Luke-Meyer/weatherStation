@@ -58,7 +58,6 @@ public class MainDisplay extends javax.swing.JFrame {
         year = minDate[2];
         month = minDate[0];
         day = minDate[1];
-
     }
 
     public void setTheData(String dataSpec, int count) {
@@ -1154,10 +1153,6 @@ public class MainDisplay extends javax.swing.JFrame {
 
                 dataSelector.setMaximum(data.getDayCount());
                 dataSelector.setValue(1);
-                dataSelector.setMajorTickSpacing(50);
-                dataSelector.setMinorTickSpacing(5);
-                dataSelector.setPaintTicks(true);
-                dataSelector.repaint();
                 month = 1;
                 day = 1;
                 setDataset();
@@ -1169,10 +1164,6 @@ public class MainDisplay extends javax.swing.JFrame {
 
                 dataSelector.setMaximum(data.getMonthCount() * 5);
                 dataSelector.setValue(1);
-                dataSelector.setMajorTickSpacing(10);
-                dataSelector.setMinorTickSpacing(1);
-                dataSelector.setPaintTicks(true);
-                dataSelector.repaint();
                 month = 1;
                 day = 1;
                 setDataset();
@@ -1184,10 +1175,6 @@ public class MainDisplay extends javax.swing.JFrame {
 
                 dataSelector.setMaximum(data.getMonthCount());
                 dataSelector.setValue(1);
-                dataSelector.setMajorTickSpacing(3);
-                dataSelector.setMinorTickSpacing(1);
-                dataSelector.setPaintTicks(true);
-                dataSelector.repaint();
                 month = 1;
                 day = 1;
                 setDataset();
@@ -1199,9 +1186,6 @@ public class MainDisplay extends javax.swing.JFrame {
 
                 dataSelector.setMaximum(data.getYearCount());
                 dataSelector.setValue(1);
-                dataSelector.setMajorTickSpacing(1);
-                dataSelector.setPaintTicks(true);
-                dataSelector.repaint();
                 month = 1;
                 day = 1;
                 setDataset();
