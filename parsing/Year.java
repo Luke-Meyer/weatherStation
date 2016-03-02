@@ -126,7 +126,7 @@ public class Year
 		
 			for( int j = 1; j <= days.size(); j++ )  // for each day 
 			{
-				Day daa = days.get( j );//dkey );
+				Day daa = days.get( j );
 			
 				if( daa == null )  // if day doesn't exist, skip to next day lookup
 				{
@@ -165,16 +165,16 @@ public class Year
 					
 					temp = item.getWindgust();
 			
-					if( temp > maxWind )
+					if( temp > maxWind )  // track max wind gust
 					{
 						maxWind = temp;
 						windDate = tempDate;
 						windTime = tempTime;
 					}
 			
-					rainSum += item.getRainfall();	
+					rainSum += item.getRainfall();	// accumulate rainfall
 
-					String windDir = item.getWinddirection();
+					String windDir = item.getWinddirection();  
 			
 					// calculate prevailing wind direction
 					if( north.equals( windDir ) )
@@ -386,7 +386,7 @@ public class Year
 		this.year = tempYear;
 	}
 	
-	public void setMonthlySamples( int monthKey, Month monthOfSamples )//Month monthOfSamples, int monthKey )
+	public void setMonthlySamples( int monthKey, Month monthOfSamples )
 	{
 		
 		this.monthlySamples.put( monthKey, monthOfSamples );

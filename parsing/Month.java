@@ -8,15 +8,10 @@ public class Month
 	private Hashtable<Integer, Day> dailySamples;
 	private Hashtable<Integer, ArrayList<Day> > weeklySamples;
 	
-	private String prevailingWindDir;
-	
-	//private int weekCount;
-	
-	//private Hashtable<Integer, ArrayList<WeekStats>> weekStats;	
+	private String prevailingWindDir;	
 	
 	private Hashtable<Integer, WeekStats> weekStats;
 	
-	//private String weekPrevailingWindDir;
 	
 	private Hashtable< Integer, String > weekPrevailingWindDir;
 	
@@ -70,12 +65,6 @@ public class Month
 		
 	}
 	
-	/*
-	public int getWeekCount()
-	{
-		return this.weekCount;
-	}
-	*/
 	
 	public int getSampleCount()
 	{
@@ -97,18 +86,6 @@ public class Month
 		return count;
 	}
 	
-	/*
-	public int getWeeklySampleCount()
-	{
-		int count = 0;
-		for( Day day : this.dailySamples ) // for each day in the month
-		{
-			count += day.getSampleCount();  // sum the number of samples in each day			
-		}
-		
-		return count;
-	}
-	*/
 	
 	public WeekStats getWeekStats( int weekIndex )
 	{
@@ -152,21 +129,19 @@ public class Month
 		
 		int maxCount = -1;
 		
-	    Hashtable<Integer, ArrayList<Day> > weeks = this.getAllWeekSamples();
+	    Hashtable<Integer, ArrayList<Day> > weeks = this.getAllWeekSamples();  
 		
-		for( int i = 1; i <= weeks.size(); i++ )
+		for( int i = 1; i <= weeks.size(); i++ )  // for all weeks in the month
 		{
-			//int month = this.getMonth();
-			//System.out.println( "Made it here: " + month + "iteration: " + i );
 			ArrayList<Day> week = weeks.get(i);
 			
 			WeekStats stats = new WeekStats();
 			
-			for( int j = 0; j < week.size(); j++ )
+			for( int j = 0; j < week.size(); j++ )  // for each day in the week
 			{
 				Day day = week.get(j);
 				
-				if( day == null )
+				if( day == null )  // if day doesn't exist, skip it
 				{
 					continue;
 				}
@@ -203,14 +178,14 @@ public class Month
 
 					temp = item.getWindgust();
 			
-					if( temp > maxWind )
+					if( temp > maxWind )  // track max wind gust
 					{
 						maxWind = temp;
 						windDate = tempDate;
 						windTime = tempTime;
 					}
 			
-					rainSum += item.getRainfall();
+					rainSum += item.getRainfall();  // accumulate rainfall
 					
 					String windDir = item.getWinddirection();
 			
@@ -297,8 +272,6 @@ public class Month
 					}			
 				}
 				
-				//WeekStats stats = new WeekStats();
-				
 				stats.setMaxTemp( maxTemp, maxTempDate, maxTempTime );
 				stats.setMeanTemp( (float) tempSum / sampCount );
 				stats.setLowTemp( minTemp, minTempDate, minTempTime );
@@ -314,6 +287,15 @@ public class Month
 		
 	}
 	
+	/**
+     * **********************************************************************
+     * Function: calcStats()
+	 * Author: All 
+	 * Description: calculates avg temp, high/low temp, avg wind speed, 
+	 * max wind gust, and accumulated rainfall for the month
+     * Parameters: n/a
+     * **********************************************************************
+     */
     public void calcStats()
 	{
 		float tempSum = 0.0f;
@@ -351,7 +333,7 @@ public class Month
 		
 		Hashtable<Integer, Day> days = this.getAllDaySamples();
 		
-		for( int i = 1; i <= days.size(); i++ )
+		for( int i = 1; i <= days.size(); i++ )  // for each day in the month
 		{
 			Day daa = days.get( i );//dkey );
 			
@@ -616,8 +598,6 @@ public class Month
 		ArrayList<Day> daze = new ArrayList<Day>();
 		
 		int weekIndex = 1;
-		
-		//System.out.println( "THere are : " + numOdays + "number of days in the month");
 
 		
 		for( int i = 1; i <= numOdays; i++ )  // for each day in the month
@@ -630,32 +610,23 @@ public class Month
 			
 			if( i % 7 == 0 ) // if we have processed seven days, consider this a week
 			{
-				//System.out.println( "THere are : " + daze.size() + "number of days in week" + weekIndex );
 
 				ArrayList<Day> temp = new ArrayList<Day>(daze);
 				this.weeklySamples.put( weekIndex, temp );
 				
-				//this.weekCount += 1;
-				
-				//System.out.println( "THere are : " + temp.size() + "number of days in temp week" + weekIndex );
-			
 				daze.clear(); 
 				weekIndex += 1;
 				flag = true;
 			}
 			
-			if( i == numOdays && !flag )//weekIndex == 5 && numOweeks == 5 ) // if we have processed the last day in the fifth week of a month
+			if( i == numOdays && !flag ) // if we have processed the last day in the fifth week of a month
 			{
 				// add the last incomplete week to the week list
 				this.weeklySamples.put( weekIndex, daze );
 				
-				//this.weekCount += 1;
-				//System.out.println( "THere are : " + daze.size() + "number of days in week" + weekIndex + "LAST WEEK IN MONTH!");
-				
 			}												
 		}	
 
-         //System.out.println( "THere are " + this.weekCount + " weeks of samples in " + this.getMonth() );		
 	}
 	
 	
@@ -690,7 +661,7 @@ public class Month
 		this.year = tempYear;
 	}
 	
-	public void setDailySamples( int dayKey, Day dayOfSamples ) //Day dayOfSamples, int dayKey )
+	public void setDailySamples( int dayKey, Day dayOfSamples )
 	{		
 		this.dailySamples.put( dayKey, dayOfSamples );
 	}
@@ -712,121 +683,5 @@ public class Month
 		this.year = -1;
 	}
 	
-	/*
-	public class WeekStats
-	{
-		private float meanTemp;
-		private float maxTemp;
-		private String maxTempDate;
-		private String maxTempTime;
-		private float minTemp;
-		private String minTempDate;
-		private String minTempTime;
-		private float meanWind;
-		private float maxWind;
-		private String windDate;
-		private String windTime;
-		private float rainfall;
-		
-		
-		public float getMeanTemp()
-		{
-			return this.meanTemp;
-		}
-		
-		public void setMeanTemp( float avg)
-		{
-			this.meanTemp = avg;
-		}
-		
-		public float getMaxTemp()
-		{
-			return this.maxTemp;
-		}
-		
-		public void setMaxTemp( float max, String date, String time )
-		{
-			this.maxTemp = max;
-			this.maxTempDate = date;
-			this.maxTempTime = time;
-		}
-		
-		public String getMaxTempDate()
-		{
-			return this.maxTempDate;
-		}
-		
-		
-		public String getMaxTempTime()
-		{
-			return this.maxTempTime;
-		}
-		
-		public float getLowTemp()
-		{
-			return this.minTemp;
-		}
-		
-		public void setLowTemp( float low, String date, String time )
-		{
-			this.minTemp = low;
-			this.minTempDate = date;
-			this.minTempTime = time;
-		}
-		
-		public String getLowTempDate()
-		{
-			return this.minTempDate;
-		}
-		
-		public String getLowTempTime()
-		{
-			return this.minTempTime;
-		}
-		
-		public float getMeanWind()
-		{
-			return this.meanWind;
-		}
-		
-		public void setMeanWind( float avg )
-		{
-			this.meanWind = avg;
-		}
-		
-		public float getMaxWind()
-		{
-			return this.maxWind;
-		}
-		
-		public void setMaxWind( float max, String date, String time )
-		{
-			this.maxWind = max;
-			this.windDate = date;
-			this.windTime = time;
-		}
-		
-		public String getMaxWindDate()
-		{
-			return this.windDate;
-		}
-		
-		public String getMaxWindTime()
-		{
-			return this.windTime;
-		}
-		
-		public float getRainfall()
-		{
-			return this.rainfall;
-		}
-		
-		public void setRainfall( float rain )
-		{
-			this.rainfall = rain;
-		}	
-	
-	}
-	*/
 	
 }
