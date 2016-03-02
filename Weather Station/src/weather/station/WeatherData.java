@@ -21,36 +21,28 @@ package weather.station;
 
 import org.jdom2.*;
 import java.io.File;
-import java.io.FileInputStream;
 import org.jdom2.input.SAXBuilder;
 import java.io.IOException;
 import java.util.*;
 import java.io.FilenameFilter;
 import org.apache.commons.io.FileUtils;
-import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYDataItem;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
-import org.jfree.data.time.Minute;
-import org.jfree.data.time.TimeSeries;
-import org.jfree.data.time.TimeSeriesCollection;
-//import javax.xml.parsers.DocumentBuilderFactory;
-//import javax.xml.xpath.*;
-//import org.w3c.dom.*;
 
 public class WeatherData {
 
-    private static Hashtable<Integer, Year> dictOfYears;  // data structure to hold the weather data
+    private Hashtable<Integer, Year> dictOfYears;  // data structure to hold the weather data
 
-    private static int dayCount;
+    private int dayCount;
 
-    private static int weekCount;
+    private int weekCount;
 
-    private static int monthCount;
+    private int monthCount;
 
-    private static int yearCount;
+    private int yearCount;
 
-    public static String checkNullTag(String tag) // used to check for null tags in a .xml file
+    public String checkNullTag(String tag) // used to check for null tags in a .xml file
     {
         String attr = tag;
 
@@ -67,7 +59,7 @@ public class WeatherData {
 		
 	}
      */
-    public static int getDayCount()//( int yearIndex, int monthIndex, int dayIndex )
+    public int getDayCount()//( int yearIndex, int monthIndex, int dayIndex )
     {
         /*
 		Day day = WeatherData.dictOfYears.get( yearIndex ).getMonthlySamplesByMonth( monthIndex ).getDayofSamples( dayIndex );
@@ -76,38 +68,38 @@ public class WeatherData {
 		
 		return count;
          */
-        return WeatherData.dayCount;
+        return this.dayCount;
     }
 
     /*
-	public static int getWeekSampleCount( int yearIndex, int monthIndex, int weekIndex )
+	public int getWeekSampleCount( int yearIndex, int monthIndex, int weekIndex )
 	{
-		Month month = WeatherData.dictOfYears.get( yearIndex ).getMonthlySamplesByMonth( monthIndex );
+		Month month = this.dictOfYears.get( yearIndex ).getMonthlySamplesByMonth( monthIndex );
 		
 		Hashtable<Integer, ArrayList<Day> > weeks = month.getAllWeekSamples();
 	}
      */
-    public static int getWeekCount() {
-        return WeatherData.weekCount;
+    public int getWeekCount() {
+        return this.weekCount;
     }
 
-    public static int getMonthCount()//( int yearIndex, int monthIndex )
+    public int getMonthCount()//( int yearIndex, int monthIndex )
     {
         /*
-		Month month = WeatherData.dictOfYears.get( yearIndex ).getMonthlySamplesByMonth( monthIndex );
+		Month month = this.dictOfYears.get( yearIndex ).getMonthlySamplesByMonth( monthIndex );
 		
 		int count = month.getSampleCount();
 		
 		return count;
          */
 
-        return WeatherData.monthCount;
+        return this.monthCount;
     }
 
-    public static int getYearCount()//( int yearIndex )
+    public int getYearCount()//( int yearIndex )
     {
         /*
-		Year year = WeatherData.dictOfYears.get( yearIndex );
+		Year year = this.dictOfYears.get( yearIndex );
 		
 		int count = year.getSampleCount();
 		
@@ -115,11 +107,11 @@ public class WeatherData {
 		
          */
 
-        return WeatherData.yearCount;
+        return this.yearCount;
     }
 
-    public static float getWeekAvgTemp(int yearIndex, int monthIndex, int weekIndex) {
-        Month month = WeatherData.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex);
+    public float getWeekAvgTemp(int yearIndex, int monthIndex, int weekIndex) {
+        Month month = this.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex);
 
         WeekStats temp = month.getWeekStats(weekIndex);
 
@@ -129,56 +121,56 @@ public class WeatherData {
 
     }
 
-    public static float getWeekMaxTemp(int yearIndex, int monthIndex, int weekIndex) {
-        Month month = WeatherData.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex);
+    public float getWeekMaxTemp(int yearIndex, int monthIndex, int weekIndex) {
+        Month month = this.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex);
 
         WeekStats temp = month.getWeekStats(weekIndex);
 
         return temp.getMaxTemp();
     }
 
-    public static String getWeekMaxTempDate(int yearIndex, int monthIndex, int weekIndex) {
-        Month month = WeatherData.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex);
+    public String getWeekMaxTempDate(int yearIndex, int monthIndex, int weekIndex) {
+        Month month = this.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex);
 
         WeekStats temp = month.getWeekStats(weekIndex);
 
         return temp.getMaxTempDate();
     }
 
-    public static String getWeekMaxTempTime(int yearIndex, int monthIndex, int weekIndex) {
-        Month month = WeatherData.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex);
+    public String getWeekMaxTempTime(int yearIndex, int monthIndex, int weekIndex) {
+        Month month = this.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex);
 
         WeekStats temp = month.getWeekStats(weekIndex);
 
         return temp.getMaxTempTime();
     }
 
-    public static float getWeekLowTemp(int yearIndex, int monthIndex, int weekIndex) {
-        Month month = WeatherData.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex);
+    public float getWeekLowTemp(int yearIndex, int monthIndex, int weekIndex) {
+        Month month = this.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex);
 
         WeekStats temp = month.getWeekStats(weekIndex);
 
         return temp.getLowTemp();
     }
 
-    public static String getWeekLowTempDate(int yearIndex, int monthIndex, int weekIndex) {
-        Month month = WeatherData.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex);
+    public String getWeekLowTempDate(int yearIndex, int monthIndex, int weekIndex) {
+        Month month = this.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex);
 
         WeekStats temp = month.getWeekStats(weekIndex);
 
         return temp.getLowTempDate();
     }
 
-    public static String getWeekLowTempTime(int yearIndex, int monthIndex, int weekIndex) {
-        Month month = WeatherData.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex);
+    public String getWeekLowTempTime(int yearIndex, int monthIndex, int weekIndex) {
+        Month month = this.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex);
 
         WeekStats temp = month.getWeekStats(weekIndex);
 
         return temp.getLowTempTime();
     }
 
-    public static float getWeekMeanWind(int yearIndex, int monthIndex, int weekIndex) {
-        Month month = WeatherData.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex);
+    public float getWeekMeanWind(int yearIndex, int monthIndex, int weekIndex) {
+        Month month = this.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex);
 
         WeekStats temp = month.getWeekStats(weekIndex);
 
@@ -188,32 +180,32 @@ public class WeatherData {
 
     }
 
-    public static float getWeekMaxWind(int yearIndex, int monthIndex, int weekIndex) {
-        Month month = WeatherData.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex);
+    public float getWeekMaxWind(int yearIndex, int monthIndex, int weekIndex) {
+        Month month = this.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex);
 
         WeekStats temp = month.getWeekStats(weekIndex);
 
         return temp.getMaxWind();
     }
 
-    public static String getWeekMaxWindDate(int yearIndex, int monthIndex, int weekIndex) {
-        Month month = WeatherData.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex);
+    public String getWeekMaxWindDate(int yearIndex, int monthIndex, int weekIndex) {
+        Month month = this.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex);
 
         WeekStats temp = month.getWeekStats(weekIndex);
 
         return temp.getMaxWindDate();
     }
 
-    public static String getWeekMaxWindTime(int yearIndex, int monthIndex, int weekIndex) {
-        Month month = WeatherData.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex);
+    public String getWeekMaxWindTime(int yearIndex, int monthIndex, int weekIndex) {
+        Month month = this.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex);
 
         WeekStats temp = month.getWeekStats(weekIndex);
 
         return temp.getMaxWindTime();
     }
 
-    public static float getWeekRainfall(int yearIndex, int monthIndex, int weekIndex) {
-        Month month = WeatherData.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex);
+    public float getWeekRainfall(int yearIndex, int monthIndex, int weekIndex) {
+        Month month = this.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex);
 
         WeekStats temp = month.getWeekStats(weekIndex);
 
@@ -221,64 +213,64 @@ public class WeatherData {
     }
 
     ///////////////////////////////////////////////////////////////////
-    public static float getDayAvgTemp(int yearIndex, int monthIndex, int dayIndex) {
-        Day day = WeatherData.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex).getDayofSamples(dayIndex);
+    public float getDayAvgTemp(int yearIndex, int monthIndex, int dayIndex) {
+        Day day = this.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex).getDayofSamples(dayIndex);
 
         float avg = day.getMeanTemp();
 
         return avg;
     }
 
-    public static float getDayHighTemp(int yearIndex, int monthIndex, int dayIndex) {
-        Day day = WeatherData.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex).getDayofSamples(dayIndex);
+    public float getDayHighTemp(int yearIndex, int monthIndex, int dayIndex) {
+        Day day = this.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex).getDayofSamples(dayIndex);
 
         float high = day.getHighTemp();
 
         return high;
     }
 
-    public static String getDayHighTempDate(int yearIndex, int monthIndex, int dayIndex) {
-        Day day = WeatherData.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex).getDayofSamples(dayIndex);
+    public String getDayHighTempDate(int yearIndex, int monthIndex, int dayIndex) {
+        Day day = this.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex).getDayofSamples(dayIndex);
 
         String date = day.getHighTempDate();
 
         return date;
     }
 
-    public static String getDayHighTempTime(int yearIndex, int monthIndex, int dayIndex) {
-        Day day = WeatherData.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex).getDayofSamples(dayIndex);
+    public String getDayHighTempTime(int yearIndex, int monthIndex, int dayIndex) {
+        Day day = this.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex).getDayofSamples(dayIndex);
 
         String time = day.getHighTempTime();
 
         return time;
     }
 
-    public static float getDayLowTemp(int yearIndex, int monthIndex, int dayIndex) {
-        Day day = WeatherData.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex).getDayofSamples(dayIndex);
+    public float getDayLowTemp(int yearIndex, int monthIndex, int dayIndex) {
+        Day day = this.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex).getDayofSamples(dayIndex);
 
         float low = day.getLowTemp();
 
         return low;
     }
 
-    public static String getDayLowTempDate(int yearIndex, int monthIndex, int dayIndex) {
-        Day day = WeatherData.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex).getDayofSamples(dayIndex);
+    public String getDayLowTempDate(int yearIndex, int monthIndex, int dayIndex) {
+        Day day = this.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex).getDayofSamples(dayIndex);
 
         String date = day.getLowTempDate();
 
         return date;
     }
 
-    public static String getDayLowTempTime(int yearIndex, int monthIndex, int dayIndex) {
-        Day day = WeatherData.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex).getDayofSamples(dayIndex);
+    public String getDayLowTempTime(int yearIndex, int monthIndex, int dayIndex) {
+        Day day = this.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex).getDayofSamples(dayIndex);
 
         String time = day.getLowTempTime();
 
         return time;
     }
 
-    public static float getDayAvgWind(int yearIndex, int monthIndex, int dayIndex) {
-        Day day = WeatherData.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex).getDayofSamples(dayIndex);
+    public float getDayAvgWind(int yearIndex, int monthIndex, int dayIndex) {
+        Day day = this.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex).getDayofSamples(dayIndex);
 
         float avg = day.getMeanWind();
 
@@ -286,32 +278,32 @@ public class WeatherData {
 
     }
 
-    public static float getDayMaxWind(int yearIndex, int monthIndex, int dayIndex) {
-        Day day = WeatherData.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex).getDayofSamples(dayIndex);
+    public float getDayMaxWind(int yearIndex, int monthIndex, int dayIndex) {
+        Day day = this.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex).getDayofSamples(dayIndex);
 
         float low = day.getMaxWind();
 
         return low;
     }
 
-    public static String getDayMaxWindDate(int yearIndex, int monthIndex, int dayIndex) {
-        Day day = WeatherData.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex).getDayofSamples(dayIndex);
+    public String getDayMaxWindDate(int yearIndex, int monthIndex, int dayIndex) {
+        Day day = this.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex).getDayofSamples(dayIndex);
 
         String date = day.getMaxWindDate();
 
         return date;
     }
 
-    public static String getDayMaxWindTime(int yearIndex, int monthIndex, int dayIndex) {
-        Day day = WeatherData.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex).getDayofSamples(dayIndex);
+    public String getDayMaxWindTime(int yearIndex, int monthIndex, int dayIndex) {
+        Day day = this.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex).getDayofSamples(dayIndex);
 
         String time = day.getMaxWindTime();
 
         return time;
     }
 
-    public static float getDayTotalRainfall(int yearIndex, int monthIndex, int dayIndex) {
-        Day day = WeatherData.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex).getDayofSamples(dayIndex);
+    public float getDayTotalRainfall(int yearIndex, int monthIndex, int dayIndex) {
+        Day day = this.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex).getDayofSamples(dayIndex);
 
         float rain = day.getRainfall();
 
@@ -319,64 +311,64 @@ public class WeatherData {
     }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
 
-    public static float getMonthAvgTemp(int yearIndex, int monthIndex) {
-        Month month = WeatherData.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex);
+    public float getMonthAvgTemp(int yearIndex, int monthIndex) {
+        Month month = this.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex);
 
         float avg = month.getMeanTemp();
 
         return avg;
     }
 
-    public static float getMonthHighTemp(int yearIndex, int monthIndex) {
-        Month month = WeatherData.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex);
+    public float getMonthHighTemp(int yearIndex, int monthIndex) {
+        Month month = this.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex);
 
         float high = month.getHighTemp();
 
         return high;
     }
 
-    public static String getMonthHighTempDate(int yearIndex, int monthIndex) {
-        Month month = WeatherData.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex);
+    public String getMonthHighTempDate(int yearIndex, int monthIndex) {
+        Month month = this.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex);
 
         String date = month.getHighTempDate();
 
         return date;
     }
 
-    public static String getMonthHighTempTime(int yearIndex, int monthIndex) {
-        Month month = WeatherData.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex);
+    public String getMonthHighTempTime(int yearIndex, int monthIndex) {
+        Month month = this.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex);
 
         String time = month.getHighTempTime();
 
         return time;
     }
 
-    public static float getMonthLowTemp(int yearIndex, int monthIndex) {
-        Month month = WeatherData.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex);
+    public float getMonthLowTemp(int yearIndex, int monthIndex) {
+        Month month = this.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex);
 
         float low = month.getLowTemp();
 
         return low;
     }
 
-    public static String getMonthLowTempDate(int yearIndex, int monthIndex) {
-        Month month = WeatherData.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex);
+    public String getMonthLowTempDate(int yearIndex, int monthIndex) {
+        Month month = this.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex);
 
         String date = month.getLowTempDate();
 
         return date;
     }
 
-    public static String getMonthLowTempTime(int yearIndex, int monthIndex) {
-        Month month = WeatherData.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex);
+    public String getMonthLowTempTime(int yearIndex, int monthIndex) {
+        Month month = this.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex);
 
         String time = month.getLowTempTime();
 
         return time;
     }
 
-    public static float getMonthAvgWind(int yearIndex, int monthIndex) {
-        Month month = WeatherData.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex);
+    public float getMonthAvgWind(int yearIndex, int monthIndex) {
+        Month month = this.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex);
 
         float avg = month.getMeanWind();
 
@@ -384,32 +376,32 @@ public class WeatherData {
 
     }
 
-    public static float getMonthMaxWind(int yearIndex, int monthIndex) {
-        Month month = WeatherData.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex);
+    public float getMonthMaxWind(int yearIndex, int monthIndex) {
+        Month month = this.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex);
 
         float low = month.getMaxWind();
 
         return low;
     }
 
-    public static String getMonthMaxWindDate(int yearIndex, int monthIndex) {
-        Month month = WeatherData.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex);
+    public String getMonthMaxWindDate(int yearIndex, int monthIndex) {
+        Month month = this.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex);
 
         String date = month.getMaxWindDate();
 
         return date;
     }
 
-    public static String getMonthMaxWindTime(int yearIndex, int monthIndex) {
-        Month month = WeatherData.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex);
+    public String getMonthMaxWindTime(int yearIndex, int monthIndex) {
+        Month month = this.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex);
 
         String time = month.getMaxWindTime();
 
         return time;
     }
 
-    public static float getMonthTotalRainfall(int yearIndex, int monthIndex) {
-        Month month = WeatherData.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex);
+    public float getMonthTotalRainfall(int yearIndex, int monthIndex) {
+        Month month = this.dictOfYears.get(yearIndex).getMonthlySamplesByMonth(monthIndex);
 
         float rain = month.getRainfall();
 
@@ -417,64 +409,64 @@ public class WeatherData {
     }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public static float getYearAvgTemp(int yearIndex) {
-        Year year = WeatherData.dictOfYears.get(yearIndex);
+    public float getYearAvgTemp(int yearIndex) {
+        Year year = this.dictOfYears.get(yearIndex);
 
         float avg = year.getMeanTemp();
 
         return avg;
     }
 
-    public static float getYearHighTemp(int yearIndex) {
-        Year year = WeatherData.dictOfYears.get(yearIndex);
+    public float getYearHighTemp(int yearIndex) {
+        Year year = this.dictOfYears.get(yearIndex);
 
         float high = year.getHighTemp();
 
         return high;
     }
 
-    public static String getYearHighTempDate(int yearIndex) {
-        Year year = WeatherData.dictOfYears.get(yearIndex);
+    public String getYearHighTempDate(int yearIndex) {
+        Year year = this.dictOfYears.get(yearIndex);
 
         String date = year.getHighTempDate();
 
         return date;
     }
 
-    public static String getYearHighTempTime(int yearIndex) {
-        Year year = WeatherData.dictOfYears.get(yearIndex);
+    public String getYearHighTempTime(int yearIndex) {
+        Year year = this.dictOfYears.get(yearIndex);
 
         String time = year.getHighTempTime();
 
         return time;
     }
 
-    public static float getYearLowTemp(int yearIndex) {
-        Year year = WeatherData.dictOfYears.get(yearIndex);
+    public float getYearLowTemp(int yearIndex) {
+        Year year = this.dictOfYears.get(yearIndex);
 
         float low = year.getLowTemp();
 
         return low;
     }
 
-    public static String getYearLowTempDate(int yearIndex) {
-        Year year = WeatherData.dictOfYears.get(yearIndex);
+    public String getYearLowTempDate(int yearIndex) {
+        Year year = this.dictOfYears.get(yearIndex);
 
         String date = year.getLowTempDate();
 
         return date;
     }
 
-    public static String getYearLowTempTime(int yearIndex) {
-        Year year = WeatherData.dictOfYears.get(yearIndex);
+    public String getYearLowTempTime(int yearIndex) {
+        Year year = this.dictOfYears.get(yearIndex);
 
         String time = year.getLowTempTime();
 
         return time;
     }
 
-    public static float getYearAvgWind(int yearIndex) {
-        Year year = WeatherData.dictOfYears.get(yearIndex);
+    public float getYearAvgWind(int yearIndex) {
+        Year year = this.dictOfYears.get(yearIndex);
 
         float avg = year.getMeanWind();
 
@@ -482,32 +474,32 @@ public class WeatherData {
 
     }
 
-    public static float getYearMaxWind(int yearIndex) {
-        Year year = WeatherData.dictOfYears.get(yearIndex);
+    public float getYearMaxWind(int yearIndex) {
+        Year year = this.dictOfYears.get(yearIndex);
 
         float low = year.getMaxWind();
 
         return low;
     }
 
-    public static String getYearMaxWindDate(int yearIndex) {
-        Year year = WeatherData.dictOfYears.get(yearIndex);
+    public String getYearMaxWindDate(int yearIndex) {
+        Year year = this.dictOfYears.get(yearIndex);
 
         String date = year.getMaxWindDate();
 
         return date;
     }
 
-    public static String getYearMaxWindTime(int yearIndex) {
-        Year year = WeatherData.dictOfYears.get(yearIndex);
+    public String getYearMaxWindTime(int yearIndex) {
+        Year year = this.dictOfYears.get(yearIndex);
 
         String time = year.getMaxWindTime();
 
         return time;
     }
 
-    public static float getYearTotalRainfall(int yearIndex) {
-        Year year = WeatherData.dictOfYears.get(yearIndex);
+    public float getYearTotalRainfall(int yearIndex) {
+        Year year = this.dictOfYears.get(yearIndex);
 
         float rain = year.getRainfall();
 
@@ -515,7 +507,7 @@ public class WeatherData {
     }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public static XYSeriesCollection getDaySetOfData(int yearIndex, int monthIndex, int dayIndex) //public static TimeSeriesCollection getDaySetOfData( int yearIndex, int monthIndex, int dayIndex )
+    public XYSeriesCollection getDaySetOfData(int yearIndex, int monthIndex, int dayIndex) //public TimeSeriesCollection getDaySetOfData( int yearIndex, int monthIndex, int dayIndex )
     {
 
         XYSeries tempz = new XYSeries("Temperature");
@@ -543,7 +535,7 @@ public class WeatherData {
         XYSeriesCollection dataset = new XYSeriesCollection();
         //TimeSeriesCollection dataset = new TimeSeriesCollection();
 
-        Year year = WeatherData.dictOfYears.get(yearIndex); // grab the year of data in question
+        Year year = this.dictOfYears.get(yearIndex); // grab the year of data in question
 
         System.out.println("The year index is: " + yearIndex);
 
@@ -648,7 +640,7 @@ public class WeatherData {
 
     }
 
-    public static XYSeriesCollection getWeekSetOfData(int yearIndex, int monthIndex, int weekIndex) //public static TimeSeriesCollection getWeekSetOfData( int yearIndex, int monthIndex, int weekIndex )
+    public XYSeriesCollection getWeekSetOfData(int yearIndex, int monthIndex, int weekIndex) //public TimeSeriesCollection getWeekSetOfData( int yearIndex, int monthIndex, int weekIndex )
     {
 
         XYSeries tempz = new XYSeries("Temperature");
@@ -675,7 +667,7 @@ public class WeatherData {
 
 		TimeSeriesCollection dataset = new TimeSeriesCollection();
          */
-        Year year = WeatherData.dictOfYears.get(yearIndex); // grab the year of data in question
+        Year year = this.dictOfYears.get(yearIndex); // grab the year of data in question
 
         Month mun = year.getMonthlySamplesByMonth(monthIndex);  // grab the month of data in question
 
@@ -774,7 +766,7 @@ public class WeatherData {
 
     }
 
-    public static XYSeriesCollection getMonthSetOfData(int yearIndex, int monthIndex) //public static TimeSeriesCollection getMonthSetOfData( int yearIndex, int monthIndex )
+    public XYSeriesCollection getMonthSetOfData(int yearIndex, int monthIndex) //public TimeSeriesCollection getMonthSetOfData( int yearIndex, int monthIndex )
     {
 
         XYSeries tempz = new XYSeries("Temperature");
@@ -801,7 +793,7 @@ public class WeatherData {
 
 		TimeSeriesCollection dataset = new TimeSeriesCollection();
          */
-        Year year = WeatherData.dictOfYears.get(yearIndex); // grab the year of data in question
+        Year year = this.dictOfYears.get(yearIndex); // grab the year of data in question
 
         Month mun = year.getMonthlySamplesByMonth(monthIndex);  // grab the month of data in question
 
@@ -927,7 +919,7 @@ public class WeatherData {
 
     }
 
-    public static XYSeriesCollection getYearSetOfData(int yearIndex) //public static TimeSeriesCollection getYearSetOfData( int yearIndex )
+    public XYSeriesCollection getYearSetOfData(int yearIndex) //public TimeSeriesCollection getYearSetOfData( int yearIndex )
     {
 
         XYSeries tempz = new XYSeries("Temperature");
@@ -952,7 +944,7 @@ public class WeatherData {
         XYSeriesCollection dataset = new XYSeriesCollection();
         //TimeSeriesCollection dataset = new TimeSeriesCollection();
 
-        Year year = WeatherData.dictOfYears.get(yearIndex); // grab the year of data in question
+        Year year = this.dictOfYears.get(yearIndex); // grab the year of data in question
 
         if (year == null) // if year doesn't exist, create uniteresting data to graph and return;
         {
@@ -1070,7 +1062,7 @@ public class WeatherData {
         return dataset;
     }
 
-    public static void getWeatherData(File folder)//String dirName )//main( String[] args )
+    public void getWeatherData(File folder)//String dirName )//main( String[] args )
     {
         //String dirName = dir.getName();
 
@@ -1101,7 +1093,7 @@ public class WeatherData {
         int prevMonth = -1;
         int currMonth = -1;
 
-        WeatherData.dictOfYears = new Hashtable<Integer, Year>();
+        this.dictOfYears = new Hashtable<Integer, Year>();
 
         ArrayList<wItem> daySamples = new ArrayList<wItem>();  // will contain all samples for one day
         Month mun = new Month();
@@ -1141,43 +1133,43 @@ public class WeatherData {
 
                         // check for null tags; set default value if data is missing
                         String tag = element.getChildText("temperature");
-                        String attr = WeatherData.checkNullTag(tag);
+                        String attr = this.checkNullTag(tag);
                         item.setTemperature(Float.parseFloat(attr));
 
                         tag = element.getChildText("humidity");
-                        attr = WeatherData.checkNullTag(tag);
+                        attr = this.checkNullTag(tag);
                         item.setHumidity(Float.parseFloat(element.getChildText("humidity")));
 
                         tag = element.getChildText("barometer");
-                        attr = WeatherData.checkNullTag(tag);
+                        attr = this.checkNullTag(tag);
                         item.setBarometer(Float.parseFloat(element.getChildText("barometer")));
 
                         tag = element.getChildText("windspeed");
-                        attr = WeatherData.checkNullTag(tag);
+                        attr = this.checkNullTag(tag);
                         item.setWindspeed(Float.parseFloat(element.getChildText("windspeed")));
 
                         tag = element.getChildText("winddirection");
-                        attr = WeatherData.checkNullTag(tag);
+                        attr = this.checkNullTag(tag);
                         item.setWinddirection(element.getChildText("winddirection"));
 
                         tag = element.getChildText("windgust");
-                        attr = WeatherData.checkNullTag(tag);
+                        attr = this.checkNullTag(tag);
                         item.setWindgust(Float.parseFloat(element.getChildText("windgust")));
 
                         tag = element.getChildText("windchill");
-                        attr = WeatherData.checkNullTag(tag);
+                        attr = this.checkNullTag(tag);
                         item.setWindchill(Float.parseFloat(element.getChildText("windchill")));
 
                         tag = element.getChildText("heatindex");
-                        attr = WeatherData.checkNullTag(tag);
+                        attr = this.checkNullTag(tag);
                         item.setHeatindex(Float.parseFloat(element.getChildText("heatindex")));
 
                         tag = element.getChildText("uvindex");
-                        attr = WeatherData.checkNullTag(tag);
+                        attr = this.checkNullTag(tag);
                         item.setUvindex(Float.parseFloat(element.getChildText("uvindex")));
 
                         tag = element.getChildText("rainfall");
-                        attr = WeatherData.checkNullTag(tag);
+                        attr = this.checkNullTag(tag);
                         item.setRainfall(Float.parseFloat(element.getChildText("rainfall")));
 
                         j += 1;
@@ -1196,7 +1188,7 @@ public class WeatherData {
 
                             daa.calcStats();
 
-                            WeatherData.dayCount += 1;
+                            this.dayCount += 1;
                             mun.setDailySamples(currDay, daa);
 
                             mun.setMonth(currMonth);
@@ -1216,7 +1208,7 @@ public class WeatherData {
 
                             weekCount += tempMonth.getWeekCount();
 
-                            WeatherData.monthCount += 1;
+                            this.monthCount += 1;
 
                             year.setMonthlySamples(currMonth, tempMonth);  // add month to year
 
@@ -1228,9 +1220,9 @@ public class WeatherData {
 
                             year.calcStats();
 
-                            WeatherData.yearCount += 1;
+                            this.yearCount += 1;
 
-                            WeatherData.dictOfYears.put(currYear, savedYear);
+                            this.dictOfYears.put(currYear, savedYear);
                         }
 
                         currDay = item.getDay();
@@ -1265,7 +1257,7 @@ public class WeatherData {
 
                             daa.calcStats();
 
-                            WeatherData.dayCount += 1;
+                            this.dayCount += 1;
 
                             mun.setDailySamples(prevDay, daa);  // set that day of samples in a month object
                             //mun.setWeeklySamples();  // set weekly chunks of samples
@@ -1287,7 +1279,7 @@ public class WeatherData {
                                 tempMonth.calcWeekStats();
 
                                 //tempMonth.setWeeklySamples();
-                                WeatherData.monthCount += 1;
+                                this.monthCount += 1;
 
                                 weekCount += tempMonth.getWeekCount();
 
@@ -1302,9 +1294,9 @@ public class WeatherData {
 
                                     savedYear.calcStats();
 
-                                    WeatherData.yearCount += 1;
+                                    this.yearCount += 1;
 
-                                    WeatherData.dictOfYears.put(prevYear, savedYear);
+                                    this.dictOfYears.put(prevYear, savedYear);
 
                                     year.reset();
 
@@ -1359,7 +1351,7 @@ public class WeatherData {
 
     }
 
-    public static void main(String[] args) {
+    /*public void main(String[] args) {
         //File dir = new File("");
         //WeatherData data = new WeatherData();
         File dir = new File("..\\data\\");
@@ -1396,5 +1388,5 @@ public class WeatherData {
             count += 1;
         }
 
-    }
+    }*/
 }
