@@ -18,6 +18,7 @@ public class Day
 	private String mWindDate;
 	private String mWindTime;
 	private float rainfall;
+	private String prevailingWindDir;
 	
 	public Day()
 	{
@@ -31,6 +32,13 @@ public class Day
 	{
 		return this.samples.size();
 	}
+	
+	public String getPrevailingWindDir()
+	{
+		return this.prevailingWindDir;
+	}
+	
+	
 	
 	public void calcStats()
 	{
@@ -47,6 +55,26 @@ public class Day
 		String windDate = "";
 		String windTime = "";
 		float rainSum = 0.0f;
+		
+		String north = "N";
+		int nCount = 0;
+		String east = "E";
+		int eCount = 0;
+		String south = "S";
+		int sCount = 0;
+		String west = "W";
+		int wCount = 0;
+		String nEast = "NE";
+		int neCount = 0;
+		String sEast = "SE";
+		int seCount = 0;
+		String sWest = "SW";
+		int swCount = 0;
+		String nWest = "NW";
+		int nwCount = 0;
+		
+		int maxCount = -1;
+		
 		
 		ArrayList<wItem> samples = this.getSamples();
 		
@@ -87,11 +115,96 @@ public class Day
 				windTime = tempTime;
 			}
 			
-			rainSum += item.getRainfall();						
+			rainSum += item.getRainfall();	// accumulate rainfall
+			
+		    String windDir = item.getWinddirection();
+			
+            // calculate prevailing wind direction
+			if( north.equals( windDir ) )
+			{
+				nCount += 1;
+				
+				if( nCount > maxCount )
+				{
+					maxCount = nCount;
+					this.prevailingWindDir = "N";
+				}
+			}
+			else if( east.equals( windDir ) )
+			{
+				eCount +=1;
+				
+				if( eCount > maxCount )
+				{
+					maxCount = eCount;
+					this.prevailingWindDir = "E";
+				}
+			}
+			else if( south.equals( windDir ) )
+			{
+				sCount += 1;
+				
+				if( sCount > maxCount )
+				{
+					maxCount = sCount;
+					this.prevailingWindDir = "S";
+				}
+			}
+			else if( west.equals( windDir ) )
+			{
+				wCount +=1;
+				
+				if( wCount > maxCount )
+				{
+					maxCount = wCount;
+					this.prevailingWindDir = "W";
+				}
+			}
+			else if( nEast.equals( windDir ) )
+			{
+				neCount += 1;
+				
+				if( neCount > maxCount )
+				{
+					maxCount = neCount;
+					this.prevailingWindDir = "NE";
+				}
+			}
+			else if( sEast.equals( windDir ) )
+			{
+				seCount += 1;
+				
+				if( seCount > maxCount )
+				{
+					maxCount = seCount;
+					this.prevailingWindDir = "SE";
+				}
+			}
+			else if( sWest.equals( windDir ) )
+			{
+				swCount += 1;
+				
+				if( swCount > maxCount )
+				{
+					maxCount = swCount;
+					this.prevailingWindDir = "SW";
+				}
+			}
+			else if( nWest.equals( windDir ) )
+			{
+				nwCount += 1;
+				
+				if( nwCount > maxCount )
+				{
+					maxCount = nwCount;
+					this.prevailingWindDir = "NW";
+				}
+			}			
 			
 		}
 		
 		this.setHighTemp( maxTemp, maxTempDate, maxTempTime );  // set the max temp for day
+		
 		this.setLowTemp( minTemp, minTempDate, minTempTime );  // set low temp
 		
 		this.setMaxWind( maxWind, windDate, windTime );  // set max wind speed
@@ -100,12 +213,8 @@ public class Day
 		
 		this.setMeanTemp( (float) tempSum / sampCount ); // set avg temp speed 
 		
-		this.setRainfall( rainSum );  // set accumulated precipitation
-		
-		
-		
-		
-		
+		this.setRainfall( rainSum );  // set accumulated precipitation	
+				
 	}
 	
 	public float getMeanTemp()
