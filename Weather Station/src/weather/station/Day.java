@@ -1,4 +1,5 @@
 package weather.station;
+
 import java.util.*;
 
 
@@ -202,6 +203,7 @@ public class Day
 			if( north.equals( windDir ) )
 			{
 				nCount += 1;
+				
 				
 				if( nCount > maxCount )
 				{

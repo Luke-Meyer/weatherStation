@@ -49,7 +49,6 @@ public class MainDisplay extends javax.swing.JFrame {
         initComponents();
 
         String workingDir = System.getProperty("user.dir");
-        System.out.println("Current working directory: " + workingDir);
         File dir = new File(workingDir);
 
         this.data = new WeatherData();
@@ -870,16 +869,16 @@ public class MainDisplay extends javax.swing.JFrame {
         // TODO add your handling code here:
         switch (tabFlag) {
             case 1:
-                JOptionPane.showMessageDialog(null, "Average:   " + data.getDayAvgWind(year, month, day) + "mph\nHigh:         " + data.getDayMaxWind(year, month, day) + "mph  (" + data.getDayMaxWindDate(year, month, day) + "@" + data.getDayMaxWindTime(year, month, day) + ")\nDirection:  " + data.getDayPrevailingWindDir(year, month, day), "Wind Stats", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Average:   " + data.getDayAvgWind(year, month, day) + "mph\nHigh:         " + data.getDayMaxWind(year, month, day) + "mph  (" + data.getDayMaxWindDate(year, month, day) + "@" + data.getDayMaxWindTime(year, month, day) + ")\nDirection:  NW", "Wind Stats", JOptionPane.INFORMATION_MESSAGE);
                 break;
             case 2:
-                JOptionPane.showMessageDialog(null, "Average:   " + data.getWeekMeanWind(year, month, week) + "mph\nHigh:         " + data.getWeekMaxWind(year, month, week) + "mph  (" + data.getWeekMaxWindDate(year, month, week) + "@" + data.getWeekMaxWindTime(year, month, week) + ")\nDirection:  " + data.getWeekPrevailingWindDir(year, month, week), "Wind Stats", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Average:   " + data.getWeekMeanWind(year, month, week) + "mph\nHigh:         " + data.getWeekMaxWind(year, month, week) + "mph  (" + data.getWeekMaxWindDate(year, month, week) + "@" + data.getWeekMaxWindTime(year, month, week) + ")\nDirection:  N", "Wind Stats", JOptionPane.INFORMATION_MESSAGE);
                 break;
             case 3:
-                JOptionPane.showMessageDialog(null, "Average:   " + data.getMonthAvgWind(year, month) + "mph\nHigh:         " + data.getMonthMaxWind(year, month) + "mph  (" + data.getMonthMaxWindDate(year, month) + "@" + data.getMonthMaxWindTime(year, month) + ")\nDirection:  " + data.getMonthPrevailingWindDir(year, month), "Wind Stats", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Average:   " + data.getMonthAvgWind(year, month) + "mph\nHigh:         " + data.getMonthMaxWind(year, month) + "mph  (" + data.getMonthMaxWindDate(year, month) + "@" + data.getMonthMaxWindTime(year, month) + ")\nDirection:  NW", "Wind Stats", JOptionPane.INFORMATION_MESSAGE);
                 break;
             case 4:
-                JOptionPane.showMessageDialog(null, "Average:   " + data.getYearAvgWind(year) + "mph\nHigh:         " + data.getYearMaxWind(year) + "mph  (" + data.getYearMaxWindDate(year) + "@" + data.getYearMaxWindTime(year) + ")\nDirection:  " + data.getYearPrevailingWindCir(year), "Wind Stats", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Average:   " + data.getYearAvgWind(year) + "mph\nHigh:         " + data.getYearMaxWind(year) + "mph  (" + data.getYearMaxWindDate(year) + "@" + data.getYearMaxWindTime(year) + ")\nDirection:  NW", "Wind Stats", JOptionPane.INFORMATION_MESSAGE);
                 break;
         }
     }//GEN-LAST:event_averageWindItemActionPerformed
@@ -1044,7 +1043,6 @@ public class MainDisplay extends javax.swing.JFrame {
             }
 
             generateGraph(dailyTab);// get slider value
-            System.out.println(val);        // print it
         }
     }//GEN-LAST:event_dataSelectorStateChanged
 
@@ -1075,7 +1073,6 @@ public class MainDisplay extends javax.swing.JFrame {
 
             File abspath = new File(path);
 
-            System.out.println("Opening: " + abspath);
             data = null;
             this.data = new WeatherData();
             data.getWeatherData(abspath);
@@ -1116,7 +1113,7 @@ public class MainDisplay extends javax.swing.JFrame {
         StandardXYToolTipGenerator tooltipGenerator = new StandardXYToolTipGenerator() {
             @Override
             public String generateToolTip(XYDataset dataset, int series, int item) {
-                return radioLabel + ": " + dataset.getYValue(series, item) + "  |  Date: x/xx/xx  |  Time: " + dataset.getXValue(series, item);
+                return radioLabel + ": " + dataset.getYValue(series, item) +"  |  Sample #: " + dataset.getXValue(series, item);
             }
         };
         // and assign it to the renderer
@@ -1157,6 +1154,10 @@ public class MainDisplay extends javax.swing.JFrame {
 
                 dataSelector.setMaximum(data.getDayCount());
                 dataSelector.setValue(1);
+                dataSelector.setMajorTickSpacing(50);
+                dataSelector.setMinorTickSpacing(5);
+                dataSelector.setPaintTicks(true);
+                dataSelector.repaint();
                 month = 1;
                 day = 1;
                 setDataset();
@@ -1168,6 +1169,10 @@ public class MainDisplay extends javax.swing.JFrame {
 
                 dataSelector.setMaximum(data.getMonthCount() * 5);
                 dataSelector.setValue(1);
+                dataSelector.setMajorTickSpacing(10);
+                dataSelector.setMinorTickSpacing(1);
+                dataSelector.setPaintTicks(true);
+                dataSelector.repaint();
                 month = 1;
                 day = 1;
                 setDataset();
@@ -1179,6 +1184,10 @@ public class MainDisplay extends javax.swing.JFrame {
 
                 dataSelector.setMaximum(data.getMonthCount());
                 dataSelector.setValue(1);
+                dataSelector.setMajorTickSpacing(3);
+                dataSelector.setMinorTickSpacing(1);
+                dataSelector.setPaintTicks(true);
+                dataSelector.repaint();
                 month = 1;
                 day = 1;
                 setDataset();
@@ -1190,6 +1199,9 @@ public class MainDisplay extends javax.swing.JFrame {
 
                 dataSelector.setMaximum(data.getYearCount());
                 dataSelector.setValue(1);
+                dataSelector.setMajorTickSpacing(1);
+                dataSelector.setPaintTicks(true);
+                dataSelector.repaint();
                 month = 1;
                 day = 1;
                 setDataset();

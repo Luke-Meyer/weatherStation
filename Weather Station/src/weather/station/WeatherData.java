@@ -17,7 +17,6 @@ JMW 160205
 
 http://www.journaldev.com/1206/jdom-parser-read-xml-file-to-object-in-java
 */
-
 package weather.station;
 
 import org.jdom2.*;
@@ -30,19 +29,39 @@ import org.apache.commons.io.FileUtils;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
-
+/************************************************************************
+    Class:  WeatherData
+    Author: All
+    Description: Class representing an over-arching object to contain
+	a hash table of year objects containing all sample data given via
+	the default/user specified directory; 
+ ************************************************************************/
 public class WeatherData
 {
-	private Hashtable<Integer, Year> dictOfYears;  // data structure to hold the weather data
+	/* Dictionary object containing all years of weather samples */
+	private Hashtable<Integer, Year> dictOfYears;  	
 	
+	/* get the number of days of samples in the data set */
 	private int dayCount;
 	
+	/* get the number of weeks of samples in the data set */
 	private int weekCount;
 	
+	/* get the number of months of samples in the data set */
 	private int monthCount;
 	
+	/* get the number of years of samples in the data set */
 	private int yearCount;
 	
+	
+	/**
+     * **********************************************************************
+     * Function: getMinDate() 
+	 * Author: All 
+	 * Description: gets the date of the first sample in the data set
+     * Parameters: n/a
+     * **********************************************************************
+     */
 	public int[] getMinDate()
 	{
 		int minYearKey = 999999;
@@ -100,6 +119,14 @@ public class WeatherData
 
 	}
 	
+	/**
+     * **********************************************************************
+     * Function: checkNullTag() 
+	 * Author: All 
+	 * Description: checks for null tags in .xml data; sets default value if null
+     * Parameters: n/a
+     * **********************************************************************
+     */
 	public String checkNullTag( String tag )  // used to check for null tags in a .xml file
 	{
 		String attr = tag;
@@ -112,25 +139,58 @@ public class WeatherData
 		return attr;
 	}
 	
-	
+	/**
+     * **********************************************************************
+     * Function: getDayPrevailingWindDir()
+	 * Author: All 
+	 * Description: returns the prevailing wind direction for a given day
+     * Parameters: int yearIndex - used to index a specific year
+	 *             int monthIndex - used to index a specific month
+	 *             int dayIndex - used to index a specific day 
+     * **********************************************************************
+     */
 	public String getDayPrevailingWindDir( int yearIndex, int monthIndex, int dayIndex )
 	{
+		// get the specific day
 		Day day = this.dictOfYears.get( yearIndex ).getMonthlySamplesByMonth( monthIndex ).getDayofSamples( dayIndex );
 		
-		String dir = day.getPrevailingWindDir();
+	
+		
+		String dir = day.getPrevailingWindDir();  // return the wind direction
 		
 		return dir;
 	}
 	
+	/**
+     * **********************************************************************
+     * Function: getWeekPrevailingWindDir()
+	 * Author: All 
+	 * Description: returns the prevailing wind direction for a given week
+     * Parameters: int yearIndex - used to index a specific year
+	 *             int monthIndex - used to index a specific month
+	 *             int weekIndex - used to index a specific week
+     * **********************************************************************
+     */
 	public String getWeekPrevailingWindDir( int yearIndex, int monthIndex, int weekIndex )
 	{
+		//get specific month
 		Month month = this.dictOfYears.get( yearIndex ).getMonthlySamplesByMonth( monthIndex );
 		
+		//returns the wind direction 
 		String dir = month.getWeekPrevailingWindDir( weekIndex );
 		
 		return dir;
 	}
 	
+	/**
+     * **********************************************************************
+     * Function: getMonthPrevailingWindDir()
+	 * Author: All 
+	 * Description: returns the prevailing wind direction for a given month
+     * Parameters: int yearIndex - used to index a specific year
+	 *             int monthIndex - used to index a specific month
+     * **********************************************************************
+     */
 	public String getMonthPrevailingWindDir( int yearIndex, int monthIndex )
 	{
 		Month month = this.dictOfYears.get( yearIndex ).getMonthlySamplesByMonth( monthIndex );
@@ -140,6 +200,15 @@ public class WeatherData
 		return dir;
 	}
 	
+	
+	/**
+     * **********************************************************************
+     * Function: getYearPrevailingWindDir()
+	 * Author: All 
+	 * Description: returns the prevailing wind direction for a given year
+     * Parameters: int yearIndex - used to index a specific year
+     * **********************************************************************
+     */
 	public String getYearPrevailingWindCir( int yearIndex )
 	{
 		Year year = this.dictOfYears.get( yearIndex );
@@ -149,23 +218,55 @@ public class WeatherData
 		return dir; 
 	}
 	
+	
+	/**
+     * **********************************************************************
+     * Function: getDayCount()
+	 * Author: All 
+	 * Description: returns the number of days worth of samples in the dataset
+     * Parameters: n/a
+     * **********************************************************************
+     */
 	public int getDayCount()
 	{
 		return this.dayCount;
 	}
 	
-	
+	/**
+     * **********************************************************************
+     * Function: getWeekCount()
+	 * Author: All 
+	 * Description: returns the number of weeks worth of samples in the dataset
+     * Parameters: n/a
+     * **********************************************************************
+     */
 	public int getWeekCount()
 	{
 		return this.weekCount;
 	}
 	
+	/**
+     * **********************************************************************
+     * Function: getMonthCount()
+	 * Author: All 
+	 * Description: returns the number of months worth of samples in the dataset
+     * Parameters: n/a
+     * **********************************************************************
+     */
 	public int getMonthCount()
 	{
 		
 		return this.monthCount;
 	}
 	
+	/**
+     * **********************************************************************
+     * Function: getYearCount()
+	 * Author: All 
+	 * Description: returns the number of years worth of samples in the dataset
+     * Parameters: n/a
+     * **********************************************************************
+     */
 	public int getYearCount()
     {
 		
@@ -173,7 +274,16 @@ public class WeatherData
 	}
 	
 	
-	
+	/**
+     * **********************************************************************
+     * Function: getWeekAvgTemp()
+	 * Author: All 
+	 * Description: returns the average temperature of a specified week
+     * Parameters: int yearIndex - index for specific year
+	 *             int monthIndex - index for specific month
+	 *             int weekIndex - index for specific week
+     * **********************************************************************
+     */
 	public float getWeekAvgTemp( int yearIndex, int monthIndex, int weekIndex )
 	{
 		Month month = this.dictOfYears.get( yearIndex ).getMonthlySamplesByMonth( monthIndex );
@@ -186,6 +296,17 @@ public class WeatherData
 		
 	}
 	
+	
+	/**
+     * **********************************************************************
+     * Function: getWeekMaxTemp()
+	 * Author: All 
+	 * Description: returns the high temp for a given week
+     * Parameters: int yearIndex - index for a specific year
+	 *             int monthIndex - index for a specific month
+	 *             int weekIndex - index for a specific week
+     * **********************************************************************
+     */
 	public float getWeekMaxTemp( int yearIndex, int monthIndex, int weekIndex )
 	{
 		Month month = this.dictOfYears.get( yearIndex ).getMonthlySamplesByMonth( monthIndex );
@@ -195,6 +316,17 @@ public class WeatherData
 		return temp.getMaxTemp();
 	}
 	
+	
+	/**
+     * **********************************************************************
+     * Function: getWeekMaxTempDate()
+	 * Author: All 
+	 * Description: returns the date of the the high temp of a specific week
+     * Parameters: int yearIndex - index for a specific year
+	 *             int monthIndex - index for a specific month
+	 *             int weekIndex - index for a specific week
+     * **********************************************************************
+     */
 	public String getWeekMaxTempDate( int yearIndex, int monthIndex, int weekIndex )
 	{
 		Month month = this.dictOfYears.get( yearIndex ).getMonthlySamplesByMonth( monthIndex );
@@ -204,6 +336,16 @@ public class WeatherData
 		return temp.getMaxTempDate();
 	}
 	
+	/**
+     * **********************************************************************
+     * Function: getWeekMaxTempTime()
+	 * Author: All 
+	 * Description: returns the time of the the high temp of a specific week
+     * Parameters: int yearIndex - index for a specific year
+	 *             int monthIndex - index for a specific month
+	 *             int weekIndex - index for a specific week
+     * **********************************************************************
+     */
 	public String getWeekMaxTempTime( int yearIndex, int monthIndex, int weekIndex )
 	{
 		Month month = this.dictOfYears.get( yearIndex ).getMonthlySamplesByMonth( monthIndex );
@@ -213,6 +355,16 @@ public class WeatherData
 		return temp.getMaxTempTime();
 	}
 
+	/**
+     * **********************************************************************
+     * Function: getWeekLowTemp()
+	 * Author: All 
+	 * Description: returns the low temp of a specific week
+     * Parameters: int yearIndex - index for a specific year
+	 *             int monthIndex - index for a specific month
+	 *             int weekIndex - index for a specific week
+     * **********************************************************************
+     */
 	public float getWeekLowTemp( int yearIndex, int monthIndex, int weekIndex )
 	{
 		Month month = this.dictOfYears.get( yearIndex ).getMonthlySamplesByMonth( monthIndex );
@@ -222,6 +374,16 @@ public class WeatherData
 		return temp.getLowTemp();
 	}
 	
+	/**
+     * **********************************************************************
+     * Function: getWeekLowTempDate()
+	 * Author: All 
+	 * Description: returns the date of the low temp of a specific week
+     * Parameters: int yearIndex - index for a specific year
+	 *             int monthIndex - index for a specific month
+	 *             int weekIndex - index for a specific week
+     * **********************************************************************
+     */
 	public String getWeekLowTempDate( int yearIndex, int monthIndex, int weekIndex )
 	{
 		Month month = this.dictOfYears.get( yearIndex ).getMonthlySamplesByMonth( monthIndex );
@@ -231,6 +393,17 @@ public class WeatherData
 		return temp.getLowTempDate();
 	}
 	
+	
+	/**
+     * **********************************************************************
+     * Function: getWeekLowTempTime()
+	 * Author: All 
+	 * Description: returns the time of the low temp of a specific week
+     * Parameters: int yearIndex - index for a specific year
+	 *             int monthIndex - index for a specific month
+	 *             int weekIndex - index for a specific week
+     * **********************************************************************
+     */
 	public String getWeekLowTempTime( int yearIndex, int monthIndex, int weekIndex )
 	{
 		Month month = this.dictOfYears.get( yearIndex ).getMonthlySamplesByMonth( monthIndex );
@@ -240,7 +413,16 @@ public class WeatherData
 		return temp.getLowTempTime();
 	}
 	
-	
+	/**
+     * **********************************************************************
+     * Function: getWeekMeanWind()
+	 * Author: All 
+	 * Description: returns the average wind speed of a specific week
+     * Parameters: int yearIndex - index for a specific year
+	 *             int monthIndex - index for a specific month
+	 *             int weekIndex - index for a specific week
+     * **********************************************************************
+     */
 	public float getWeekMeanWind( int yearIndex, int monthIndex, int weekIndex )
 	{
 		Month month = this.dictOfYears.get( yearIndex ).getMonthlySamplesByMonth( monthIndex );
@@ -253,6 +435,16 @@ public class WeatherData
 		
 	}
 	
+	/**
+     * **********************************************************************
+     * Function: getWeekMaxWind()
+	 * Author: All 
+	 * Description: returns the high wind gust for a specific week
+     * Parameters: int yearIndex - index for a specific year
+	 *             int monthIndex - index for a specific month
+	 *             int weekIndex - index for a specific week
+     * **********************************************************************
+     */
 	public float getWeekMaxWind( int yearIndex, int monthIndex, int weekIndex )
 	{
 		Month month = this.dictOfYears.get( yearIndex ).getMonthlySamplesByMonth( monthIndex );
@@ -262,6 +454,17 @@ public class WeatherData
 		return temp.getMaxWind();
 	}
 	
+	
+	/**
+     * **********************************************************************
+     * Function: getWeekWindDate()
+	 * Author: All 
+	 * Description: returns the date of the high wind gust for a specific week
+     * Parameters: int yearIndex - index for a specific year
+	 *             int monthIndex - index for a specific month
+	 *             int weekIndex - index for a specific week
+     * **********************************************************************
+     */
 	public String getWeekMaxWindDate( int yearIndex, int monthIndex, int weekIndex )
 	{
 		Month month = this.dictOfYears.get( yearIndex ).getMonthlySamplesByMonth( monthIndex );
@@ -271,6 +474,16 @@ public class WeatherData
 		return temp.getMaxWindDate();
 	}
 	
+	/**
+     * **********************************************************************
+     * Function: getWeekWindTime()
+	 * Author: All 
+	 * Description: returns the time of the high wind gust for a specific week
+     * Parameters: int yearIndex - index for a specific year
+	 *             int monthIndex - index for a specific month
+	 *             int weekIndex - index for a specific week
+     * **********************************************************************
+     */
 	public String getWeekMaxWindTime( int yearIndex, int monthIndex, int weekIndex )
 	{
 		Month month = this.dictOfYears.get( yearIndex ).getMonthlySamplesByMonth( monthIndex );
@@ -280,6 +493,17 @@ public class WeatherData
 		return temp.getMaxWindTime();
 	}
 	
+	
+	/**
+     * **********************************************************************
+     * Function: getWeekRainfall()
+	 * Author: All 
+	 * Description: returns the accumulated precipiation for a specific week
+     * Parameters: int yearIndex - index for a specific year
+	 *             int monthIndex - index for a specific month
+	 *             int weekIndex - index for a specific week
+     * **********************************************************************
+     */
 	public float getWeekRainfall( int yearIndex, int monthIndex, int weekIndex )
 	{
 		Month month = this.dictOfYears.get( yearIndex ).getMonthlySamplesByMonth( monthIndex );
@@ -290,8 +514,16 @@ public class WeatherData
 	}
 	
 	
-	
-	
+	/**
+     * **********************************************************************
+     * Function: getDayAvgTemp()
+	 * Author: All 
+	 * Description: returns the average temperature for a specific day
+     * Parameters: int yearIndex - index for a specific year
+	 *             int monthIndex - index for a specific month
+	 *             int dayIndex - index for a specific day
+     * **********************************************************************
+     */
 	public float getDayAvgTemp( int yearIndex, int monthIndex, int dayIndex )
 	{
 		Day day = this.dictOfYears.get( yearIndex ).getMonthlySamplesByMonth( monthIndex ).getDayofSamples( dayIndex );
@@ -301,6 +533,17 @@ public class WeatherData
 		return avg;
 	}
 	
+	
+	/**
+     * **********************************************************************
+     * Function: getDayHighTemp()
+	 * Author: All 
+	 * Description: returns the high temperature for a specific day
+     * Parameters: int yearIndex - index for a specific year
+	 *             int monthIndex - index for a specific month
+	 *             int dayIndex - index for a specific day
+     * **********************************************************************
+     */
 	public float getDayHighTemp( int yearIndex, int monthIndex, int dayIndex )
 	{
 		Day day = this.dictOfYears.get( yearIndex ).getMonthlySamplesByMonth( monthIndex ).getDayofSamples( dayIndex );
@@ -310,6 +553,16 @@ public class WeatherData
 		return high;
 	}
 	
+	/**
+     * **********************************************************************
+     * Function: getDayHighTempDate()
+	 * Author: All 
+	 * Description: returns the date of the high temp of a specific day
+     * Parameters: int yearIndex - index for a specific year
+	 *             int monthIndex - index for a specific month
+	 *             int dayIndex - index for a specific day
+     * **********************************************************************
+     */
 	public String getDayHighTempDate( int yearIndex, int monthIndex, int dayIndex )
 	{
 		Day day = this.dictOfYears.get( yearIndex ).getMonthlySamplesByMonth( monthIndex ).getDayofSamples( dayIndex );
@@ -319,6 +572,17 @@ public class WeatherData
 		return date;
 	}
 	
+	
+	/**
+     * **********************************************************************
+     * Function: getDayHighTempTime()
+	 * Author: All 
+	 * Description: returns the time of the high temp of a specific day
+     * Parameters: int yearIndex - index for a specific year
+	 *             int monthIndex - index for a specific month
+	 *             int dayIndex - index for a specific day
+     * **********************************************************************
+     */
 	public String getDayHighTempTime( int yearIndex, int monthIndex, int dayIndex )
 	{
 		Day day = this.dictOfYears.get( yearIndex ).getMonthlySamplesByMonth( monthIndex ).getDayofSamples( dayIndex );
@@ -329,7 +593,16 @@ public class WeatherData
 	}
 	
 	
-	
+	/**
+     * **********************************************************************
+     * Function: getDayLowTemp()
+	 * Author: All 
+	 * Description: returns the low temp of a specific day
+     * Parameters: int yearIndex - index for a specific year
+	 *             int monthIndex - index for a specific month
+	 *             int dayIndex - index for a specific day
+     * **********************************************************************
+     */
 	public float getDayLowTemp( int yearIndex, int monthIndex, int dayIndex )
 	{
 		Day day = this.dictOfYears.get( yearIndex ).getMonthlySamplesByMonth( monthIndex ).getDayofSamples( dayIndex );
@@ -339,6 +612,17 @@ public class WeatherData
 		return low;
 	}
 	
+	
+	/**
+     * **********************************************************************
+     * Function: getDayLowTempDate()
+	 * Author: All 
+	 * Description: returns the date of the low temp of a specific day
+     * Parameters: int yearIndex - index for a specific year
+	 *             int monthIndex - index for a specific month
+	 *             int dayIndex - index for a specific day
+     * **********************************************************************
+     */
 	public String getDayLowTempDate( int yearIndex, int monthIndex, int dayIndex )
 	{
 		Day day = this.dictOfYears.get( yearIndex ).getMonthlySamplesByMonth( monthIndex ).getDayofSamples( dayIndex );
@@ -348,6 +632,17 @@ public class WeatherData
 		return date;
 	}
 	
+	
+	/**
+     * **********************************************************************
+     * Function: getDayLowTempTime()
+	 * Author: All 
+	 * Description: returns the time of the low temp of a specific day
+     * Parameters: int yearIndex - index for a specific year
+	 *             int monthIndex - index for a specific month
+	 *             int dayIndex - index for a specific day
+     * **********************************************************************
+     */
 	public String getDayLowTempTime( int yearIndex, int monthIndex, int dayIndex )
 	{
 		Day day = this.dictOfYears.get( yearIndex ).getMonthlySamplesByMonth( monthIndex ).getDayofSamples( dayIndex );
@@ -357,6 +652,16 @@ public class WeatherData
 		return time;
 	}
 	
+	/**
+     * **********************************************************************
+     * Function: getDayAvgWind()
+	 * Author: All 
+	 * Description: returns the average wind speed of a specific day
+     * Parameters: int yearIndex - index for a specific year
+	 *             int monthIndex - index for a specific month
+	 *             int dayIndex - index for a specific day
+     * **********************************************************************
+     */
 	public float getDayAvgWind( int yearIndex, int monthIndex, int dayIndex )
 	{
 		Day day = this.dictOfYears.get( yearIndex ).getMonthlySamplesByMonth( monthIndex ).getDayofSamples( dayIndex );
@@ -367,7 +672,16 @@ public class WeatherData
 		
 	}
 		
-	
+	/**
+     * **********************************************************************
+     * Function: getDayMaxWind()
+	 * Author: All 
+	 * Description: returns the high wind gust for a specific day
+     * Parameters: int yearIndex - index for a specific year
+	 *             int monthIndex - index for a specific month
+	 *             int dayIndex - index for a specific day
+     * **********************************************************************
+     */
 	public float getDayMaxWind( int yearIndex, int monthIndex, int dayIndex )
 	{
 		Day day = this.dictOfYears.get( yearIndex ).getMonthlySamplesByMonth( monthIndex ).getDayofSamples( dayIndex );
@@ -377,6 +691,17 @@ public class WeatherData
 		return low;
 	}
 	
+	
+	/**
+     * **********************************************************************
+     * Function: getDayMaxWindDate()
+	 * Author: All 
+	 * Description: returns the date of the high wind gust for a specific day
+     * Parameters: int yearIndex - index for a specific year
+	 *             int monthIndex - index for a specific month
+	 *             int dayIndex - index for a specific day
+     * **********************************************************************
+     */
 	public String getDayMaxWindDate( int yearIndex, int monthIndex, int dayIndex )
 	{
 		Day day = this.dictOfYears.get( yearIndex ).getMonthlySamplesByMonth( monthIndex ).getDayofSamples( dayIndex );
@@ -386,6 +711,17 @@ public class WeatherData
 		return date;
 	}
 	
+	
+	/**
+     * **********************************************************************
+     * Function: getDayMaxWindTime()
+	 * Author: All 
+	 * Description: returns the time of the high wind gust for a specific day
+     * Parameters: int yearIndex - index for a specific year
+	 *             int monthIndex - index for a specific month
+	 *             int dayIndex - index for a specific day
+     * **********************************************************************
+     */
 	public String getDayMaxWindTime( int yearIndex, int monthIndex, int dayIndex )
 	{
 		Day day = this.dictOfYears.get( yearIndex ).getMonthlySamplesByMonth( monthIndex ).getDayofSamples( dayIndex );
@@ -395,6 +731,17 @@ public class WeatherData
 		return time;
 	}
 	
+	
+	/**
+     * **********************************************************************
+     * Function: getDayTotalRainfall()
+	 * Author: All 
+	 * Description: returns the accumulated rainfall for a specific day
+     * Parameters: int yearIndex - index for a specific year
+	 *             int monthIndex - index for a specific month
+	 *             int dayIndex - index for a specific day
+     * **********************************************************************
+     */
 	public float getDayTotalRainfall( int yearIndex, int monthIndex, int dayIndex )
 	{
 		Day day = this.dictOfYears.get( yearIndex ).getMonthlySamplesByMonth( monthIndex ).getDayofSamples( dayIndex );
@@ -405,6 +752,15 @@ public class WeatherData
 	}
 	
 	
+	/**
+     * **********************************************************************
+     * Function: getMonthAvgTemp()
+	 * Author: All 
+	 * Description: returns the average temperature for a given month
+     * Parameters: int yearIndex - index for a specific year
+	 *             int monthIndex - index for a specific month
+     * **********************************************************************
+     */
 	public float getMonthAvgTemp( int yearIndex, int monthIndex )
 	{
 		Month month = this.dictOfYears.get( yearIndex ).getMonthlySamplesByMonth( monthIndex );
@@ -414,6 +770,15 @@ public class WeatherData
 		return avg;
 	}
 	
+	/**
+     * **********************************************************************
+     * Function: getMonthHighTemp()
+	 * Author: All 
+	 * Description: returns the high temperature for a given month
+     * Parameters: int yearIndex - index for a specific year
+	 *             int monthIndex - index for a specific month
+     * **********************************************************************
+     */
 	public float getMonthHighTemp( int yearIndex, int monthIndex)
 	{
 		Month month = this.dictOfYears.get( yearIndex ).getMonthlySamplesByMonth( monthIndex );
@@ -423,6 +788,16 @@ public class WeatherData
 		return high;
 	}
 	
+	
+	/**
+     * **********************************************************************
+     * Function: getMonthHighTempDate()
+	 * Author: All 
+	 * Description: returns the date of the high temperature for a given month
+     * Parameters: int yearIndex - index for a specific year
+	 *             int monthIndex - index for a specific month
+     * **********************************************************************
+     */
 	public String getMonthHighTempDate( int yearIndex, int monthIndex )
 	{
 		Month month = this.dictOfYears.get( yearIndex ).getMonthlySamplesByMonth( monthIndex );
@@ -432,6 +807,16 @@ public class WeatherData
 		return date;
 	}
 	
+	
+	/**
+     * **********************************************************************
+     * Function: getMonthHighTempTime()
+	 * Author: All 
+	 * Description: returns the time of the high temperature for a given month
+     * Parameters: int yearIndex - index for a specific year
+	 *             int monthIndex - index for a specific month
+     * **********************************************************************
+     */
 	public String getMonthHighTempTime( int yearIndex, int monthIndex)
 	{
 		Month month = this.dictOfYears.get( yearIndex ).getMonthlySamplesByMonth( monthIndex );
@@ -442,7 +827,15 @@ public class WeatherData
 	}
 	
 	
-	
+	/**
+     * **********************************************************************
+     * Function: getMonthLowTemp()
+	 * Author: All 
+	 * Description: returns the low temperature for a given month
+     * Parameters: int yearIndex - index for a specific year
+	 *             int monthIndex - index for a specific month
+     * **********************************************************************
+     */
 	public float getMonthLowTemp( int yearIndex, int monthIndex)
 	{
 		Month month = this.dictOfYears.get( yearIndex ).getMonthlySamplesByMonth( monthIndex );
@@ -452,6 +845,16 @@ public class WeatherData
 		return low;
 	}
 	
+	
+	/**
+     * **********************************************************************
+     * Function: getMonthLowTempDate()
+	 * Author: All 
+	 * Description: returns the date of the low temperature for a given month
+     * Parameters: int yearIndex - index for a specific year
+	 *             int monthIndex - index for a specific month
+     * **********************************************************************
+     */
 	public String getMonthLowTempDate( int yearIndex, int monthIndex )
 	{
 		Month month = this.dictOfYears.get( yearIndex ).getMonthlySamplesByMonth( monthIndex );
@@ -461,6 +864,16 @@ public class WeatherData
 		return date;
 	}
 	
+	
+	/**
+     * **********************************************************************
+     * Function: getMonthLowTempTime()
+	 * Author: All 
+	 * Description: returns the date of the low temperature for a given month
+     * Parameters: int yearIndex - index for a specific year
+	 *             int monthIndex - index for a specific month
+     * **********************************************************************
+     */
 	public String getMonthLowTempTime( int yearIndex, int monthIndex)
 	{
 		Month month = this.dictOfYears.get( yearIndex ).getMonthlySamplesByMonth( monthIndex );
@@ -470,6 +883,16 @@ public class WeatherData
 		return time;
 	}
 	
+	
+	/**
+     * **********************************************************************
+     * Function: getMonthAvgTemp()
+	 * Author: All 
+	 * Description: returns the average temperature for a given month
+     * Parameters: int yearIndex - index for a specific year
+	 *             int monthIndex - index for a specific month
+     * **********************************************************************
+     */
 	public float getMonthAvgWind( int yearIndex, int monthIndex)
 	{
 		Month month = this.dictOfYears.get( yearIndex ).getMonthlySamplesByMonth( monthIndex );
@@ -480,7 +903,15 @@ public class WeatherData
 		
 	}
 		
-	
+	/**
+     * **********************************************************************
+     * Function: getMonthMaxWind()
+	 * Author: All 
+	 * Description: returns the max wind gust for a given month
+     * Parameters: int yearIndex - index for a specific year
+	 *             int monthIndex - index for a specific month
+     * **********************************************************************
+     */
 	public float getMonthMaxWind( int yearIndex, int monthIndex)
 	{
 		Month month = this.dictOfYears.get( yearIndex ).getMonthlySamplesByMonth( monthIndex );
@@ -490,6 +921,15 @@ public class WeatherData
 		return low;
 	}
 	
+	/**
+     * **********************************************************************
+     * Function: getMonthMaxWindDate()
+	 * Author: All 
+	 * Description: returns the date of the max wind gust for a given month
+     * Parameters: int yearIndex - index for a specific year
+	 *             int monthIndex - index for a specific month
+     * **********************************************************************
+     */
 	public String getMonthMaxWindDate( int yearIndex, int monthIndex)
 	{
 		Month month = this.dictOfYears.get( yearIndex ).getMonthlySamplesByMonth( monthIndex );
@@ -499,6 +939,16 @@ public class WeatherData
 		return date;
 	}
 	
+	
+	/**
+     * **********************************************************************
+     * Function: getMonthMaxWindTime()
+	 * Author: All 
+	 * Description: returns the time of the max wind gust for a given month
+     * Parameters: int yearIndex - index for a specific year
+	 *             int monthIndex - index for a specific month
+     * **********************************************************************
+     */
 	public String getMonthMaxWindTime( int yearIndex, int monthIndex)
 	{
 		Month month = this.dictOfYears.get( yearIndex ).getMonthlySamplesByMonth( monthIndex );
@@ -508,6 +958,16 @@ public class WeatherData
 		return time;
 	}
 	
+	
+	/**
+     * **********************************************************************
+     * Function: getMonthTotalRainfall()
+	 * Author: All 
+	 * Description: returns the accumulated rainfall for a given month
+     * Parameters: int yearIndex - index for a specific year
+	 *             int monthIndex - index for a specific month
+     * **********************************************************************
+     */
 	public float getMonthTotalRainfall( int yearIndex, int monthIndex)
 	{
 		Month month = this.dictOfYears.get( yearIndex ).getMonthlySamplesByMonth( monthIndex );
@@ -518,8 +978,15 @@ public class WeatherData
 	}
 	
 	
-
-public float getYearAvgTemp( int yearIndex)
+	/**
+     * **********************************************************************
+     * Function: getYearAvgTemp()
+	 * Author: All 
+	 * Description: returns the average temperature for a given year 
+     * Parameters: int yearIndex - index for a specific year
+     * **********************************************************************
+     */
+	public float getYearAvgTemp( int yearIndex)
 	{
 		Year year = this.dictOfYears.get( yearIndex );
 		
@@ -528,6 +995,15 @@ public float getYearAvgTemp( int yearIndex)
 		return avg;
 	}
 	
+	
+	/**
+     * **********************************************************************
+     * Function: getYearHighTemp()
+	 * Author: All 
+	 * Description: returns the high temperature for a given year 
+     * Parameters: int yearIndex - index for a specific year
+     * **********************************************************************
+     */
 	public float getYearHighTemp( int yearIndex)
 	{
 		Year year = this.dictOfYears.get( yearIndex );
@@ -537,6 +1013,15 @@ public float getYearAvgTemp( int yearIndex)
 		return high;
 	}
 	
+	
+	/**
+     * **********************************************************************
+     * Function: getYearHighTempDate()
+	 * Author: All 
+	 * Description: returns the date of the high temperature for a given year 
+     * Parameters: int yearIndex - index for a specific year
+     * **********************************************************************
+     */
 	public String getYearHighTempDate( int yearIndex)
 	{
 		Year year = this.dictOfYears.get( yearIndex );
@@ -546,6 +1031,15 @@ public float getYearAvgTemp( int yearIndex)
 		return date;
 	}
 	
+	
+	/**
+     * **********************************************************************
+     * Function: getYearHighTempTime()
+	 * Author: All 
+	 * Description: returns the time of the high temperature for a given year 
+     * Parameters: int yearIndex - index for a specific year
+     * **********************************************************************
+     */
 	public String getYearHighTempTime( int yearIndex)
 	{
 		Year year = this.dictOfYears.get( yearIndex );
@@ -556,7 +1050,14 @@ public float getYearAvgTemp( int yearIndex)
 	}
 	
 	
-	
+	/**
+     * **********************************************************************
+     * Function: getYearLowTemp()
+	 * Author: All 
+	 * Description: returns the low temperature for a given year 
+     * Parameters: int yearIndex - index for a specific year
+     * **********************************************************************
+     */
 	public float getYearLowTemp( int yearIndex )
 	{
 		Year year = this.dictOfYears.get( yearIndex );
@@ -566,6 +1067,15 @@ public float getYearAvgTemp( int yearIndex)
 		return low;
 	}
 	
+	
+	/**
+     * **********************************************************************
+     * Function: getYearLowTempDate()
+	 * Author: All 
+	 * Description: returns the date of the low temperature for a given year 
+     * Parameters: int yearIndex - index for a specific year
+     * **********************************************************************
+     */
 	public String getYearLowTempDate( int yearIndex )
 	{
 		Year year = this.dictOfYears.get( yearIndex );
@@ -575,6 +1085,15 @@ public float getYearAvgTemp( int yearIndex)
 		return date;
 	}
 	
+	
+	/**
+     * **********************************************************************
+     * Function: getYearLowTempTime()
+	 * Author: All 
+	 * Description: returns the time of the low temperature for a given year 
+     * Parameters: int yearIndex - index for a specific year
+     * **********************************************************************
+     */
 	public String getYearLowTempTime( int yearIndex)
 	{
 		Year year = this.dictOfYears.get( yearIndex );
@@ -584,6 +1103,14 @@ public float getYearAvgTemp( int yearIndex)
 		return time;
 	}
 	
+	/**
+     * **********************************************************************
+     * Function: getYearAvgWind()
+	 * Author: All 
+	 * Description: returns the average wind speed for a given year 
+     * Parameters: int yearIndex - index for a specific year
+     * **********************************************************************
+     */
 	public float getYearAvgWind( int yearIndex)
 	{
 		Year year = this.dictOfYears.get( yearIndex );
@@ -594,7 +1121,14 @@ public float getYearAvgTemp( int yearIndex)
 		
 	}
 		
-	
+	/**
+     * **********************************************************************
+     * Function: getYearMaxWind()
+	 * Author: All 
+	 * Description: returns the max wind speed for a given year 
+     * Parameters: int yearIndex - index for a specific year
+     * **********************************************************************
+     */
 	public float getYearMaxWind( int yearIndex)
 	{
 		Year year = this.dictOfYears.get( yearIndex );
@@ -604,6 +1138,14 @@ public float getYearAvgTemp( int yearIndex)
 		return low;
 	}
 	
+	/**
+     * **********************************************************************
+     * Function: getYearMaxWindDate()
+	 * Author: All 
+	 * Description: returns the date of the max wind speed for a given year 
+     * Parameters: int yearIndex - index for a specific year
+     * **********************************************************************
+     */
 	public String getYearMaxWindDate( int yearIndex)
 	{
 		Year year = this.dictOfYears.get( yearIndex );
@@ -613,6 +1155,15 @@ public float getYearAvgTemp( int yearIndex)
 		return date;
 	}
 	
+	
+	/**
+     * **********************************************************************
+     * Function: getYearMaxWindTime()
+	 * Author: All 
+	 * Description: returns the time of the max wind speed for a given year 
+     * Parameters: int yearIndex - index for a specific year
+     * **********************************************************************
+     */
 	public String getYearMaxWindTime( int yearIndex)
 	{
 		Year year = this.dictOfYears.get( yearIndex );
@@ -622,6 +1173,15 @@ public float getYearAvgTemp( int yearIndex)
 		return time;
 	}
 	
+	
+	/**
+     * **********************************************************************
+     * Function: getYearTotalRainfall()
+	 * Author: All 
+	 * Description: returns the accumulated precipitation
+     * Parameters: int yearIndex - index for a specific year
+     * **********************************************************************
+     */
 	public float getYearTotalRainfall( int yearIndex)
 	{
 		Year year = this.dictOfYears.get( yearIndex );
@@ -632,7 +1192,16 @@ public float getYearAvgTemp( int yearIndex)
 	}
 
 
-	
+	/**
+     * **********************************************************************
+     * Function: getDaySetOfData()
+	 * Author: All 
+	 * Description: returns XY coords of a specific day to be graphed 
+     * Parameters: int yearIndex - index for a specific year
+	 *             int monthIndex - index for a specific month
+	 *             int dayIndex - index for a specific month
+     * **********************************************************************
+     */
 	public XYSeriesCollection getDaySetOfData( int yearIndex, int monthIndex, int dayIndex )
 	{
 		
@@ -651,12 +1220,7 @@ public float getYearAvgTemp( int yearIndex)
 		
 		
 		Year year = this.dictOfYears.get( yearIndex ); // grab the year of data in question
-		
-		System.out.println( "The year index is: " + yearIndex );
-		
-		System.out.println( "The month index is: " + monthIndex );
-		
-		System.out.println( "The day index is: " + dayIndex );				
+						
 		
 		Month mun = year.getMonthlySamplesByMonth( monthIndex );  // grab the month of data in question
 		
@@ -689,7 +1253,7 @@ public float getYearAvgTemp( int yearIndex)
 				
 		int i = 0;
 		
-		System.out.println( "Made it here" );
+
 		for (wItem item: samples) // for each sample in a day
 		{
 			
@@ -721,6 +1285,16 @@ public float getYearAvgTemp( int yearIndex)
 				
 	}
 	
+	/**
+     * **********************************************************************
+     * Function: getWeekSetOfData()
+	 * Author: All 
+	 * Description: returns XY coords of a specific week to be graphed 
+     * Parameters: int yearIndex - index for a specific year
+	 *             int monthIndex - index for a specific month
+	 *             int weekIndex - index for a specific month
+     * **********************************************************************
+     */
 	public XYSeriesCollection getWeekSetOfData( int yearIndex, int monthIndex, int weekIndex )
 	{
 		
@@ -806,7 +1380,15 @@ public float getYearAvgTemp( int yearIndex)
 		
 	}	
 	
-	
+	/**
+     * **********************************************************************
+     * Function: getMonthSetOfData()
+	 * Author: All 
+	 * Description: returns XY coords of a specific month to be graphed 
+     * Parameters: int yearIndex - index for a specific year
+	 *             int monthIndex - index for a specific month
+     * **********************************************************************
+     */
 	public XYSeriesCollection getMonthSetOfData( int yearIndex, int monthIndex )
 	{
 		
@@ -900,7 +1482,14 @@ public float getYearAvgTemp( int yearIndex)
 		
 	}
 	
-	
+	/**
+     * **********************************************************************
+     * Function: getYearSetOfData()
+	 * Author: All 
+	 * Description: returns XY coords of a specific year to be graphed 
+     * Parameters: int yearIndex - index for a specific year
+     * **********************************************************************
+     */
 	public XYSeriesCollection getYearSetOfData( int yearIndex )
 	{
 		
@@ -1005,7 +1594,14 @@ public float getYearAvgTemp( int yearIndex)
 		return dataset;
     }
 		
-	
+	/**
+     * **********************************************************************
+     * Function: getWeatherData()
+	 * Author: All 
+	 * Description: parses .xml file and populates WeatherData object
+     * Parameters: File folder - contains a directory path full of .xml files
+     * **********************************************************************
+     */
     public void getWeatherData( File folder )
     {        	
 		
@@ -1066,52 +1662,55 @@ public float getYearAvgTemp( int yearIndex)
 					
                     for (Element element : xmlContent) 
 					{
-				
-						
                         wItem item = new wItem();
                         item.setDate(element.getChildText("date"));
-                        item.setTime(element.getChildText("time"));																
+                        item.setTime(element.getChildText("time"));	
+
+						
 						
 						// check for null tags; set default value if data is missing
 						String tag = element.getChildText("temperature");  						
 						String attr = this.checkNullTag( tag );
-						item.setTemperature(Float.parseFloat(attr));												
+						item.setTemperature(Float.parseFloat(attr));
 						
-						tag = element.getChildText("humidity");  
-						attr = this.checkNullTag( tag );							
-                        item.setHumidity(Float.parseFloat(element.getChildText("humidity")));
 						
-						tag = element.getChildText("barometer");  
-						attr = this.checkNullTag( tag );					
-                        item.setBarometer(Float.parseFloat(element.getChildText("barometer")));
+						String atag = element.getChildText("humidity"); 
+												
+						String aattr = this.checkNullTag( atag );
 						
-						tag = element.getChildText("windspeed");  
-						attr = this.checkNullTag( tag );
-                        item.setWindspeed(Float.parseFloat(element.getChildText("windspeed")));
+                        item.setHumidity(Float.parseFloat(aattr));
 						
-						tag = element.getChildText("winddirection");  
-						attr = this.checkNullTag( tag );						
-                        item.setWinddirection(element.getChildText("winddirection"));
+						String btag = element.getChildText("barometer");  
+						String battr = this.checkNullTag( btag );					
+                        item.setBarometer(Float.parseFloat(battr));
 						
-						tag = element.getChildText("windgust");  
-						attr = this.checkNullTag( tag );
-                        item.setWindgust(Float.parseFloat(element.getChildText("windgust")));
+						String ctag = element.getChildText("windspeed");  
+						String cattr = this.checkNullTag( ctag );
+                        item.setWindspeed(Float.parseFloat(cattr));
 						
-						tag = element.getChildText("windchill");  					
-						attr = this.checkNullTag( tag );
-                        item.setWindchill(Float.parseFloat(element.getChildText("windchill")));
+						String dtag = element.getChildText("winddirection");  
+						String dattr = this.checkNullTag( dtag );						
+                        item.setWinddirection(element.getChildText(dattr));//"winddirection"));
 						
-						tag = element.getChildText("heatindex");  					
-						attr = this.checkNullTag( tag );
-                        item.setHeatindex(Float.parseFloat(element.getChildText("heatindex")));
+						String etag = element.getChildText("windgust");  
+						String eattr = this.checkNullTag( etag );
+                        item.setWindgust(Float.parseFloat(eattr));
 						
-						tag = element.getChildText("uvindex");  
-						attr = this.checkNullTag( tag );						
-                        item.setUvindex(Float.parseFloat(element.getChildText("uvindex")));
+						String ftag = element.getChildText("windchill");  					
+						String fattr = this.checkNullTag( ftag );
+                        item.setWindchill(Float.parseFloat(fattr));
 						
-						tag = element.getChildText("rainfall");  
-						attr = this.checkNullTag( tag );							
-                        item.setRainfall(Float.parseFloat(element.getChildText("rainfall")));
+						String gtag = element.getChildText("heatindex");  					
+						String gattr = this.checkNullTag( gtag );
+                        item.setHeatindex(Float.parseFloat(gattr));
+						
+						String htag = element.getChildText("uvindex");  
+						String hattr = this.checkNullTag( htag );						
+                        item.setUvindex(Float.parseFloat(hattr));
+						
+						String itag = element.getChildText("rainfall");  
+						String iattr = this.checkNullTag( itag );							
+                        item.setRainfall(Float.parseFloat(iattr));
 						
 						
 						j += 1;
@@ -1132,7 +1731,7 @@ public float getYearAvgTemp( int yearIndex)
 							
 							this.dayCount += 1;
 							
-							//System.out.println( "The number of days is: " + this.dayCount );
+
 							mun.setDailySamples( currDay, daa ); 
 							
 							mun.setMonth( currMonth );
@@ -1158,12 +1757,13 @@ public float getYearAvgTemp( int yearIndex)
 							tempMonth.calcWeekStats();
 							
 							
-							//System.out.println( "The number of weeks is: " + this.weekCount );
+
 							
 							this.monthCount += 1;
 							
-							//System.out.println( "The number of months is: " + this.monthCount );
+
 							
+							year.setMonthlySamples( currMonth, tempMonth );
 							
 							year.setYear( currYear );
 							
@@ -1175,7 +1775,7 @@ public float getYearAvgTemp( int yearIndex)
 							
 							this.yearCount += 1;
 							
-							System.out.println( "The number of years is: " + this.yearCount );
+
 							
 							this.dictOfYears.put( currYear, savedYear );
 						}
@@ -1289,10 +1889,7 @@ public float getYearAvgTemp( int yearIndex)
 							daySamples.add( item ); // if we are still processing the same day, keep adding samples 
 						}
 						
-                    }
-  
-                    //this.setWeeklySamples(); // create the weekly sample sets from the .xml data  
-					
+                    }			
                 }
                 // JDOMException indicates a well-formedness error
                 catch ( JDOMException e )
@@ -1305,96 +1902,6 @@ public float getYearAvgTemp( int yearIndex)
                     System.out.println( e );
                 }
             } 
-        }
-		
-		/*
-        System.out.println(dictOfYears);
-		Year tempYear = dictOfYears.get(10);
-		System.out.println( tempYear.getYear() );
-		Hashtable<Integer, Month> dictofMonths = new Hashtable<Integer, Month>();
-		dictofMonths.putAll(tempYear.getAllMonthlySamples() );
-		System.out.println(dictofMonths);
-		
-		Hashtable<Integer, Day> dictOfDays = new Hashtable<Integer, Day>();
-		Month tempMonth = dictofMonths.get(1);
-		System.out.println( tempMonth.getMonth() );
-		dictOfDays.putAll( tempMonth.getAllDaySamples() );
-		System.out.println(dictOfDays);
-		
-		Hashtable<Integer, ArrayList<wItem> > dictOfSamples = new Hashtable<Integer, ArrayList<wItem>>();
-		Day tempDay = dictOfDays.get(1);
-		System.out.println( tempDay.getDay() );
-		dictOfSamples.put( 1,  tempDay.getSamples() );
-		System.out.println( dictOfSamples );
-		*/
-			
-		
+        }	
     }
-	
-	/*public void main( String[] args )
-	{
-		//File dir = new File("");
-		//WeatherData data = new WeatherData();
-		File dir = new File("..\\data\\");
-		
-		//System.out.println( "The name of the directory is : " + dir.getName() );
-		
-		WeatherData.getWeatherData( dir );
-
-        int[] minDate = WeatherData.getMinDate();
-
-        for( int i = 0; i < 3; i++ )
-        {
-            System.out.println( "Keys: " + minDate[i] ); 
-        }*/	
-		
-		//System.out.println( "Got data from .xml" );
-		
-		//XYSeriesCollection dataSet = WeatherData.getYearSetOfData( 15 ); // grab year 2010 weather data
-		
-	    //XYSeriesCollection dataSet = WeatherData.getMonthSetOfData( 10, 1 );
-		
-		//TimeSeriesCollection dataSet = WeatherData.getWeekSetOfData( 14, 12, 5 ); // grab data from the first week in Feb. 2010
-		
-		/*
-		System.out.println( "The number of days is: " + WeatherData.dayCount );
-		
-		System.out.println( "The number of weeks is: " + WeatherData.weekCount );
-		
-		System.out.println( "The number of months is: " + WeatherData.monthCount );
-		
-		System.out.println( "The number of years is: " + WeatherData.yearCount );
-		*/
-		
-		
-		//XYSeriesCollection dataSet = WeatherData.getDaySetOfData( 12, 2, 10 );  // grab jan. 1st 2010
-		 //TimeSeriesCollection dataSet = WeatherData.getDaySetOfData( 10, 1, 1 );  // grab jan. 1st 2010
-		
-		//System.out.println( "Created XY coord sets for graphing" );		
-		
-		//  debug for getYearSetOfData
-		//XYSeries series0 = dataSet.getSeries("Temperature");
-		//TimeSeries series0 = dataSet.getSeries("Temperature");
-		
-		/*if( series0.isEmpty() )
-		{
-			System.out.println("THERE IS NO WEEKLY DATA!" );
-		}
-		
-		int count = 0;
-        for (Object i : series0.getItems()) 
-		{
-            XYDataItem item = (XYDataItem) i;
-            double x = item.getXValue();
-            double y = item.getYValue();
-			
-			if( count < 50 )
-			{
-			    System.out.println(" Sample#: " + x + " Temp: " + y );
-			}
-			
-			count += 1;
-        }
-		
-	}*/
 }

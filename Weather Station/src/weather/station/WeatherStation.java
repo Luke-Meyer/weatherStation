@@ -4,12 +4,18 @@
    Class:   CSC 468/568 - GUI Programming
    Instructor:  Dr. Weiss
    Date:    3/1/2016
-   Description:    (program requirements)
-   Input:   
-   Output:
-   Compilation instructions:
-   Usage:
-   Known bugs/missing features:
+   Description:    Write a Java Swing program to display weather station data in graphical form. The display
+    format is up to you, but should resemble the graphs available on most Internet weather sites (see
+    screen shots below). Allow the user to plot any of the following measurements: temperature,
+    humidity, barometric pressure, wind speed, UV index, and rainfall. Provide controls to toggle
+    (zoom) between daily, weekly, monthly, and yearly displays, and move (pan) from one
+    day/week/month/year to the next. Clicking (or hovering) on a specific data point should bring up
+    a message box with all the available information about that particular time point.
+   Input: none
+   Output: GUI
+   Compilation instructions: run the project from NetBeans
+   Usage: See External Document.
+   Known bugs/missing features: See Usage File.
  ************************************************************************/
 package weather.station;
 

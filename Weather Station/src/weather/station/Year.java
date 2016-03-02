@@ -1,32 +1,85 @@
 package weather.station;
 import java.util.*;
 
+
+/************************************************************************
+    Class:  Year
+    Author: All
+    Description: Class representing a "year" object within the context of 
+	weather data; contains a hash table of all months of weather data 
+	associated with the year in question.
+ ************************************************************************/
 public class Year
 {
+	/* two digit integer representing the year */
 	private int year;
 	
+	/* collection of all months of weather data in the year */
 	private Hashtable<Integer, Month> monthlySamples;
 	
+	/* avg temp for the year */
 	private float meanTemp;
+	
+	/* high temp for the year */
 	private float highTemp;
+	
+	/* high temp date */ 
 	private String hTempDate;
+	
+	/* high temp time */
 	private String hTempTime;
+	
+	/* low temp for the year */
 	private float lowTemp;
+	
+	/* low temp date */
 	private String lTempDate;
+	
+	/* low temp time */
 	private String lTempTime;
+	
+	/* avg wind speed for the year */
 	private float meanWind;
+	
+	/* max wind gust for the year */
 	private float maxWind;
+	
+	/* max wind gust date */
 	private String mWindDate;
+	
+	/* max wind gust time */
 	private String mWindTime;
+	
+	/* accumulated rainfall for the year */
 	private float rainfall;
+	
+	/* prevailing wind direction for the year */
 	private String prevailingWindDir;
 	
+	
+	/**
+     * **********************************************************************
+     * Function: Year() 
+	 * Author: All 
+	 * Description: Constructor for year class
+     * Parameters: n/a
+     * **********************************************************************
+     */
 	public Year()
 	{
 		this.monthlySamples = new Hashtable<Integer, Month > ();
 		this.year = -1;
 	}
 	
+	
+	/**
+     * **********************************************************************
+     * Function: Year() 
+	 * Author: All 
+	 * Description: Over-loaded constructor for year class
+     * Parameters: Year tempYear - year object with state
+     * **********************************************************************
+     */
 	public Year( Year tempYear )
 	{
 		this.monthlySamples = new Hashtable<Integer, Month>();
@@ -36,11 +89,29 @@ public class Year
 		this.monthlySamples.putAll( tempYear.getAllMonthlySamples() );		
 	}
 	
+	
+	/**
+     * **********************************************************************
+     * Function: getPrevailingWindDir()
+	 * Author: All 
+	 * Description: gets the prevailing wind direction for the year
+     * Parameters: n/a
+     * **********************************************************************
+     */
 	public String getPrevailingWindDir()
 	{
 		return this.prevailingWindDir;
 	}
 	
+	
+	/**
+     * **********************************************************************
+     * Function: getSampleCount()
+	 * Author: All 
+	 * Description: gets the number of samples in the year 
+     * Parameters: n/a
+     * **********************************************************************
+     */
 	public int getSampleCount()
 	{
 		int count = 0;
@@ -74,6 +145,16 @@ public class Year
 		return count;
 	}
 	
+	
+	/**
+     * **********************************************************************
+     * Function: calcStats()
+	 * Author: All 
+	 * Description: calculates avg temp, high/low temp, avg wind speed, 
+	 * max wind gust, and accumulated rainfall for the year
+     * Parameters: n/a
+     * **********************************************************************
+     */
 	public void calcStats()
 	{
 		float tempSum = 0.0f;
@@ -280,21 +361,55 @@ public class Year
 		
 	}
 	
+	
+	/**
+     * **********************************************************************
+     * Function: getMeanTemp()
+	 * Author: All 
+	 * Description: gets the mean average temperature for the year
+     * Parameters: n/a
+     * **********************************************************************
+     */
 	public float getMeanTemp()
 	{
 		return this.meanTemp;
 	}
 	
+	
+	/**
+     * **********************************************************************
+     * Function: setMeanTemp()
+	 * Author: All 
+	 * Description: sets the mean temperature for the year
+     * Parameters: float avg - avg temp for year
+     * **********************************************************************
+     */
 	public void setMeanTemp( float avg )
 	{
 		this.meanTemp = avg;
 	}
 	
+	/**
+     * **********************************************************************
+     * Function: getHighTemp()
+	 * Author: All 
+	 * Description: gets the high temperature for the year
+     * Parameters: n/a
+     * **********************************************************************
+     */
 	public float getHighTemp()
 	{
 		return this.highTemp;
 	}
 	
+	/**
+     * **********************************************************************
+     * Function: setHighTemp()
+	 * Author: All 
+	 * Description: sets the high temperature for the year, and its date/time
+     * Parameters: float high - high temp for the year
+     * **********************************************************************
+     */
 	public void setHighTemp( float high, String date, String time )
 	{
 		this.highTemp = high;
@@ -302,53 +417,142 @@ public class Year
 		this.hTempTime = time;
 	}
 	
+	/**
+     * **********************************************************************
+     * Function: getHighTempDate()
+	 * Author: All 
+	 * Description: gets the date of the high temp
+     * Parameters: n/a
+     * **********************************************************************
+     */
 	public String getHighTempDate()
 	{
 		return this.hTempDate;
 	}
 	
+	
+	/**
+     * **********************************************************************
+     * Function: getHighTempTime()
+	 * Author: All 
+	 * Description: gets the time of the high temp in the year
+     * Parameters: n/a
+     * **********************************************************************
+     */
 	public String getHighTempTime()
 	{
 		return this.hTempTime;
 	}
 	
+	
+	/**
+     * **********************************************************************
+     * Function: getLowTemp()
+	 * Author: All 
+	 * Description: gets the low temp for the year
+     * Parameters: n/a
+     * **********************************************************************
+     */
 	public float getLowTemp()
 	{
 		return this.lowTemp;
 	}
 	
-	public void setLowTemp( float high, String date, String time )
+	/**
+     * **********************************************************************
+     * Function: setLowTemp()
+	 * Author: All 
+	 * Description: sets the low temp of the year, also its date/time 
+     * Parameters: float low - low temp of the year
+	 *             String date - date of low temp
+	 *             String time - time of low temp
+     * **********************************************************************
+     */
+	public void setLowTemp( float low, String date, String time )
 	{
-		this.lowTemp = high;
+		this.lowTemp = low;
 		this.lTempDate = date;
 		this.lTempTime = time;
 	}
 	
+	/**
+     * **********************************************************************
+     * Function: getLowTempDate()
+	 * Author: All 
+	 * Description: gets the date of the low temp in the year
+     * Parameters: n/a
+     * **********************************************************************
+     */
 	public String getLowTempDate()
 	{
 		return this.lTempDate;
 	}
 	
+	/**
+     * **********************************************************************
+     * Function: getLowTempTime()
+	 * Author: All 
+	 * Description: gets the time of the low temp in the year
+     * Parameters: n/a
+     * **********************************************************************
+     */
 	public String getLowTempTime()
 	{
 		return this.lTempTime;
 	}
 	
+	
+	/**
+     * **********************************************************************
+     * Function: getMeanWind()
+	 * Author: All 
+	 * Description: gets the average wind speed for the year
+     * Parameters: n/a
+     * **********************************************************************
+     */
 	public float getMeanWind()
 	{
 		return this.meanWind;
 	}
 	
+	
+	/**
+     * **********************************************************************
+     * Function: setMeanWind()
+	 * Author: All 
+	 * Description: sets the mean average wind speed for the year
+     * Parameters: float avg - average wind speed value
+     * **********************************************************************
+     */
 	public void setMeanWind( float avg )
 	{
 		this.meanWind = avg;
 	}
 	
+	/**
+     * **********************************************************************
+     * Function: getMaxWind()
+	 * Author: All 
+	 * Description: gets the max wind gust in the year
+     * Parameters: n/a
+     * **********************************************************************
+     */
 	public float getMaxWind()
 	{
 		return this.maxWind;
 	}
 	
+	
+	/**
+     * **********************************************************************
+     * Function: setMaxWind()
+	 * Author: All 
+	 * Description: sets the max wind gust in the year, and its date/time
+     * Parameters: float max - max wind gust value
+	 *             String date - date of max wind gust
+	 *             String time - time of max wind gust
+     * **********************************************************************
+     */
 	public void setMaxWind( float max, String date, String time )
 	{
 		this.maxWind = max;
@@ -356,54 +560,138 @@ public class Year
 		this.mWindTime = time;
 	}
 	
+	/**
+     * **********************************************************************
+     * Function: getMaxWindDate()
+	 * Author: All 
+	 * Description: gets the date of the max wind gust in the year
+     * Parameters: n/a
+     * **********************************************************************
+     */
 	public String getMaxWindDate()
 	{
 		return this.mWindDate;
 	}
 	
+	/**
+     * **********************************************************************
+     * Function: getMaxWindTime()
+	 * Author: All 
+	 * Description: gets the time of the max wind gust in the year
+     * Parameters: n/a
+     * **********************************************************************
+     */
 	public String getMaxWindTime()
 	{
 		return this.mWindTime;
 	}
 	
+	/**
+     * **********************************************************************
+     * Function: getRainfall()
+	 * Author: All 
+	 * Description: gets the accumulated precipitation in the year
+     * Parameters: n/a
+     * **********************************************************************
+     */
 	public float getRainfall()
 	{
 		return this.rainfall;
 	}
 	
+	
+	/**
+     * **********************************************************************
+     * Function: setRainfall()
+	 * Author: All 
+	 * Description: sets the precipitation in the year
+     * Parameters: float rain - accumulated rain in the year
+     * **********************************************************************
+     */
 	public void setRainfall( float rain )
 	{
 		this.rainfall = rain;
 	}
-		
+	
+
+	/**
+     * **********************************************************************
+     * Function: getYear()
+	 * Author: All 
+	 * Description: gets the year value for the year object
+     * Parameters: n/a
+     * **********************************************************************
+     */	
 	public int getYear()
 	{
 		return this.year;
 	}
 	
+	/**
+     * **********************************************************************
+     * Function: setYear()
+	 * Author: All 
+	 * Description: sets the year value for the year object
+     * Parameters: int tempYear - integer value of the year object
+     * **********************************************************************
+     */	
 	public void setYear( int tempYear )
 	{
 		this.year = tempYear;
 	}
 	
+	
+	/**
+     * **********************************************************************
+     * Function: setMonthlySamples()
+	 * Author: All 
+	 * Description: sets the monthly samples of the year object
+     * Parameters: int monthKey - index to reference a month
+	 *             Month monthOfSamples - month object full of data
+     * **********************************************************************
+     */	
 	public void setMonthlySamples( int monthKey, Month monthOfSamples )
 	{
 		
 		this.monthlySamples.put( monthKey, monthOfSamples );
 	}
 	
+	/**
+     * **********************************************************************
+     * Function: getAllMonthlySamples()
+	 * Author: All 
+	 * Description: gets all monthly samples in the year object
+     * Parameters: n/a
+     * **********************************************************************
+     */	
 	public Hashtable<Integer, Month> getAllMonthlySamples()
 	{
 		return this.monthlySamples;
 	}
 	
+	
+	/**
+     * **********************************************************************
+     * Function: getMonthlySamplesByMonth()
+	 * Author: All 
+	 * Description: gets a single month of samples in the year object
+     * Parameters: int monthKey - index to reference a month
+     * **********************************************************************
+     */	
 	public Month getMonthlySamplesByMonth( int monthKey )
-	{
-		System.out.println( "Made it so get Month Samples" );
-		
+	{		
 		return this.monthlySamples.get(monthKey);
 	}
 	
+	
+	/**
+     * **********************************************************************
+     * Function: reset()
+	 * Author: All 
+	 * Description: resets the year object to a "fresh" state
+     * Parameters: n/a
+     * **********************************************************************
+     */
 	public void reset()
 	{
 		this.monthlySamples = new Hashtable<Integer, Month >();
