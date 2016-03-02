@@ -159,6 +159,8 @@ public class WeatherData
 		// get the specific day
 		Day day = WeatherData.dictOfYears.get( yearIndex ).getMonthlySamplesByMonth( monthIndex ).getDayofSamples( dayIndex );
 		
+	
+		
 		String dir = day.getPrevailingWindDir();  // return the wind direction
 		
 		return dir;
@@ -1195,7 +1197,16 @@ public class WeatherData
 	}
 
 
-	
+	/**
+     * **********************************************************************
+     * Function: getDaySetOfData()
+	 * Author: All 
+	 * Description: returns XY coords of a specific day to be graphed 
+     * Parameters: int yearIndex - index for a specific year
+	 *             int monthIndex - index for a specific month
+	 *             int dayIndex - index for a specific month
+     * **********************************************************************
+     */
 	public static XYSeriesCollection getDaySetOfData( int yearIndex, int monthIndex, int dayIndex )
 	{
 		
@@ -1214,12 +1225,7 @@ public class WeatherData
 		
 		
 		Year year = WeatherData.dictOfYears.get( yearIndex ); // grab the year of data in question
-		
-		System.out.println( "The year index is: " + yearIndex );
-		
-		System.out.println( "The month index is: " + monthIndex );
-		
-		System.out.println( "The day index is: " + dayIndex );				
+						
 		
 		Month mun = year.getMonthlySamplesByMonth( monthIndex );  // grab the month of data in question
 		
@@ -1252,7 +1258,7 @@ public class WeatherData
 				
 		int i = 0;
 		
-		System.out.println( "Made it here" );
+
 		for (wItem item: samples) // for each sample in a day
 		{
 			
@@ -1284,6 +1290,16 @@ public class WeatherData
 				
 	}
 	
+	/**
+     * **********************************************************************
+     * Function: getWeekSetOfData()
+	 * Author: All 
+	 * Description: returns XY coords of a specific week to be graphed 
+     * Parameters: int yearIndex - index for a specific year
+	 *             int monthIndex - index for a specific month
+	 *             int weekIndex - index for a specific month
+     * **********************************************************************
+     */
 	public static XYSeriesCollection getWeekSetOfData( int yearIndex, int monthIndex, int weekIndex )
 	{
 		
@@ -1369,7 +1385,15 @@ public class WeatherData
 		
 	}	
 	
-	
+	/**
+     * **********************************************************************
+     * Function: getMonthSetOfData()
+	 * Author: All 
+	 * Description: returns XY coords of a specific month to be graphed 
+     * Parameters: int yearIndex - index for a specific year
+	 *             int monthIndex - index for a specific month
+     * **********************************************************************
+     */
 	public static XYSeriesCollection getMonthSetOfData( int yearIndex, int monthIndex )
 	{
 		
@@ -1463,7 +1487,14 @@ public class WeatherData
 		
 	}
 	
-	
+	/**
+     * **********************************************************************
+     * Function: getYearSetOfData()
+	 * Author: All 
+	 * Description: returns XY coords of a specific year to be graphed 
+     * Parameters: int yearIndex - index for a specific year
+     * **********************************************************************
+     */
 	public static XYSeriesCollection getYearSetOfData( int yearIndex )
 	{
 		
@@ -1568,7 +1599,14 @@ public class WeatherData
 		return dataset;
     }
 		
-	
+	/**
+     * **********************************************************************
+     * Function: getWeatherData()
+	 * Author: All 
+	 * Description: parses .xml file and populates WeatherData object
+     * Parameters: File folder - contains a directory path full of .xml files
+     * **********************************************************************
+     */
     public static void getWeatherData( File folder )
     {        	
 		
@@ -1631,24 +1669,29 @@ public class WeatherData
 					{
                         wItem item = new wItem();
                         item.setDate(element.getChildText("date"));
-                        item.setTime(element.getChildText("time"));																
+                        item.setTime(element.getChildText("time"));	
+
+						
 						
 						// check for null tags; set default value if data is missing
 						String tag = element.getChildText("temperature");  						
 						String attr = WeatherData.checkNullTag( tag );
-						item.setTemperature(Float.parseFloat(attr));												
+						item.setTemperature(Float.parseFloat(attr));
 						
-						String atag = element.getChildText("humidity");  
-						String aattr = WeatherData.checkNullTag( atag );							
-                        item.setHumidity(Float.parseFloat(element.getChildText(aattr)));//"humidity")));
+						
+						String atag = element.getChildText("humidity"); 
+												
+						String aattr = WeatherData.checkNullTag( atag );
+						
+                        item.setHumidity(Float.parseFloat(aattr));
 						
 						String btag = element.getChildText("barometer");  
 						String battr = WeatherData.checkNullTag( btag );					
-                        item.setBarometer(Float.parseFloat(element.getChildText(battr)));//"barometer")));
+                        item.setBarometer(Float.parseFloat(battr));
 						
 						String ctag = element.getChildText("windspeed");  
 						String cattr = WeatherData.checkNullTag( ctag );
-                        item.setWindspeed(Float.parseFloat(element.getChildText(cattr)));//"windspeed")));
+                        item.setWindspeed(Float.parseFloat(cattr));
 						
 						String dtag = element.getChildText("winddirection");  
 						String dattr = WeatherData.checkNullTag( dtag );						
@@ -1656,23 +1699,23 @@ public class WeatherData
 						
 						String etag = element.getChildText("windgust");  
 						String eattr = WeatherData.checkNullTag( etag );
-                        item.setWindgust(Float.parseFloat(element.getChildText(eattr)));//"windgust")));
+                        item.setWindgust(Float.parseFloat(eattr));
 						
 						String ftag = element.getChildText("windchill");  					
 						String fattr = WeatherData.checkNullTag( ftag );
-                        item.setWindchill(Float.parseFloat(element.getChildText(fattr)));//"windchill")));
+                        item.setWindchill(Float.parseFloat(fattr));
 						
 						String gtag = element.getChildText("heatindex");  					
 						String gattr = WeatherData.checkNullTag( gtag );
-                        item.setHeatindex(Float.parseFloat(element.getChildText(gattr)));//"heatindex")));
+                        item.setHeatindex(Float.parseFloat(gattr));
 						
 						String htag = element.getChildText("uvindex");  
 						String hattr = WeatherData.checkNullTag( htag );						
-                        item.setUvindex(Float.parseFloat(element.getChildText(hattr)));//"uvindex")));
+                        item.setUvindex(Float.parseFloat(hattr));
 						
 						String itag = element.getChildText("rainfall");  
 						String iattr = WeatherData.checkNullTag( itag );							
-                        item.setRainfall(Float.parseFloat(element.getChildText(iattr)));//"rainfall")));
+                        item.setRainfall(Float.parseFloat(iattr));
 						
 						
 						j += 1;
@@ -1693,7 +1736,7 @@ public class WeatherData
 							
 							WeatherData.dayCount += 1;
 							
-							//System.out.println( "The number of days is: " + WeatherData.dayCount );
+
 							mun.setDailySamples( currDay, daa ); 
 							
 							mun.setMonth( currMonth );
@@ -1719,11 +1762,11 @@ public class WeatherData
 							tempMonth.calcWeekStats();
 							
 							
-							//System.out.println( "The number of weeks is: " + WeatherData.weekCount );
+
 							
 							WeatherData.monthCount += 1;
 							
-							//System.out.println( "The number of months is: " + WeatherData.monthCount );
+
 							
 							year.setMonthlySamples( currMonth, tempMonth );
 							
@@ -1737,7 +1780,7 @@ public class WeatherData
 							
 							WeatherData.yearCount += 1;
 							
-							System.out.println( "The number of years is: " + WeatherData.yearCount );
+
 							
 							WeatherData.dictOfYears.put( currYear, savedYear );
 						}
@@ -1869,94 +1912,12 @@ public class WeatherData
             } 
         }
 		
-		/*
-        System.out.println(dictOfYears);
-		Year tempYear = dictOfYears.get(10);
-		System.out.println( tempYear.getYear() );
-		Hashtable<Integer, Month> dictofMonths = new Hashtable<Integer, Month>();
-		dictofMonths.putAll(tempYear.getAllMonthlySamples() );
-		System.out.println(dictofMonths);
 		
-		Hashtable<Integer, Day> dictOfDays = new Hashtable<Integer, Day>();
-		Month tempMonth = dictofMonths.get(1);
-		System.out.println( tempMonth.getMonth() );
-		dictOfDays.putAll( tempMonth.getAllDaySamples() );
-		System.out.println(dictOfDays);
-		
-		Hashtable<Integer, ArrayList<wItem> > dictOfSamples = new Hashtable<Integer, ArrayList<wItem>>();
-		Day tempDay = dictOfDays.get(1);
-		System.out.println( tempDay.getDay() );
-		dictOfSamples.put( 1,  tempDay.getSamples() );
-		System.out.println( dictOfSamples );
-		*/
-			
 		
     }
 	
-	public static void main( String[] args )
-	{
-		//File dir = new File("");
-		//WeatherData data = new WeatherData();
-		File dir = new File("..\\data\\");
+	
+	
 		
-		//System.out.println( "The name of the directory is : " + dir.getName() );
-		
-		WeatherData.getWeatherData( dir );
-
-        int[] minDate = WeatherData.getMinDate();
-
-        for( int i = 0; i < 3; i++ )
-        {
-            System.out.println( "Keys: " + minDate[i] ); 
-        }	
-		
-		//System.out.println( "Got data from .xml" );
-		
-		//XYSeriesCollection dataSet = WeatherData.getYearSetOfData( 15 ); // grab year 2010 weather data
-		
-	    XYSeriesCollection dataSet = WeatherData.getMonthSetOfData( 10, 9 );
-		
-		//TimeSeriesCollection dataSet = WeatherData.getWeekSetOfData( 14, 12, 5 ); // grab data from the first week in Feb. 2010
-		
-		/*
-		System.out.println( "The number of days is: " + WeatherData.dayCount );
-		
-		System.out.println( "The number of weeks is: " + WeatherData.weekCount );
-		
-		System.out.println( "The number of months is: " + WeatherData.monthCount );
-		
-		System.out.println( "The number of years is: " + WeatherData.yearCount );
-		*/
-		
-		
-		//XYSeriesCollection dataSet = WeatherData.getDaySetOfData( 12, 2, 10 );  // grab jan. 1st 2010
-		 //TimeSeriesCollection dataSet = WeatherData.getDaySetOfData( 10, 1, 1 );  // grab jan. 1st 2010
-		
-		//System.out.println( "Created XY coord sets for graphing" );		
-		
-		//  debug for getYearSetOfData
-		XYSeries series0 = dataSet.getSeries("Temperature");
-		//TimeSeries series0 = dataSet.getSeries("Temperature");
-		
-		if( series0.isEmpty() )
-		{
-			System.out.println("THERE IS NO WEEKLY DATA!" );
-		}
-		
-		int count = 0;
-        for (Object i : series0.getItems()) 
-		{
-            XYDataItem item = (XYDataItem) i;
-            double x = item.getXValue();
-            double y = item.getYValue();
-			
-			if( count < 50 )
-			{
-			    System.out.println(" Sample#: " + x + " Temp: " + y );
-			}
-			
-			count += 1;
-        }
-		
-	}
+	
 }

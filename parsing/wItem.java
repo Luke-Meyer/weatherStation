@@ -310,7 +310,7 @@ public class wItem
      */
     public String getWinddirection() 
 	{
-        return winddirection;
+        return this.winddirection;
     }
 	
 	

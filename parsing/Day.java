@@ -202,6 +202,7 @@ public class Day
 			{
 				nCount += 1;
 				
+				
 				if( nCount > maxCount )
 				{
 					maxCount = nCount;
