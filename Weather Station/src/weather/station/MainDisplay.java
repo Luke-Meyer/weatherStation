@@ -47,17 +47,21 @@ public class MainDisplay extends javax.swing.JFrame {
     public MainDisplay() {
         super("Weather Station");
         initComponents();
+        
+        try {
+            String workingDir = System.getProperty("user.dir");
+            File dir = new File(workingDir);
 
-        String workingDir = System.getProperty("user.dir");
-        File dir = new File(workingDir);
+            this.data = new WeatherData();
+            data.getWeatherData(dir);
 
-        this.data = new WeatherData();
-        data.getWeatherData(dir);
-
-        int[] minDate = data.getMinDate();
-        year = minDate[2];
-        month = minDate[0];
-        day = minDate[1];
+            int[] minDate = data.getMinDate();
+            year = minDate[2];
+            month = minDate[0];
+            day = minDate[1];
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(null, "Please choose data collection using directory chooser: \"File-->Open Directory\"", "No Initial Data Found", JOptionPane.INFORMATION_MESSAGE);
+        }       
     }
 
     public void setTheData(String dataSpec, int count) {
